@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.3.0`、`go 1.27.1-ohos.1` 及 5 个 `ohos-sdk-*` 组件，
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.3.1`、`go 1.27.1-ohos.1` 及 5 个 `ohos-sdk-*` 组件，
 目标平台为 `ohos-arm64`。软件包本身发布到对应适配仓库的 GitHub Releases。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
@@ -88,7 +88,7 @@ public/
 
 ## 发布顺序
 
-1. 在 `oheco/oheco` 发布 `v0.3.0`，上传已签名的 `oheco-0.3.0-ohos-arm64.tar.gz`
+1. 在 `oheco/oheco` 发布 `v0.3.1`，上传已签名的 `oheco-0.3.1-ohos-arm64.tar.gz`
    及其 `.sha256`。Pages 索引生成器继续固定为兼容的 `v0.2.0`。
 2. 确认包描述中的移植负责人、项目地址、大小及哈希与发行文件一致。
 3. 在 `oheco-packages` 的 Settings → Pages 中选择 GitHub Actions。
