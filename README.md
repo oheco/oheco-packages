@@ -133,8 +133,8 @@ cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk
 
 ## Git 原生命令行工具
 
-`git` 收录 [Git 2.55.0 的 OHOS ARM64 适配版](https://github.com/oheco/git/releases/tag/v2.55.0-ohos.1)，
-包版本为 `2.55.0-ohos.1`，`git --version` 显示 `2.55.0.ohos.1`。
+`git` 收录 [Git 2.55.0 的 OHOS ARM64 适配版](https://github.com/oheco/git/releases/tag/v2.55.0-ohos.2)，
+包版本为 `2.55.0-ohos.2`，`git --version` 显示 `2.55.0.ohos.2`。
 
 ```sh
 oo update
@@ -142,15 +142,19 @@ oo install git
 git --version
 ```
 
-支持基础版本管理、merge、rebase、stash 及 SSH clone/push/fetch/pull；暂不支持 HTTP/HTTPS。
-SSH 使用系统 `ssh` 及用户配置的密钥。发行包已签名，保留完整辅助程序与模板目录，运行无需
-OpenSSL、libcurl 或编译工具链。本地克隆请使用 `--no-hardlinks`；共享目录若触发仓库所有者
+支持基础版本管理、merge、rebase、stash 及 SSH、HTTP/HTTPS clone/push/fetch/pull。
+HTTPS 静态集成 libcurl 8.22.0 和 Mbed TLS 3.6.7 LTS，默认使用鸿蒙系统 CA 校验证书链和
+主机名；私有 CA 可用 Git 的 `http.sslCAInfo` 配置。当前采用 HTTP/1.1，未包含 HTTP/2/3
+和旧式 WebDAV push。SSH 使用系统 `ssh` 及用户配置的密钥。发行包已签名，保留完整辅助
+程序与模板目录，运行无需额外安装 curl/TLS 库或编译工具链。
+本地克隆请使用 `--no-hardlinks`；共享目录若触发仓库所有者
 检查，请确认路径后配置具体的 `safe.directory`，不要关闭所有仓库的检查。
 
 使用 v2 包规范，为各命令生成启动器，保留原始命令名；也可使用
-`git@2.55.0-ohos.1` 等带版本号的命令。完整支持范围见
-[适配说明](https://github.com/oheco/git/blob/v2.55.0-ohos.1/contrib/harmony/README.md)和
-[测试记录](https://github.com/oheco/git/blob/v2.55.0-ohos.1/contrib/harmony/VALIDATION.md)。
+`git@2.55.0-ohos.2` 等带版本号的命令。旧版 `2.55.0-ohos.1` 保留下载，该版本仅支持本地和
+SSH 传输。完整支持范围见
+[适配说明](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/README.md)和
+[测试记录](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/VALIDATION.md)。
 
 ## OpenHarmony SDK
 

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "git",
-  "description": "Git 鸿蒙原生命令行工具，支持本地版本管理和 SSH 远端操作",
+  "description": "Git 鸿蒙原生命令行工具，支持本地、SSH 和 HTTP/HTTPS 远端操作",
   "upstream": "https://github.com/git/git",
   "repository": "https://github.com/oheco/git",
   "maintainers": [
@@ -11,11 +11,38 @@
     }
   ],
   "license": "GPL-2.0-only (with compatible bundled licenses)",
-  "notes": "支持 merge、rebase、stash 和 SSH clone/push/fetch/pull，暂不支持 HTTP/HTTPS。SSH 使用系统 ssh；本地克隆请使用 --no-hardlinks。共享目录若提示 dubious ownership，请确认路径后仅信任具体仓库。",
+  "notes": "支持 merge、rebase、stash 和本地、SSH、HTTP/HTTPS clone/push/fetch/pull。HTTPS 静态集成 libcurl 与 Mbed TLS，默认校验系统 CA 和主机名；SSH 使用系统 ssh。本地克隆请使用 --no-hardlinks。共享目录若提示 dubious ownership，请确认路径后仅信任具体仓库。",
   "latest": {
-    "ohos-arm64": "2.55.0-ohos.1"
+    "ohos-arm64": "2.55.0-ohos.2"
   },
   "versions": [
+    {
+      "version": "2.55.0-ohos.2",
+      "upstream_version": "2.55.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/git/releases/download/v2.55.0-ohos.2/git-2.55.0.ohos.2-ohos-arm64.tar.gz",
+          "sha256": "8b568334e7decd6381d1a162fde79d44f67f8e9513454d4b148759c527bada81",
+          "size": 5588391,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "git": "bin/git",
+            "git-shell": "bin/git-shell",
+            "git-upload-pack": "bin/git-upload-pack",
+            "git-receive-pack": "bin/git-receive-pack",
+            "git-upload-archive": "bin/git-upload-archive"
+          },
+          "launchers": [
+            "git",
+            "git-shell",
+            "git-upload-pack",
+            "git-receive-pack",
+            "git-upload-archive"
+          ]
+        }
+      }
+    },
     {
       "version": "2.55.0-ohos.1",
       "upstream_version": "2.55.0",
