@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "ohos-sdk-ets",
   "description": "OpenHarmony ETS/ArkTS 开发资源",
-  "upstream": "https://gitee.com/openharmony",
+  "upstream": "https://gitcode.com/openharmony",
   "repository": "https://github.com/oheco/ohos-sdk",
   "maintainers": [
     {

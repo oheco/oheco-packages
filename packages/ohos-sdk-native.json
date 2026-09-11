@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "ohos-sdk-native",
   "description": "OpenHarmony 原生开发 SDK，包含 LLVM/Clang、sysroot、CMake 和 Ninja",
-  "upstream": "https://gitee.com/openharmony",
+  "upstream": "https://gitcode.com/openharmony",
   "repository": "https://github.com/oheco/ohos-sdk",
   "maintainers": [
     {

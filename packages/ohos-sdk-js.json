@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "ohos-sdk-js",
   "description": "OpenHarmony JavaScript 开发资源",
-  "upstream": "https://gitee.com/openharmony",
+  "upstream": "https://gitcode.com/openharmony",
   "repository": "https://github.com/oheco/ohos-sdk",
   "maintainers": [
     {

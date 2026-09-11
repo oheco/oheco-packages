@@ -2,7 +2,7 @@
   "schema_version": 2,
   "name": "ohos-sdk-previewer",
   "description": "OpenHarmony Previewer 组件元数据（当前版本不含预览器程序）",
-  "upstream": "https://gitee.com/openharmony",
+  "upstream": "https://gitcode.com/openharmony",
   "repository": "https://github.com/oheco/ohos-sdk",
   "maintainers": [
     {
