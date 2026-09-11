@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Git、tmux 及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -180,6 +180,35 @@ Ctrl+B 后按 `%` 左右分屏、`"` 上下分屏、`c` 新建窗口、`d` 脱�
 终端应用完全退出、系统休眠或后台回收后的保活尚未验证。详细范围见
 [适配说明](https://github.com/oheco/tmux/blob/3.5a-ohos.1/README.ohos.md)和
 [验收记录](https://github.com/oheco/tmux/blob/3.5a-ohos.1/ohos/validation.md)。
+
+## Python 原生解释器
+
+`python3` 收录 [CPython 3.14.7 的鸿蒙 ARM64 社区预发布版](https://github.com/oheco/cpython/releases/tag/v3.14.7-ohos.1)，
+包版本为 `3.14.7-ohos.1`，包含 pip、venv、开发头文件和自动签名的扩展编译器入口。
+
+```sh
+oo update
+oo install python3
+python3 -VV
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip --version
+```
+
+支持 SSL、ctypes、SQLite、压缩库、readline/curses、子进程和多进程。使用 v2 包规范，
+命令启动器保留真实安装路径，支持 `python3@3.14.7-ohos.1`、`pip3@3.14.7-ohos.1`
+及 `python3-config@3.14.7-ohos.1` 等版本入口。运行包已签名，解压时移除一层根目录。
+
+原生扩展编译需 PATH 中的 OHOS SDK Clang 和 `binary-sign-tool`，客户端不会自动安装
+这些工具。涉及 Unix socket 或严格 POSIX 权限时，将 `TMPDIR` 指向应用私有可写目录。
+本版未包含 Tk、gdbm/ndbm 和可选 libuuid 扩展；Python `uuid` 和 `dbm.sqlite3` 可用。
+通用 Linux/musllinux 二进制 wheel 不兼容。仅验证了 HarmonyOS PC ARM64 原生终端，
+其他架构、系统版本和手机应用沙箱未验证。
+
+已通过 15 项原生集成检查和 7 个上游测试文件（1,153 项测试，29 项跳过）。
+运行包保留 GNU Readline GPLv3 等第三方许可证，完整对应源码随 Release 发布。
+详见[构建说明](https://github.com/oheco/cpython/blob/v3.14.7-ohos.1/Tools/ohos/README.md)
+及[验证记录](https://github.com/oheco/cpython/blob/v3.14.7-ohos.1/Tools/ohos/VALIDATION.md)。
 
 ## OpenHarmony SDK
 

@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "name": "python3",
+  "description": "Python 3.14 鸿蒙原生解释器，包含 pip、venv、开发头文件及扩展编译支持",
+  "upstream": "https://github.com/python/cpython",
+  "repository": "https://github.com/oheco/cpython",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "PSF-2.0 (with bundled GPL-3.0-or-later Readline and other dependency licenses)",
+  "notes": "HarmonyOS PC ARM64 社区预发布版。已签名，包含 SSL、ctypes、SQLite、压缩库、readline/curses；支持含空格的安装路径。原生扩展编译需 OHOS SDK Clang 和 binary-sign-tool；涉及 Unix socket 或严格 POSIX 权限时使用应用私有 TMPDIR。未包含 Tk、gdbm/ndbm 及可选 libuuid 扩展。通用 Linux/musllinux 二进制 wheel 不兼容；其他架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
+  "latest": {
+    "ohos-arm64": "3.14.7-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "3.14.7-ohos.1",
+      "upstream_version": "3.14.7",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/cpython/releases/download/v3.14.7-ohos.1/python-3.14.7-ohos.1-arm64.tar.gz",
+          "sha256": "1c6e9b4a3073fb1a8a7d14aaaf8e22b67f28b3d7eeaa1c6a13fb40cf3ca864c9",
+          "size": 37457142,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "python": "bin/python",
+            "python3": "bin/python3",
+            "python3.14": "bin/python3.14",
+            "pip": "bin/pip",
+            "pip3": "bin/pip3",
+            "pip3.14": "bin/pip3.14",
+            "pydoc3": "bin/pydoc3",
+            "pydoc3.14": "bin/pydoc3.14",
+            "python3-config": "bin/python3-config",
+            "python3.14-config": "bin/python3.14-config"
+          },
+          "launchers": [
+            "python",
+            "python3",
+            "python3.14",
+            "pip",
+            "pip3",
+            "pip3.14",
+            "pydoc3",
+            "pydoc3.14",
+            "python3-config",
+            "python3.14-config"
+          ]
+        }
+      }
+    }
+  ]
+}
