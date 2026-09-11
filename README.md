@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Git 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -130,6 +130,27 @@ cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk
 已验证原生构建、运行、测试、cgo 等功能。完整支持范围和宿主限制见
 [适配说明](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/README.md)及
 [验证记录](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/VALIDATION.md)。
+
+## Git 原生命令行工具
+
+`git` 收录 [Git 2.55.0 的 OHOS ARM64 适配版](https://github.com/oheco/git/releases/tag/v2.55.0-ohos.1)，
+包版本为 `2.55.0-ohos.1`，`git --version` 显示 `2.55.0.ohos.1`。
+
+```sh
+oo update
+oo install git
+git --version
+```
+
+支持基础版本管理、merge、rebase、stash 及 SSH clone/push/fetch/pull；暂不支持 HTTP/HTTPS。
+SSH 使用系统 `ssh` 及用户配置的密钥。发行包已签名，保留完整辅助程序与模板目录，运行无需
+OpenSSL、libcurl 或编译工具链。本地克隆请使用 `--no-hardlinks`；共享目录若触发仓库所有者
+检查，请确认路径后配置具体的 `safe.directory`，不要关闭所有仓库的检查。
+
+使用 v2 包规范，为各命令生成启动器，保留原始命令名；也可使用
+`git@2.55.0-ohos.1` 等带版本号的命令。完整支持范围见
+[适配说明](https://github.com/oheco/git/blob/v2.55.0-ohos.1/contrib/harmony/README.md)和
+[测试记录](https://github.com/oheco/git/blob/v2.55.0-ohos.1/contrib/harmony/VALIDATION.md)。
 
 ## OpenHarmony SDK
 
