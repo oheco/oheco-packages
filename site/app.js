@@ -212,11 +212,34 @@ function render() {
   status.textContent = matches.length ? '' : '没有找到匹配的工具。';
 }
 search.addEventListener('input', render);
-fetch('./index/v2/index.json').then(response => {
-  if (!response.ok) throw new Error(`HTTP ${response.status}`);
-  return response.json();
-}).then(index => {
-  if (index.schema_version !== 2 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
-  packages = index.packages;
-  render();
-}).catch(error => { status.textContent = `工具目录暂时无法加载：${error.message}。请稍后重试。`; });
+let loadingIndex = false;
+let loadedPackages;
+async function refreshIndex() {
+  if (loadingIndex) return;
+  loadingIndex = true;
+  try {
+    // Pages caches files for ten minutes; revalidate release metadata on each visit.
+    const response = await fetch('./index/v2/index.json', { cache: 'no-cache' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const index = await response.json();
+    if (index.schema_version !== 2 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+    const updatedPackages = JSON.stringify(index.packages);
+    if (updatedPackages !== loadedPackages) {
+      packages = index.packages;
+      render();
+      loadedPackages = updatedPackages;
+    }
+  } catch (error) {
+    // Retain a usable catalog when a background refresh fails.
+    if (loadedPackages === undefined) status.textContent = `工具目录暂时无法加载：${error.message}。请稍后重试。`;
+  } finally {
+    loadingIndex = false;
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) refreshIndex();
+});
+window.addEventListener('pageshow', event => {
+  if (event.persisted) refreshIndex();
+});
+refreshIndex();
