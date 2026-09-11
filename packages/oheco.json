@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.2.1"
+    "ohos-arm64": "0.3.0"
   },
   "versions": [
     {
@@ -52,6 +52,21 @@
           "url": "https://github.com/oheco/oheco/releases/download/v0.2.1/oheco-0.2.1-ohos-arm64.tar.gz",
           "sha256": "ff1b0bdd2dd3ec271d7807793a0458d309a74caa2ac958ba35402dbac05d7a1a",
           "size": 2828926,
+          "format": "tar.gz",
+          "strip_components": 0,
+          "binaries": {
+            "oo": "bin/oo"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.3.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco/releases/download/v0.3.0/oheco-0.3.0-ohos-arm64.tar.gz",
+          "sha256": "e172ae2368cc9d89c852b7a6d37e2b2b04c0d1d11309f96a7a07dfec6e12a422",
+          "size": 2837577,
           "format": "tar.gz",
           "strip_components": 0,
           "binaries": {
