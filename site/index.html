@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="oheco 鸿蒙开源工具目录：使用 oo 搜索、安装和管理原生软件包。">
+  <title>oheco · 鸿蒙开源工具</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header><a class="brand" href="./" aria-label="oheco 首页">oo<span>oheco</span></a><a href="https://github.com/oheco">GitHub ↗</a></header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">OPEN SOURCE ON HARMONYOS</p>
+      <h1>让熟悉的工具，<br>在鸿蒙上继续工作。</h1>
+      <p class="lead">原生适配的开源工具，一个命令安装。<br>用 <code>oo</code> 发现软件，管理版本，随时切换。</p>
+      <div class="install"><code id="install-command">curl -fsSL https://oheco.github.io/oheco-packages/install.sh | zsh</code><button id="copy-install" type="button">复制</button></div>
+      <p class="hint">在鸿蒙原生 zsh 终端执行 · 安装至 ~/.oheco · 当前支持 ARM64</p>
+    </section>
+    <section aria-labelledby="packages-title">
+      <div class="catalog-heading"><h2 id="packages-title">工具目录 <span id="count"></span></h2><label class="search"><span class="sr-only">搜索工具名称、描述或命令</span><input id="search" type="search" placeholder="搜索名称、描述或命令…" autocomplete="off"></label></div>
+      <p id="status" role="status">正在加载工具目录…</p>
+      <div id="packages" class="packages"></div>
+    </section>
+    <section class="usage" aria-label="使用方式"><div><span>01 / 同步</span><code>oo update</code><p>获取最新工具索引。</p></div><div><span>02 / 安装</span><code>oo install go</code><p>下载工具并建立命令链接。</p></div><div><span>03 / 切换</span><code>oo switch go 1.27.1</code><p>在已安装的版本之间切换。</p></div></section>
+  </main>
+  <footer><span>由 oheco 社区维护。</span><a href="./index/v1/index.json">查看软件索引 ↗</a><a href="https://github.com/oheco/oheco-packages">贡献工具 ↗</a></footer>
+</body>
+</html>
