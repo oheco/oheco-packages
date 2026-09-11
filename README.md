@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Git 及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -155,6 +155,31 @@ HTTPS 静态集成 libcurl 8.22.0 和 Mbed TLS 3.6.7 LTS，默认使用鸿蒙系
 SSH 传输。完整支持范围见
 [适配说明](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/README.md)和
 [测试记录](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/VALIDATION.md)。
+
+## tmux 终端复用器
+
+`tmux` 收录 [tmux 3.5a 的鸿蒙原生适配版](https://github.com/oheco/tmux/releases/tag/3.5a-ohos.1)，
+包版本为 `3.5a-ohos.1`。安装后可直接创建和恢复会话：
+
+```sh
+oo update
+oo install tmux
+tmux new-session -s work
+```
+
+Ctrl+B 后按 `%` 左右分屏、`"` 上下分屏、`c` 新建窗口、`d` 脱离会话。
+重新连接使用 `tmux attach-session -t work`；也可使用版本命令 `tmux@3.5a-ohos.1`。
+
+发行包已签名，静态集成 libevent 和 libtinfo，随包 terminfo 通过真实二进制位置自动查找，
+无需另装这些库。默认 socket 位于应用私有目录
+`/data/storage/el2/base/haps/entry/files/tmux-<UID>/`；其他终端环境可设置 `TMUX_TMPDIR`
+或使用 `-S` 指定允许创建 Unix socket 的路径，共享目录及只读 `/tmp` 不适用。
+包采用 v1 规范，`strip_components: 0`，保留 `bin/` 和 `share/` 的相对布局。
+
+已验证分屏、窗口、中文输出、复制粘贴、缓冲区编辑、窗口缩放及 zshc 断线重连。
+终端应用完全退出、系统休眠或后台回收后的保活尚未验证。详细范围见
+[适配说明](https://github.com/oheco/tmux/blob/3.5a-ohos.1/README.ohos.md)和
+[验收记录](https://github.com/oheco/tmux/blob/3.5a-ohos.1/ohos/validation.md)。
 
 ## OpenHarmony SDK
 

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "name": "tmux",
+  "description": "tmux 鸿蒙原生终端复用器，支持会话、窗口、分屏和断线重连",
+  "upstream": "https://github.com/tmux/tmux",
+  "repository": "https://github.com/oheco/tmux",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "ISC (with bundled BSD and ncurses licenses)",
+  "notes": "已签名，静态集成 libevent 和 libtinfo，随包提供 terminfo。默认 socket 位于应用私有目录；其他终端环境可设置 TMUX_TMPDIR 或使用 -S，共享目录及只读 /tmp 不适用。已验证 zshc 断线重连；终端应用退出、休眠或后台回收后的保活尚未验证。",
+  "latest": {
+    "ohos-arm64": "3.5a-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "3.5a-ohos.1",
+      "upstream_version": "3.5a",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/tmux/releases/download/3.5a-ohos.1/tmux-3.5a-ohos-arm64.tar.gz",
+          "sha256": "e38079e712f4f880edd6c99d8fd450351001c9be9a8552ad19731066a825e747",
+          "size": 1879269,
+          "format": "tar.gz",
+          "strip_components": 0,
+          "binaries": {
+            "tmux": "bin/tmux"
+          }
+        }
+      }
+    }
+  ]
+}
