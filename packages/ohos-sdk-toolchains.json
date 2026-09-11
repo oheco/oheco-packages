@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "name": "ohos-sdk-toolchains",
+  "description": "OpenHarmony 签名、应用打包、资源处理和设备工具",
+  "upstream": "https://gitee.com/openharmony",
+  "repository": "https://github.com/oheco/ohos-sdk",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "Multiple (see NOTICE.txt)",
+  "notes": "binary-sign-tool 位于 lib/binary-sign-tool，用于原生 ELF 签名；hap-sign-tool 用于 HAP 签名。随包资源和第三方许可完整保留。",
+  "latest": {
+    "ohos-arm64": "26.0.0.35-Beta"
+  },
+  "versions": [
+    {
+      "version": "26.0.0.35-Beta",
+      "upstream_version": "26.0.0.35",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/ohos-sdk/releases/download/26.0.0.35-Beta/toolchains-ohos-arm64-26.0.0.35-Beta.zip",
+          "sha256": "79ae088481f91c32c4f2f8e0feeddad75b6dba3b0dfc208684da86f5d0d02b34",
+          "size": 32165256,
+          "format": "zip",
+          "strip_components": 1,
+          "binaries": {
+            "ark_disasm": "ark_disasm",
+            "binary-sign-tool": "lib/binary-sign-tool",
+            "hap-sign-tool": "lib/hap-sign-tool",
+            "hdc": "hdc",
+            "js_rawheap_translator": "js_rawheap_translator",
+            "ohos_packing_tool": "lib/ohos_packing_tool",
+            "rawheap_translator": "rawheap_translator",
+            "restool": "restool",
+            "syscap_tool": "syscap_tool"
+          },
+          "launchers": [
+            "ark_disasm",
+            "binary-sign-tool",
+            "hap-sign-tool",
+            "hdc",
+            "js_rawheap_translator",
+            "ohos_packing_tool",
+            "rawheap_translator",
+            "restool",
+            "syscap_tool"
+          ]
+        }
+      }
+    }
+  ]
+}

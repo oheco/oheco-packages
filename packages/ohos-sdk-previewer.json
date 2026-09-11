@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "name": "ohos-sdk-previewer",
+  "description": "OpenHarmony Previewer 组件元数据（当前版本不含预览器程序）",
+  "upstream": "https://gitee.com/openharmony",
+  "repository": "https://github.com/oheco/ohos-sdk",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "Multiple (see NOTICE.txt)",
+  "notes": "本 Release 的压缩包只有 oh-uni-package.json 和 NOTICE.txt，无可执行程序，不创建命令链接。",
+  "latest": {
+    "ohos-arm64": "26.0.0.35-Beta"
+  },
+  "versions": [
+    {
+      "version": "26.0.0.35-Beta",
+      "upstream_version": "26.0.0.35",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/ohos-sdk/releases/download/26.0.0.35-Beta/previewer-ohos-arm64-26.0.0.35-Beta.zip",
+          "sha256": "3735dcb58aa4c0eec404d123da9d5e02937e7f58aa2be53e1ed8dc69bd41f395",
+          "size": 103738,
+          "format": "zip",
+          "strip_components": 1,
+          "binaries": {}
+        }
+      }
+    }
+  ]
+}

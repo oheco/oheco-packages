@@ -83,11 +83,11 @@ function render() {
   status.textContent = matches.length ? '' : '没有找到匹配的工具。';
 }
 search.addEventListener('input', render);
-fetch('./index/v1/index.json').then(response => {
+fetch('./index/v2/index.json').then(response => {
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   return response.json();
 }).then(index => {
-  if (index.schema_version !== 1 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+  if (index.schema_version !== 2 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
   packages = index.packages;
   render();
 }).catch(error => { status.textContent = `工具目录暂时无法加载：${error.message}。请稍后重试。`; });

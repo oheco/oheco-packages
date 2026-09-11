@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。当前收录 `oheco`，
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.2.0` 及 5 个 `ohos-sdk-*` 组件，
 目标平台为 `ohos-arm64`。软件包本身发布到对应适配仓库的 GitHub Releases。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
@@ -14,7 +14,7 @@ Go 的鸿蒙适配尚未完成，暂时从索引中移除；已安装的版本�
 - `scripts/build.sh`：调用 `oheco` 仓库内共享的 Go 校验器，生成 `public/`。
 - `.github/workflows/pages.yml`：检查软件包后部署静态站，PR 仅检查而不部署。
 
-## 包规范 v1
+## 包规范 v2
 
 包级字段：`schema_version`、`name`、`description`、`upstream`、`repository`、
 `maintainers`、`license`、`latest`、`versions`，以及可选的 `notes`。
@@ -32,12 +32,16 @@ Go 的鸿蒙适配尚未完成，暂时从索引中移除；已安装的版本�
 | `url` | HTTPS 软件包地址；仅本地调试允许 loopback HTTP |
 | `sha256` | 最终压缩包的 64 位小写 SHA-256 |
 | `size` | 压缩包字节数，最大 8 GiB |
-| `format` | 第一版固定 `tar.gz` |
+| `format` | `tar.gz` 或 `zip` |
 | `strip_components` | 解压时明确去掉的前缀目录层数，0–8 |
-| `binaries` | 命令名到解压后相对路径的映射 |
+| `binaries` | 命令名到解压后相对路径的映射；无命令包使用 `{}` |
+| `launchers`（可选） | 需要由启动器以原名执行的命令列表，必须引用 `binaries` 中的名称 |
+
+SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
 
 名字和版本不允许 `/`、`@`、空格及路径跳转。包内路径不得越界。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
+ZIP 额外验证 CRC，拒绝加密条目；保留目录 `.oo-launchers/` 仅由客户端生成启动器。
 软件包内的可执行文件必须带执行权限；其他内容可包含 `lib/`、`share/`、源码、许可证等。
 第一版不执行安装钩子，不自动求解跨包依赖；随包依赖应使用可重定位的目录布局。
 
@@ -73,17 +77,19 @@ public/
   style.css
   app.js
   install.sh
-  index/v1/index.json
+  index/v2/index.json          # 完整索引
+  index/v1/index.json          # 旧客户端升级入口
   schema/{package,index}.schema.json
+  schema/v1/{package,index}.schema.json
   .nojekyll
 ```
 
 页面和客户端读取同一份索引。安装脚本由 oheco 模板和该包当前平台的 latest 产物生成，
 内嵌固定版本、URL、SHA-256 和包描述，避免脚本与索引漂移。
 
-## 首次发布顺序
+## 发布顺序
 
-1. 在 `oheco/oheco` 发布 `v0.1.0`，上传已签名的 `oheco-0.1.0-ohos-arm64.tar.gz`
+1. 在 `oheco/oheco` 发布 `v0.2.0`，上传已签名的 `oheco-0.2.0-ohos-arm64.tar.gz`
    及其 `.sha256`。该标签也为索引生成器提供可复现版本。
 2. 确认包描述中的移植负责人、项目地址、大小及哈希与发行文件一致。
 3. 在 `oheco-packages` 的 Settings → Pages 中选择 GitHub Actions。
@@ -91,3 +97,26 @@ public/
 
 正式地址为 `https://oheco.github.io/oheco-packages/`。本地生成成功不代表 GitHub 已发布。
 新增版本先发布并验证二进制，再提交索引；已发布版本的下载地址和产物不得被原地替换。
+
+## OpenHarmony SDK
+
+5 个组件分别维护一个 `packages/ohos-sdk-<component>.json`，当前版本统一为
+`26.0.0.35-Beta`，直接引用 `oheco/ohos-sdk` Release 的原始 ZIP，不重新打包。
+每个压缩包带有对应组件的根目录，故均设置 `strip_components: 1`；版本目录内保留完整组件布局。
+
+- `native`：LLVM 15.0.4、sysroot、CMake/CTest/CPack 3.28.2、Ninja 1.13.2。
+- `toolchains`：`lib/binary-sign-tool`、`lib/hap-sign-tool`、`lib/ohos_packing_tool` 和目录根部的工具。
+- `ets` / `js`：暂按资源包安装，内置工具尚未验证在主目录中可执行，不创建命令链接。
+- `previewer`：当前只有元数据和 NOTICE，`binaries: {}`，不提供预览器程序。
+
+各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。
+当前不支持 LLDB，描述文件不声明任何 lldb 命令。各包均保留原始 NOTICE 中的许可证。
+
+Pages 使用 v0.2.0 索引生成器。完整 v2 索引供新版 oo 和网站使用，v1 索引只包含
+`schema_version: 1` 的包，包含最新 oheco 版本。oheco 自举包持续使用 v1 / tar.gz，
+旧版客户端通过 `oo update && oo install oheco` 升级后，再次执行 `oo update` 获取 SDK。
+
+native 的原始 ZIP 包含 8 对仅大小写不同且内容不同的头文件。oo 解压默认保留全小写
+文件名对应的原始内容，舍弃对应的大写变体，不受 ZIP 条目顺序影响，以兼容鸿蒙主目录
+文件系统。需要大写变体中定义的代码仍需另行适配；Release ZIP 及校验值保持不变。
+该规则由客户端统一实现，描述文件无需添加排除列表。

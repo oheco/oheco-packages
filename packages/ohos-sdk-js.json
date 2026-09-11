@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "name": "ohos-sdk-js",
+  "description": "OpenHarmony JavaScript 开发资源",
+  "upstream": "https://gitee.com/openharmony",
+  "repository": "https://github.com/oheco/ohos-sdk",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "Multiple (see NOTICE.txt)",
+  "notes": "当前作为开发资源包安装。内置编译工具的宿主执行尚未验证通过，暂不创建命令链接；完整应用构建还需要相应运行环境。",
+  "latest": {
+    "ohos-arm64": "26.0.0.35-Beta"
+  },
+  "versions": [
+    {
+      "version": "26.0.0.35-Beta",
+      "upstream_version": "26.0.0.35",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/ohos-sdk/releases/download/26.0.0.35-Beta/js-ohos-arm64-26.0.0.35-Beta.zip",
+          "sha256": "c84345c0269c2546e0eb4968de7349a80b9d70a16f20f6420e307806448e875e",
+          "size": 46983379,
+          "format": "zip",
+          "strip_components": 1,
+          "binaries": {}
+        }
+      }
+    }
+  ]
+}

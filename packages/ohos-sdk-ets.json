@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "name": "ohos-sdk-ets",
+  "description": "OpenHarmony ETS/ArkTS 开发资源",
+  "upstream": "https://gitee.com/openharmony",
+  "repository": "https://github.com/oheco/ohos-sdk",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "Multiple (see NOTICE.txt)",
+  "notes": "当前作为开发资源包安装。内置编译工具的宿主执行尚未验证通过，暂不创建命令链接；完整应用构建还需要相应运行环境。",
+  "latest": {
+    "ohos-arm64": "26.0.0.35-Beta"
+  },
+  "versions": [
+    {
+      "version": "26.0.0.35-Beta",
+      "upstream_version": "26.0.0.35",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/ohos-sdk/releases/download/26.0.0.35-Beta/ets-ohos-arm64-26.0.0.35-Beta.zip",
+          "sha256": "e30cc26a9d1a9884bed3ae52b1551efae9c1f5752ceadc27bf3c71d953ebff5f",
+          "size": 38557280,
+          "format": "zip",
+          "strip_components": 1,
+          "binaries": {}
+        }
+      }
+    }
+  ]
+}
