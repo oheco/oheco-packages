@@ -1,9 +1,10 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。首批收录 `oheco` 和 `go`，
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。当前收录 `oheco`，
 目标平台为 `ohos-arm64`。软件包本身发布到对应适配仓库的 GitHub Releases。
 
-`oheco` 和 `go` 的移植维护者均为 [Guo Wei (@kdada)](https://github.com/kdada)。
+移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
+Go 的鸿蒙适配尚未完成，暂时从索引中移除；已安装的版本仍可在本地管理。
 
 ## 文件
 
@@ -22,7 +23,7 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。首批收录 `o
 
 版本包含 `version`、可选 `upstream_version` 和按平台映射的 `artifacts`。
 同一个 `(包名, 版本, 平台)` 对应不可变产物，适配修订请分配新版本，例如
-`1.27.1-ohos.1`，并保留 `upstream_version: "1.27.1"`。
+`1.0.0-ohos.1`，并保留 `upstream_version: "1.0.0"`。
 
 每个产物包含以下必填字段：
 
@@ -40,13 +41,13 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。首批收录 `o
 软件包内的可执行文件必须带执行权限；其他内容可包含 `lib/`、`share/`、源码、许可证等。
 第一版不执行安装钩子，不自动求解跨包依赖；随包依赖应使用可重定位的目录布局。
 
-例如 Go 的压缩包根目录是 `go/`，因此 `strip_components: 1`，
-`binaries` 为 `{"go":"bin/go","gofmt":"bin/gofmt"}`。
+例如压缩包带有 `example/` 根目录时，使用 `strip_components: 1`，
+`binaries` 可为 `{"example":"bin/example"}`。
 oheco 自举包固定使用 `strip_components: 0` 和 `{"oo":"bin/oo"}`。
 
 校验器除结构校验外，还验证版本唯一性、latest 引用、平台、URL、命令全局归属和
 二进制路径。安装端再次执行同样的语义校验。不同包在同一平台不能提供同名命令。
-Go 的上游 BSD 许可证及随包第三方许可保留在发行包中。
+软件包的上游许可证及随包第三方许可应保留在发行包中。
 
 ## 本地生成
 
@@ -84,11 +85,9 @@ public/
 
 1. 在 `oheco/oheco` 发布 `v0.1.0`，上传已签名的 `oheco-0.1.0-ohos-arm64.tar.gz`
    及其 `.sha256`。该标签也为索引生成器提供可复现版本。
-2. 准备 `oheco/go` 适配源码仓库并发布 `v1.27.1`，上传
-   `go1.27.1.ohos-arm64.tar.gz` 及其 `.sha256`。
-3. 确认包描述中的移植负责人、项目地址、大小及哈希与发行文件一致。
-4. 在 `oheco-packages` 的 Settings → Pages 中选择 GitHub Actions。
-5. 推送包描述；工作流验证下载后部署。首次尚未上传 Release 时，远端产物校验失败是预期结果。
+2. 确认包描述中的移植负责人、项目地址、大小及哈希与发行文件一致。
+3. 在 `oheco-packages` 的 Settings → Pages 中选择 GitHub Actions。
+4. 推送包描述；工作流验证下载后部署。首次尚未上传 Release 时，远端产物校验失败是预期结果。
 
 正式地址为 `https://oheco.github.io/oheco-packages/`。本地生成成功不代表 GitHub 已发布。
 新增版本先发布并验证二进制，再提交索引；已发布版本的下载地址和产物不得被原地替换。
