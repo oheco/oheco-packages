@@ -1,10 +1,9 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.2.0` 及 5 个 `ohos-sdk-*` 组件，
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.2.0`、`go 1.27.1-ohos.1` 及 5 个 `ohos-sdk-*` 组件，
 目标平台为 `ohos-arm64`。软件包本身发布到对应适配仓库的 GitHub Releases。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
-Go 的鸿蒙适配尚未完成，暂时从索引中移除；已安装的版本仍可在本地管理。
 
 ## 文件
 
@@ -97,6 +96,31 @@ public/
 
 正式地址为 `https://oheco.github.io/oheco-packages/`。本地生成成功不代表 GitHub 已发布。
 新增版本先发布并验证二进制，再提交索引；已发布版本的下载地址和产物不得被原地替换。
+
+## Go 原生工具链
+
+`go` 收录 [Go 1.27.1 的 OHOS ARM64 适配发行版](https://github.com/oheco/go/releases/tag/go1.27.1-ohos.1)，
+包版本为 `1.27.1-ohos.1`，对应上游版本 `1.27.1`。`go version` 显示
+`go1.27.1 ohos/arm64`。旧的 `1.27.1` 包已撤下，新适配版使用独立版本号和发行地址。
+
+```sh
+oo update
+oo install go
+go version
+```
+
+也可指定 `oo install go@1.27.1-ohos.1`。归档中的工具已签名，包内根目录为 `go/`，
+安装时使用 `strip_components: 1`，提供 `go` 和 `gofmt` 命令，并保留完整工具链布局。
+使用 v1 包规范，兼容现有客户端。
+
+构建需要 PATH 中的 `binary-sign-tool`（可通过 `oo install ohos-sdk-toolchains` 安装）；
+cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk-native`）。
+将 `TMPDIR` 指向当前应用的私有可写目录；如配置过旧工具链的 `GOROOT`，先执行
+`unset GOROOT`，让 Go 自动定位安装目录。客户端不会自动安装这些依赖。
+
+已验证原生构建、运行、测试、cgo 等功能。完整支持范围和宿主限制见
+[适配说明](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/README.md)及
+[验证记录](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/VALIDATION.md)。
 
 ## OpenHarmony SDK
 

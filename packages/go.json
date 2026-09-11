@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "name": "go",
+  "description": "Go 编程语言和鸿蒙原生工具链，支持构建、运行、测试 Go 程序及 cgo",
+  "upstream": "https://github.com/golang/go",
+  "repository": "https://github.com/oheco/go",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "BSD-3-Clause",
+  "notes": "构建需要 PATH 中的 binary-sign-tool；cgo 另需 OHOS LLVM/SDK。TMPDIR 应指向当前应用的私有可写目录；如配置过旧工具链的 GOROOT，请先取消。支持范围与宿主限制见适配项目说明。",
+  "latest": {
+    "ohos-arm64": "1.27.1-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "1.27.1-ohos.1",
+      "upstream_version": "1.27.1",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/go/releases/download/go1.27.1-ohos.1/go1.27.1.ohos-arm64.tar.gz",
+          "sha256": "0f1402f2690c3bcb508dd1d6b977b34f5d0ea198d1cd8837a4d33771ae549b5b",
+          "size": 66446390,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "go": "bin/go",
+            "gofmt": "bin/gofmt"
+          }
+        }
+      }
+    }
+  ]
+}
