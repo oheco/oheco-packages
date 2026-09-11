@@ -11,7 +11,7 @@
     }
   ],
   "license": "Multiple (see NOTICE.txt)",
-  "notes": "LLVM 15.0.4；CMake/CTest/CPack 3.28.2；Ninja 1.13.2。编译鸿蒙程序可使用 aarch64-unknown-linux-ohos-clang/clang++，它们自动指定随包 sysroot；CMake 工具链文件为 build/cmake/ohos.toolchain.cmake。编译产物签名需另装 ohos-sdk-toolchains。sysroot 中 8 对仅大小写不同的 netfilter 头文件默认保留小写版本，需要大写变体中定义的代码需另行适配。当前不支持 LLDB，不创建相关命令链接。",
+  "notes": "编译生成的二进制需使用 ohos-sdk-toolchains 包中的 binary-sign-tool 进行签名，否则运行时会出现 permission denied。",
   "latest": {
     "ohos-arm64": "26.0.0.35-Beta"
   },

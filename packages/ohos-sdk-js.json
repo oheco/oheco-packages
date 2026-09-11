@@ -11,7 +11,6 @@
     }
   ],
   "license": "Multiple (see NOTICE.txt)",
-  "notes": "当前作为开发资源包安装。内置编译工具的宿主执行尚未验证通过，暂不创建命令链接；完整应用构建还需要相应运行环境。",
   "latest": {
     "ohos-arm64": "26.0.0.35-Beta"
   },

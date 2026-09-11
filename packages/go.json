@@ -11,7 +11,7 @@
     }
   ],
   "license": "BSD-3-Clause",
-  "notes": "构建需要 PATH 中的 binary-sign-tool；cgo 另需 OHOS LLVM/SDK。TMPDIR 应指向当前应用的私有可写目录；如配置过旧工具链的 GOROOT，请先取消。支持范围与宿主限制见适配项目说明。",
+  "notes": "编译生成的二进制需使用 ohos-sdk-toolchains 包中的 binary-sign-tool 进行签名，否则运行时会出现 permission denied。",
   "latest": {
     "ohos-arm64": "1.27.1-ohos.1"
   },

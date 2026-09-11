@@ -1,7 +1,8 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录包含 `oheco 0.3.1`、`go 1.27.1-ohos.1` 及 5 个 `ohos-sdk-*` 组件，
-目标平台为 `ohos-arm64`。软件包本身发布到对应适配仓库的 GitHub Releases。
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链及
+5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
+[软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
 
@@ -42,7 +43,7 @@ SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
 ZIP 额外验证 CRC，拒绝加密条目；保留目录 `.oo-launchers/` 仅由客户端生成启动器。
 软件包内的可执行文件必须带执行权限；其他内容可包含 `lib/`、`share/`、源码、许可证等。
-第一版不执行安装钩子，不自动求解跨包依赖；随包依赖应使用可重定位的目录布局。
+`oo` 不执行包内安装脚本，也不自动解析或安装跨包依赖；随包依赖应使用可重定位的目录布局。
 
 例如压缩包带有 `example/` 根目录时，使用 `strip_components: 1`，
 `binaries` 可为 `{"example":"bin/example"}`。
@@ -86,22 +87,30 @@ public/
 页面和客户端读取同一份索引。安装脚本由 oheco 模板和该包当前平台的 latest 产物生成，
 内嵌固定版本、URL、SHA-256 和包描述，避免脚本与索引漂移。
 
-## 发布顺序
+## 发布流程
 
-1. 在 `oheco/oheco` 发布 `v0.3.1`，上传已签名的 `oheco-0.3.1-ohos-arm64.tar.gz`
-   及其 `.sha256`。Pages 索引生成器继续固定为兼容的 `v0.2.0`。
-2. 确认包描述中的移植负责人、项目地址、大小及哈希与发行文件一致。
-3. 在 `oheco-packages` 的 Settings → Pages 中选择 GitHub Actions。
-4. 推送包描述；工作流验证下载后部署。首次尚未上传 Release 时，远端产物校验失败是预期结果。
+1. 在软件对应的适配仓库创建新版本的 GitHub Release，上传完成验证及所需签名的发行包
+   和校验文件。
+2. 新增或更新 `packages/<name>.json`，确认维护者、项目地址、版本、平台、下载地址、
+   文件大小和 SHA-256 与已发布产物一致，并设置对应平台的 `latest`。
+3. 执行 `sh scripts/build.sh --verify-artifacts`，确认包描述和实际下载产物通过校验。
+4. 将包描述提交到 `main`（通过 PR 时先完成检查和合并）。工作流重新校验已发布产物后
+   部署；产物校验失败时不部署，PR 检查本身也不部署。
+5. 确认 Pages 工作流部署成功，并在[软件下载站](https://oheco.github.io/oheco-packages/)
+   核对版本、下载链接和安装命令。
 
-正式地址为 `https://oheco.github.io/oheco-packages/`。本地生成成功不代表 GitHub 已发布。
-新增版本先发布并验证二进制，再提交索引；已发布版本的下载地址和产物不得被原地替换。
+已发布版本的下载地址和产物不得被原地替换；适配修订应分配新版本。
+
+### Pages 一次性配置
+
+本仓库已使用 GitHub Actions 部署 Pages。新建同类仓库时，在 Settings → Pages 中将
+Source 设为 GitHub Actions；后续发布由工作流完成，无需重复设置。
 
 ## Go 原生工具链
 
 `go` 收录 [Go 1.27.1 的 OHOS ARM64 适配发行版](https://github.com/oheco/go/releases/tag/go1.27.1-ohos.1)，
 包版本为 `1.27.1-ohos.1`，对应上游版本 `1.27.1`。`go version` 显示
-`go1.27.1 ohos/arm64`。旧的 `1.27.1` 包已撤下，新适配版使用独立版本号和发行地址。
+`go1.27.1 ohos/arm64`。安装和版本切换使用包版本 `1.27.1-ohos.1`。
 
 ```sh
 oo update
@@ -130,7 +139,7 @@ cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk
 
 - `native`：LLVM 15.0.4、sysroot、CMake/CTest/CPack 3.28.2、Ninja 1.13.2。
 - `toolchains`：`lib/binary-sign-tool`、`lib/hap-sign-tool`、`lib/ohos_packing_tool` 和目录根部的工具。
-- `ets` / `js`：暂按资源包安装，内置工具尚未验证在主目录中可执行，不创建命令链接。
+- `ets` / `js`：作为开发资源包提供，不创建编译器命令链接；完整应用构建需另行配置相应运行环境。
 - `previewer`：当前只有元数据和 NOTICE，`binaries: {}`，不提供预览器程序。
 
 各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。

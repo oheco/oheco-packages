@@ -11,7 +11,6 @@
     }
   ],
   "license": "Multiple (see NOTICE.txt)",
-  "notes": "binary-sign-tool 位于 lib/binary-sign-tool，用于原生 ELF 签名；hap-sign-tool 用于 HAP 签名。随包资源和第三方许可完整保留。",
   "latest": {
     "ohos-arm64": "26.0.0.35-Beta"
   },

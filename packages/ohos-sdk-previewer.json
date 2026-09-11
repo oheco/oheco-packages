@@ -11,7 +11,6 @@
     }
   ],
   "license": "Multiple (see NOTICE.txt)",
-  "notes": "本 Release 的压缩包只有 oh-uni-package.json 和 NOTICE.txt，无可执行程序，不创建命令链接。",
   "latest": {
     "ohos-arm64": "26.0.0.35-Beta"
   },
