@@ -11,7 +11,7 @@
     }
   ],
   "license": "GPL-2.0-only (with compatible bundled licenses)",
-  "notes": "支持 merge、rebase、stash 和本地、SSH、HTTP/HTTPS clone/push/fetch/pull。HTTPS 静态集成 libcurl 与 Mbed TLS，默认校验系统 CA 和主机名；SSH 使用系统 ssh。本地克隆请使用 --no-hardlinks。共享目录若提示 dubious ownership，请确认路径后仅信任具体仓库。",
+  "notes": "支持 merge、rebase、stash 和本地、SSH、HTTP/HTTPS clone/push/fetch/pull。HTTPS 静态集成 libcurl 与 Mbed TLS，默认校验系统 CA 和主机名；SSH 使用系统 ssh。本地克隆请使用 --no-hardlinks。共享目录若提示 dubious ownership，请确认路径后仅信任具体仓库。 交互分页请另行执行 oo install less；oo 不自动安装跨包依赖。命令简短帮助使用 git <command> -h，本版未打包完整帮助文档。",
   "latest": {
     "ohos-arm64": "2.55.0-ohos.2"
   },
