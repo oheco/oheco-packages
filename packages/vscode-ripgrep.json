@@ -1,0 +1,61 @@
+{
+  "schema_version": 3,
+  "name": "vscode-ripgrep",
+  "package_manager": "npm",
+  "package_name": "@vscode/ripgrep",
+  "description": "Node.js ripgrep 包装层，自动加载鸿蒙 ARM64 平台命令包",
+  "upstream": "https://github.com/microsoft/vscode-ripgrep",
+  "repository": "https://github.com/oheco/vscode-ripgrep",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "latest": {
+    "ohos-arm64": "1.18.0-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "1.18.0-ohos.1",
+      "upstream_version": "1.18.0",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/vscode-ripgrep/releases/download/v1.18.0-ohos.1/vscode-ripgrep-1.18.0-ohos.1.tgz",
+        "sha256": "330b598d19ee95383cd55edf1c3714ef7780d421d7517e4704e406e7f9430945",
+        "size": 3201,
+        "filename": "vscode-ripgrep-1.18.0-ohos.1.tgz",
+        "package_json": {
+          "name": "@vscode/ripgrep",
+          "version": "1.18.0-ohos.1",
+          "description": "A module for using ripgrep in a Node project",
+          "type": "module",
+          "main": "./lib/index.js",
+          "types": "./lib/index.d.ts",
+          "exports": {
+            ".": {
+              "types": "./lib/index.d.ts",
+              "default": "./lib/index.js"
+            }
+          },
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/vscode-ripgrep"
+          },
+          "author": "Rob Lourens",
+          "license": "MIT",
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "dependencies": {
+            "@vscode/ripgrep-openharmony-arm64": "1.18.0-ohos.1"
+          }
+        }
+      }
+    }
+  ],
+  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
+}
