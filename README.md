@@ -412,20 +412,8 @@ v4 在每个版本中增加可选的 `projects`，与 `artifacts` 并列。项�
 值描述不可变项目归档，供 `oo export` 下载、校验和解压。原生版本允许只提供项目，
 或同时提供安装产物和项目；pip/npm 版本也可额外提供项目。
 
-```json
-"projects": {
-  "editor": {
-    "description": "ArkTS/C++ DevEco 项目，包含预编译引擎和运行资源",
-    "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.1/GodotEditor-4.7.2-ohos.1-project.zip",
-    "sha256": "0723d5096ba02959bd098d823a39d430ca2f2ba9b9910935ef9606a2ff560bca",
-    "size": 682872170,
-    "format": "zip",
-    "strip_components": 1
-  }
-}
-```
-
-`description` 可选，其余字段必填。项目名使用字母/数字开头，允许字母、数字、点、
+项目描述包含 `url`、`sha256`、`size`、`format`、`strip_components` 和可选的
+`description`，字段含义与安装归档一致。项目名使用字母/数字开头，允许字母、数字、点、
 下划线、加号和连字符，最多 128 字符；不声明 `binaries` 或 `launchers`。
 支持 `zip` 和 `tar.gz`，大小、摘要、解压层级和路径限制沿用安装归档规则；
 项目中的大小写冲突直接拒绝，保留源码完整性。`--verify-artifacts` 会实际下载项目，
@@ -433,20 +421,17 @@ v4 在每个版本中增加可选的 `projects`，与 `artifacts` 并列。项�
 
 `latest` 继续按目标平台填写版本；只含项目的版本也可被引用。`oo export` 默认取
 当前平台的 latest；其他宿主在各平台 latest 一致时也可导出，存在歧义时指定版本。
-只有一个项目可省略项目名，多项目需要指定：
+只有一个项目可省略项目名，多项目需要指定。以下以 `example-project` 为示例包名，
+使用时替换为目录中实际收录的包及版本：
 
 ```sh
-oo export godot-editor --output ./GodotEditor
-oo export godot-editor@4.7.2-ohos.1 editor --output './Godot Editor'
+oo export example-project --output ./ExampleProject
+oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 ```
 
 输出目录默认当前目录，现有同名顶层文件/目录会导致导出失败，不覆盖或合并。
 项目导出后由用户在 DevEco 中构建、签名和安装，不计入 `oo list` 或 `oo remove`。
 归档必须保留许可证，包含构建所需资源，并排除个人账号、签名证书和本机 SDK 路径。
-
-[godot-editor](packages/godot-editor.json) 是首个项目包，包含原生 Godot、GodotSharp、
-.NET SDK 和 ArkTS/C++ 外壳。目前为实验版，HAP 沙箱内的 .NET 和 GUI 验收仍待完成，
-不能将导出成功等同于编辑器已完成应用验收。
 
 发布时使用 `schema_version: 4`。网站和新版客户端读取 v4；v1–v3 索引仅保留各自
 能够读取的包描述，旧客户端可通过持续保持 v1 的 oheco 自举包升级至 0.6.0。
