@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "name": "aspnetcore-runtime",
+  "description": "ASP.NET Core 10 LTS 鸿蒙 ARM64 运行包，内含 .NET Runtime，支持 Kestrel、MVC/Razor、SignalR 和 gRPC",
+  "upstream": "https://github.com/dotnet/aspnetcore",
+  "repository": "https://github.com/oheco/dotnet-aspnetcore",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "notes": "ASP.NET Core 10.0.12 与 .NET Runtime 10.0.12 一起提供，无需额外安装 dotnet-runtime。入口为 aspnetcore-runtime；开发、构建和发布应用可安装 dotnet-sdk。已在 HarmonyOS PC ARM64 API 26 / 7.0.0.105 验证 HTTP/1.1、HTTPS/HTTP2、WebSocket、MVC/编译 Razor、Razor Pages、SignalR、gRPC、上传临时文件及 Data Protection 持久化。包内已有签名及 ICU、OpenSSL 和 C++ 运行库；支持含空格的迁移路径。DOTNET_OHOS_TMPDIR 可配置应用私有临时目录，应用数据、日志及密钥目录需可写。HTTP/3 所需 MsQuic 未随包提供；IIS/HTTP.sys 属于 Windows 功能，Kerberos/GSSAPI 未启用，手机沙箱未验证。目标 RID 为 openharmony-arm64，带其他平台原生二进制的 NuGet 依赖需要单独适配。",
+  "latest": {
+    "ohos-arm64": "10.0.12-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "10.0.12-ohos.1",
+      "upstream_version": "10.0.12",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/dotnet-aspnetcore/releases/download/v10.0.12-ohos.1/aspnetcore-runtime-10.0.12-ohos.1-arm64.tar.gz",
+          "sha256": "726e05988bfbc8599e3e51edc89b1ced8c5646d8e2b056390e82db968ae0ebba",
+          "size": 61920169,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "aspnetcore-runtime": "bin/aspnetcore-runtime"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -295,12 +295,14 @@ npm 下载、npx、隔离全局安装/卸载、离线签名 N-API 扩展及运�
 完整对应源码随 Release 提供，详见[构建与使用说明](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/README.md)
 及[验证记录](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/VALIDATION.md)。
 
-## .NET 10 LTS 运行时和 SDK
+## .NET 10 LTS Runtime、ASP.NET Core 和 SDK
 
-`dotnet-sdk` 提供 SDK **10.0.401-ohos.1**，内含 Runtime **10.0.12**，
-支持鸿蒙本机 C# 构建、CoreCLR JIT、ReadyToRun 和 NativeAOT。
-仅运行托管程序时可安装独立的 `dotnet-runtime` **10.0.12-ohos.1**，
-使用 `dotnet-runtime application.dll`。SDK 使用 `dotnet` 命令，两个包可以同时安装。
+`dotnet-sdk` **10.0.401-ohos.2** 内含 .NET Runtime 与 ASP.NET Core **10.0.12**，
+支持鸿蒙本机 C# 构建、CoreCLR JIT、ReadyToRun 和 NativeAOT，以及 Web 模板、
+MVC/Razor、Razor Pages、Blazor 服务端、SignalR 和托管 gRPC。
+仅运行 Web 应用可安装 `aspnetcore-runtime` **10.0.12-ohos.1**，使用
+`aspnetcore-runtime application.dll`；仅运行普通托管应用可用 `dotnet-runtime`
+**10.0.12-ohos.1**。各包包含自身所需运行时，可独立安装。
 
 ```sh
 oo update
@@ -308,28 +310,31 @@ oo install ohos-sdk-toolchains
 oo install ohos-sdk-native
 oo install dotnet-sdk
 dotnet --info
-dotnet new console -o hello
-cd hello
-dotnet run
-dotnet publish -c Release -r openharmony-arm64 -p:PublishAot=true -o out-aot
-./out-aot/hello
+dotnet new web -o hello-web
+cd hello-web
+dotnet run --urls http://127.0.0.1:5080
 ```
 
 构建需 PATH 中的 `binary-sign-tool`，NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
-和 llvm-objcopy；客户端不自动安装跨包依赖。SDK 已包含运行时，无需另装
-`dotnet-runtime`。包内原生工具已签名，构建/发布的本机文件自动签名；发布时保留
-同目录的 ICU、OpenSSL 和 C++ 运行库。NativeAOT 默认使用未压缩的调试符号。
+和 llvm-objcopy；客户端不自动安装跨包依赖。SDK 无需另装运行包。原生工具已签名，
+构建/发布的本机文件自动签名，发布时保留 ICU、OpenSSL 和 C++ 运行库。
+NativeAOT 保留上游限制；Web AOT 适用于支持裁剪的 Minimal API，可使用
+`dotnet new webapiaot`，以 `dotnet publish -c Release -r openharmony-arm64` 发布。
+MVC/Razor 和 Blazor 服务端使用 CoreCLR。
 
-目标 RID 为 `openharmony-arm64`，验收环境为 HarmonyOS PC ARM64 API 26、
-7.0.0.105、内核 1.13。入口使用当前终端应用的私有临时目录，其他终端可设置
-`DOTNET_OHOS_TMPDIR`。支持含空格路径及 `dotnet@10.0.401-ohos.1`、
-`dotnet-runtime@10.0.12-ohos.1` 版本入口。NuGet 支持标准 HTTP/HTTPS 代理变量。
+验收环境为 HarmonyOS PC ARM64 API 26、7.0.0.105、内核 1.13。支持含空格路径、
+`dotnet@10.0.401-ohos.2` 与 `aspnetcore-runtime@10.0.12-ohos.1` 版本入口。
+入口使用当前终端应用的私有临时目录，可通过 `DOTNET_OHOS_TMPDIR` 配置。
+服务的内容、上传、日志和 Data Protection 密钥目录需要可写；部署 HTTPS 时使用
+自己的证书。NuGet 支持标准 HTTP/HTTPS 代理变量。
 
-GUI、workloads、ASP.NET Core 和移动应用打包不在范围内；Kerberos/GSSAPI 未启用。
-NativeAOT 保留上游对动态代码、反射和 Unix 命名互斥量的限制。
-通用 Linux 原生 NuGet 依赖需要鸿蒙适配；其他架构、系统版本和手机沙箱未验证。
-发行说明和验证记录见 [Runtime Release](https://github.com/oheco/dotnet-runtime/releases/tag/v10.0.12-ohos.1)
-及 [SDK Release](https://github.com/oheco/dotnet-sdk/releases/tag/v10.0.401-ohos.1)。
+HTTP/3 所需 MsQuic 未随包提供；IIS/HTTP.sys 属于 Windows 功能。
+GUI、workloads、移动应用打包、原生 Grpc.Tools/protoc 及系统开发证书信任未验证，
+Kerberos/GSSAPI 未启用。通用 Linux 原生 NuGet 依赖需要鸿蒙适配，手机沙箱未验证。
+旧 SDK **10.0.401-ohos.1** 保留下载，该版本不含 ASP.NET Core。
+详情见 [Runtime Release](https://github.com/oheco/dotnet-runtime/releases/tag/v10.0.12-ohos.1)、
+[ASP.NET Core Release](https://github.com/oheco/dotnet-aspnetcore/releases/tag/v10.0.12-ohos.1)
+和 [SDK Release](https://github.com/oheco/dotnet-sdk/releases/tag/v10.0.401-ohos.2)。
 
 ## OpenHarmony SDK
 

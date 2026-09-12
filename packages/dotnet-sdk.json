@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "dotnet-sdk",
-  "description": ".NET 10 LTS 鸿蒙 ARM64 原生 SDK，支持 C# 构建、JIT、ReadyToRun 和 NativeAOT",
+  "description": ".NET 10 LTS 鸿蒙 ARM64 原生 SDK，内含 ASP.NET Core，支持 C# 构建、JIT、ReadyToRun 和 NativeAOT",
   "upstream": "https://github.com/dotnet/sdk",
   "repository": "https://github.com/oheco/dotnet-sdk",
   "maintainers": [
@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "SDK 10.0.401 内含 Runtime 10.0.12，无需额外安装 dotnet-runtime。构建需 PATH 中的 binary-sign-tool（ohos-sdk-toolchains）；NativeAOT 另需鸿蒙 LLVM 的 Clang、LLD、llvm-objcopy（ohos-sdk-native）。oo 不自动安装这些依赖。原生工具已签名，构建/发布的本机文件自动签名，发布目录保留 ICU、OpenSSL 和 C++ 运行库。NativeAOT 调试符号默认不压缩。入口使用应用私有临时目录，可用 DOTNET_OHOS_TMPDIR 配置；NuGet 支持标准 HTTP_PROXY/HTTPS_PROXY。已在 HarmonyOS PC ARM64 API 26 / 7.0.0.105 验证原生构建、增量及并行构建、JIT/R2R/AOT 和真实 NuGet 还原。目标 RID 为 openharmony-arm64，通用 Linux 原生 NuGet 依赖需要适配。GUI、workloads 和 ASP.NET Core 不在范围内；Kerberos/GSSAPI 未启用，手机沙箱未验证。",
+  "notes": "SDK 10.0.401-ohos.2 内含 .NET Runtime 与 ASP.NET Core 10.0.12，无需额外安装运行包；旧 ohos.1 不含 ASP.NET Core。支持 Web 模板、MVC/Razor、Razor Pages、Blazor 服务端、SignalR 和托管 gRPC。构建需 PATH 中的 binary-sign-tool（ohos-sdk-toolchains）；NativeAOT 另需鸿蒙 LLVM 的 Clang、LLD、llvm-objcopy（ohos-sdk-native）。oo 不自动安装这些依赖。原生工具已签名，构建/发布的本机文件自动签名，发布目录保留 ICU、OpenSSL 和 C++ 运行库。入口使用应用私有临时目录，可用 DOTNET_OHOS_TMPDIR 配置；NuGet 支持 HTTP_PROXY/HTTPS_PROXY。已在 HarmonyOS PC ARM64 API 26 / 7.0.0.105 验证原生构建、JIT/R2R/AOT、Web 协议及模板；支持含空格路径。Web NativeAOT 遵循上游 Minimal API 限制，MVC/Razor 和 Blazor 服务端使用 CoreCLR。HTTP/3 所需 MsQuic 未随包提供；IIS/HTTP.sys 属于 Windows 功能。GUI、workloads、原生 Grpc.Tools/protoc 和系统开发证书信任未验证；Kerberos/GSSAPI 未启用，手机沙箱未验证。目标 RID 为 openharmony-arm64，其他平台的原生 NuGet 依赖需要适配。",
   "latest": {
-    "ohos-arm64": "10.0.401-ohos.1"
+    "ohos-arm64": "10.0.401-ohos.2"
   },
   "versions": [
     {
@@ -24,6 +24,22 @@
           "url": "https://github.com/oheco/dotnet-sdk/releases/download/v10.0.401-ohos.1/dotnet-sdk-10.0.401-ohos.1-arm64.tar.gz",
           "sha256": "f66f292f389e6cfb109fd60de0cf44caf535ac8e9cc9c16044524cfba8ecedaf",
           "size": 338145713,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "dotnet": "bin/dotnet"
+          }
+        }
+      }
+    },
+    {
+      "version": "10.0.401-ohos.2",
+      "upstream_version": "10.0.401",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/dotnet-sdk/releases/download/v10.0.401-ohos.2/dotnet-sdk-10.0.401-ohos.2-arm64.tar.gz",
+          "sha256": "b6f981de19f1b1430bb8d77dce8fb90f02a011541ed7d9d21cec85ec81869165",
+          "size": 350000115,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
