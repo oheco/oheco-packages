@@ -14,9 +14,35 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "1.18.0-ohos.1"
+    "ohos-arm64": "1.18.0-ohos.2"
   },
   "versions": [
+    {
+      "version": "1.18.0-ohos.2",
+      "upstream_version": "1.18.0",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/vscode-ripgrep/releases/download/v1.18.0-ohos.2/vscode-ripgrep-openharmony-arm64-1.18.0-ohos.2.tgz",
+        "sha256": "38ff840887bdb7d6633243a66d5a4786ba7e809406622ae62f170bbdfa289edc",
+        "size": 9454419,
+        "filename": "vscode-ripgrep-openharmony-arm64-1.18.0-ohos.2.tgz",
+        "package_json": {
+          "name": "@vscode/ripgrep-openharmony-arm64",
+          "version": "1.18.0-ohos.2",
+          "description": "Signed HarmonyOS ARM64 ripgrep 15.0.0 with PCRE2 10.45 for @vscode/ripgrep",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/vscode-ripgrep"
+          },
+          "license": "MIT",
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ]
+        }
+      }
+    },
     {
       "version": "1.18.0-ohos.1",
       "upstream_version": "1.18.0",

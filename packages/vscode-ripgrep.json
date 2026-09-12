@@ -14,9 +14,48 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "1.18.0-ohos.1"
+    "ohos-arm64": "1.18.0-ohos.2"
   },
   "versions": [
+    {
+      "version": "1.18.0-ohos.2",
+      "upstream_version": "1.18.0",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/vscode-ripgrep/releases/download/v1.18.0-ohos.2/vscode-ripgrep-1.18.0-ohos.2.tgz",
+        "sha256": "1c4f95ff79195e148cf77bac6f88bf7523a39a74d6015acf415f109ab80b9329",
+        "size": 3210,
+        "filename": "vscode-ripgrep-1.18.0-ohos.2.tgz",
+        "package_json": {
+          "name": "@vscode/ripgrep",
+          "version": "1.18.0-ohos.2",
+          "description": "A module for using ripgrep in a Node project",
+          "type": "module",
+          "main": "./lib/index.js",
+          "types": "./lib/index.d.ts",
+          "exports": {
+            ".": {
+              "types": "./lib/index.d.ts",
+              "default": "./lib/index.js"
+            }
+          },
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/vscode-ripgrep"
+          },
+          "author": "Rob Lourens",
+          "license": "MIT",
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "dependencies": {
+            "@vscode/ripgrep-openharmony-arm64": "1.18.0-ohos.2"
+          }
+        }
+      }
+    },
     {
       "version": "1.18.0-ohos.1",
       "upstream_version": "1.18.0",

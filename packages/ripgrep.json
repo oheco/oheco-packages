@@ -12,9 +12,28 @@
   ],
   "license": "MIT OR Unlicense",
   "latest": {
-    "ohos-arm64": "15.0.0-ohos.1"
+    "ohos-arm64": "15.0.0-ohos.2"
   },
   "versions": [
+    {
+      "version": "15.0.0-ohos.2",
+      "upstream_version": "15.0.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/ripgrep/releases/download/v15.0.0-ohos.2/ripgrep-15.0.0-ohos.2-ohos-arm64.tar.gz",
+          "sha256": "b19f18c41e396d3b194892861003ef34002504c02fbf1093063111d8faa3ac14",
+          "size": 9451961,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "rg": "bin/rg"
+          },
+          "launchers": [
+            "rg"
+          ]
+        }
+      }
+    },
     {
       "version": "15.0.0-ohos.1",
       "upstream_version": "15.0.0",
