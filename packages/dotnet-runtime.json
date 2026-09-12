@@ -1,0 +1,36 @@
+{
+  "schema_version": 2,
+  "name": "dotnet-runtime",
+  "description": ".NET 10 LTS 鸿蒙 ARM64 运行时，支持 CoreCLR JIT 和 ReadyToRun",
+  "upstream": "https://github.com/dotnet/runtime",
+  "repository": "https://github.com/oheco/dotnet-runtime",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "notes": "适用于 HarmonyOS PC ARM64，目标 RID 为 openharmony-arm64。命令为 dotnet-runtime；构建应用及 NativeAOT 发布请安装 dotnet-sdk（已包含运行时）。包内已有签名及 ICU、OpenSSL 和 C++ 运行库。入口自动选择当前终端应用的私有临时目录，其他终端可设置 DOTNET_OHOS_TMPDIR。已验证 API 26 / 7.0.0.105 和含空格的迁移路径；未覆盖其他架构与手机沙箱。GUI、workloads 和 ASP.NET Core 不在范围内，Kerberos/GSSAPI 未启用。",
+  "latest": {
+    "ohos-arm64": "10.0.12-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "10.0.12-ohos.1",
+      "upstream_version": "10.0.12",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/dotnet-runtime/releases/download/v10.0.12-ohos.1/dotnet-runtime-10.0.12-ohos.1-arm64.tar.gz",
+          "sha256": "8917be58e7bc8f5fb0b8d71d2d397c92b1de3798c34cfbfa3ecebde105e9758d",
+          "size": 50841479,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "dotnet-runtime": "bin/dotnet-runtime"
+          }
+        }
+      }
+    }
+  ]
+}

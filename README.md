@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Node.js、Git、tmux 及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Node.js、.NET、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -267,6 +267,42 @@ node -p "process.platform + '/' + process.arch"
 npm 下载、npx、隔离全局安装/卸载、离线签名 N-API 扩展及运行包迁移。
 完整对应源码随 Release 提供，详见[构建与使用说明](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/README.md)
 及[验证记录](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/VALIDATION.md)。
+
+## .NET 10 LTS 运行时和 SDK
+
+`dotnet-sdk` 提供 SDK **10.0.401-ohos.1**，内含 Runtime **10.0.12**，
+支持鸿蒙本机 C# 构建、CoreCLR JIT、ReadyToRun 和 NativeAOT。
+仅运行托管程序时可安装独立的 `dotnet-runtime` **10.0.12-ohos.1**，
+使用 `dotnet-runtime application.dll`。SDK 使用 `dotnet` 命令，两个包可以同时安装。
+
+```sh
+oo update
+oo install ohos-sdk-toolchains
+oo install ohos-sdk-native
+oo install dotnet-sdk
+dotnet --info
+dotnet new console -o hello
+cd hello
+dotnet run
+dotnet publish -c Release -r openharmony-arm64 -p:PublishAot=true -o out-aot
+./out-aot/hello
+```
+
+构建需 PATH 中的 `binary-sign-tool`，NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
+和 llvm-objcopy；客户端不自动安装跨包依赖。SDK 已包含运行时，无需另装
+`dotnet-runtime`。包内原生工具已签名，构建/发布的本机文件自动签名；发布时保留
+同目录的 ICU、OpenSSL 和 C++ 运行库。NativeAOT 默认使用未压缩的调试符号。
+
+目标 RID 为 `openharmony-arm64`，验收环境为 HarmonyOS PC ARM64 API 26、
+7.0.0.105、内核 1.13。入口使用当前终端应用的私有临时目录，其他终端可设置
+`DOTNET_OHOS_TMPDIR`。支持含空格路径及 `dotnet@10.0.401-ohos.1`、
+`dotnet-runtime@10.0.12-ohos.1` 版本入口。NuGet 支持标准 HTTP/HTTPS 代理变量。
+
+GUI、workloads、ASP.NET Core 和移动应用打包不在范围内；Kerberos/GSSAPI 未启用。
+NativeAOT 保留上游对动态代码、反射和 Unix 命名互斥量的限制。
+通用 Linux 原生 NuGet 依赖需要鸿蒙适配；其他架构、系统版本和手机沙箱未验证。
+发行说明和验证记录见 [Runtime Release](https://github.com/oheco/dotnet-runtime/releases/tag/v10.0.12-ohos.1)
+及 [SDK Release](https://github.com/oheco/dotnet-sdk/releases/tag/v10.0.401-ohos.1)。
 
 ## OpenHarmony SDK
 
