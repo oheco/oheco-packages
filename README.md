@@ -156,6 +156,34 @@ SSH 传输。完整支持范围见
 [适配说明](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/README.md)和
 [测试记录](https://github.com/oheco/git/blob/v2.55.0-ohos.2/contrib/harmony/VALIDATION.md)。
 
+## Git LFS 大文件管理
+
+`git-lfs` 收录 [Git LFS 3.8.0 的 OHOS ARM64 原生版](https://github.com/oheco/git-lfs/releases/tag/v3.8.0-ohos.1)，
+包版本为 `3.8.0-ohos.1`。这是独立的 `git-lfs` 程序，由 `git lfs` 调用。
+
+```sh
+oo update
+oo install git
+oo install git-lfs
+git lfs version
+# 在需要使用 LFS 的仓库中启用：
+git lfs install --local
+git lfs track '*.psd'
+```
+
+Git 必须另行安装并加入 PATH；`oo` 不会自动安装跨包依赖。通常先执行 `git lfs install`
+启用用户过滤器，再克隆已有 LFS 仓库；包安装本身不会改动 Git 配置和 hooks。
+程序静态集成 Go 网络/TLS 和依赖，无需运行时安装 Go、curl 或 OpenSSL。已签名，
+支持整体迁移及 `git-lfs@3.8.0-ohos.1 version`。内置 Git LFS 帮助可用
+`git lfs help track` 查看。
+
+已通过鸿蒙原生 Go 单元测试、clean/smudge/filter-process、HTTPS 认证上传下载、
+克隆自动还原、fsck、历史迁移，以及共享目录/含空格路径和本地复制回退验证。
+HTTPS 默认校验系统 CA，私有 CA 可用 `http.sslCAInfo` 配置。SSH 使用系统 `ssh`；
+真实 SSH/pure-SSH 和 Kerberos/NTLM 场景尚未验收。详见
+[适配说明](https://github.com/oheco/git-lfs/blob/ohos/3.8.0/README.ohos.md)及
+[验证记录](https://github.com/oheco/git-lfs/blob/ohos/3.8.0/ohos/VALIDATION.md)。
+
 ## tmux 终端复用器
 
 `tmux` 收录 [tmux 3.5a 的鸿蒙原生适配版](https://github.com/oheco/tmux/releases/tag/3.5a-ohos.1)，
