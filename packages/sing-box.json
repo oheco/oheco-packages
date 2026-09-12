@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "name": "sing-box",
+  "description": "通用代理平台，支持 mixed/HTTP/SOCKS5 入站的代理转发、DNS、TLS 出站与 Clash API",
+  "upstream": "https://github.com/SagerNet/sing-box",
+  "repository": "https://github.com/oheco/sing-box",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "GPL-3.0-or-later (with upstream name-usage restriction)",
+  "notes": "鸿蒙应用沙箱下 /dev/net 不可访问，无法创建 TUN 设备，因此 tun 入站、auto_route、auto_redirect 等 TUN 与透明代理能力不可用，需要系统级权限；mixed/HTTP/SOCKS5 代理入站不受影响。运行需要一个可写目录用于日志，共享目录不支持硬链接，建议使用应用私有可写路径。",
+  "latest": {
+    "ohos-arm64": "1.14.0-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "1.14.0-ohos.1",
+      "upstream_version": "1.14.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/sing-box/releases/download/v1.14.0-ohos.1/sing-box-1.14.0-ohos.1-ohos-arm64.tar.gz",
+          "sha256": "69b7ccac7461b57ed4161ef7caa1311ab35746812221cbe3d849668d250d17c8",
+          "size": 24727803,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "sing-box": "bin/sing-box"
+          },
+          "launchers": [
+            "sing-box"
+          ]
+        }
+      }
+    }
+  ]
+}
