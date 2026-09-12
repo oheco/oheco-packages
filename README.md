@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Node.js、.NET、Git、tmux 及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go/Rust 原生工具链、Python、Node.js、.NET、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -109,6 +109,31 @@ public/
 
 本仓库已使用 GitHub Actions 部署 Pages。新建同类仓库时，在 Settings → Pages 中将
 Source 设为 GitHub Actions；后续发布由工作流完成，无需重复设置。
+
+## Rust 官方 OHOS 工具链
+
+`rust` 收录 [Rust 1.98.1 官方 OHOS 宿主工具链适配包](https://github.com/oheco/rust/releases/tag/v1.98.1-ohos.1)，
+包版本为 `1.98.1-ohos.1`。包含 rustc、Cargo、rustfmt、Clippy、rust-analyzer 和 Rust 库源码。
+OpenSSL 在鸿蒙原生构建并随包提供；Rust/LLVM 复用官方 OHOS 组件，未在宿主从源码自举。
+
+```zsh
+oo update
+oo install python3
+oo install ohos-sdk-native
+oo install ohos-sdk-toolchains
+oo install rust
+cargo new hello --vcs none
+cd hello
+cargo run
+cargo test --all-targets
+```
+
+启动器需要 Python 3.11+ 和系统 zsh；编译需要 PATH 中的 SDK Clang、compiler-rt 和
+`binary-sign-tool`，这些外部依赖不会自动安装。链接后自动签名程序、构建脚本及过程宏；
+Cargo 使用系统 CA 验证 HTTPS。支持 `rustc@1.98.1-ohos.1` 和 `cargo@1.98.1-ohos.1` 等版本入口。
+官方组件不包含 rustdoc，因此不支持 `cargo doc` 和文档测试。
+已完成当前 HarmonyOS PC ARM64 宿主的原生编译、C 依赖、过程宏、测试、工具及迁移验收；
+详见[适配说明](https://github.com/oheco/rust/blob/ohos/1.98.1/ohos/README.md)和 Release 验证附件。
 
 ## Go 原生工具链
 

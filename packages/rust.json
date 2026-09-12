@@ -1,0 +1,51 @@
+{
+  "schema_version": 2,
+  "name": "rust",
+  "description": "Rust 1.98.1 官方 OHOS 宿主工具链，包含 Cargo、rustfmt、Clippy 和 rust-analyzer",
+  "upstream": "https://github.com/rust-lang/rust",
+  "repository": "https://github.com/oheco/rust",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT OR Apache-2.0 (with bundled third-party notices)",
+  "notes": "HarmonyOS PC ARM64 原生验收；复用官方 OHOS 工具链，OpenSSL 3.5.8 在宿主原生构建并随包提供。需先安装 python3、ohos-sdk-native、ohos-sdk-toolchains 并使 Clang 和 binary-sign-tool 位于 PATH；oo 不自动安装这些依赖。链接后自动签名可执行文件、构建脚本和过程宏，使用系统 CA 验证 Cargo HTTPS。官方组件未包含 rustdoc，故不支持 cargo doc 和文档测试；普通测试使用 cargo test --all-targets。未在鸿蒙从源码自举 Rust/LLVM，其他设备未验证。",
+  "latest": {
+    "ohos-arm64": "1.98.1-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "1.98.1-ohos.1",
+      "upstream_version": "1.98.1",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/rust/releases/download/v1.98.1-ohos.1/rust-1.98.1-ohos.1-arm64.tar.gz",
+          "sha256": "dc316fdd13d6e38afaed78829a78100d3158e9b1d435d1bbe24b475ba0b92737",
+          "size": 276685078,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "rustc": "bin/rustc",
+            "cargo": "bin/cargo",
+            "rustfmt": "bin/rustfmt",
+            "cargo-fmt": "bin/cargo-fmt",
+            "clippy-driver": "bin/clippy-driver",
+            "cargo-clippy": "bin/cargo-clippy",
+            "rust-analyzer": "bin/rust-analyzer"
+          },
+          "launchers": [
+            "rustc",
+            "cargo",
+            "rustfmt",
+            "cargo-fmt",
+            "clippy-driver",
+            "cargo-clippy",
+            "rust-analyzer"
+          ]
+        }
+      }
+    }
+  ]
+}
