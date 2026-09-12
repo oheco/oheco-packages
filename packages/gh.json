@@ -22,8 +22,8 @@
       "artifacts": {
         "ohos-arm64": {
           "url": "https://github.com/oheco/gh/releases/download/v2.100.0-ohos.1/gh-2.100.0-ohos.1-ohos-arm64.tar.gz",
-          "sha256": "403789a6196d24f2c959626fb7c8a18c751d0916809ac1b24f1caf884ab64c63",
-          "size": 13796368,
+          "sha256": "58e48380b8a687b37038551c615a04b84866222b36d491820c9708227131da22",
+          "size": 13798384,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
