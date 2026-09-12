@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oheco.github.io/oheco-packages/schema/package.schema.json",
-  "title": "oheco package descriptor v4 (accepts v1/v2/v3)",
+  "$id": "https://oheco.github.io/oheco-packages/schema/v3/package.schema.json",
+  "title": "oheco package descriptor v3 (accepts v1/v2)",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -20,8 +20,7 @@
       "enum": [
         1,
         2,
-        3,
-        4
+        3
       ]
     },
     "name": {
@@ -115,16 +114,6 @@
           },
           "npm_artifacts": {
             "$ref": "#/$defs/npm_artifact"
-          },
-          "projects": {
-            "type": "object",
-            "minProperties": 1,
-            "propertyNames": {
-              "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"
-            },
-            "additionalProperties": {
-              "$ref": "#/$defs/project"
-            }
           }
         }
       }
@@ -294,47 +283,6 @@
           }
         }
       }
-    },
-    "project": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "url",
-        "sha256",
-        "size",
-        "format",
-        "strip_components"
-      ],
-      "properties": {
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "pattern": "^https?://"
-        },
-        "sha256": {
-          "type": "string",
-          "pattern": "^[0-9a-f]{64}$"
-        },
-        "size": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 8589934592
-        },
-        "format": {
-          "enum": [
-            "tar.gz",
-            "zip"
-          ]
-        },
-        "strip_components": {
-          "type": "integer",
-          "minimum": 0,
-          "maximum": 8
-        },
-        "description": {
-          "type": "string"
-        }
-      }
     }
   },
   "allOf": [
@@ -386,6 +334,9 @@
         "properties": {
           "versions": {
             "items": {
+              "required": [
+                "artifacts"
+              ],
               "not": {
                 "anyOf": [
                   {
@@ -399,19 +350,7 @@
                     ]
                   }
                 ]
-              },
-              "anyOf": [
-                {
-                  "required": [
-                    "artifacts"
-                  ]
-                },
-                {
-                  "required": [
-                    "projects"
-                  ]
-                }
-              ]
+              }
             }
           }
         },
@@ -457,10 +396,7 @@
             }
           },
           "schema_version": {
-            "enum": [
-              3,
-              4
-            ]
+            "const": 3
           }
         },
         "required": [
@@ -503,10 +439,7 @@
             }
           },
           "schema_version": {
-            "enum": [
-              3,
-              4
-            ]
+            "const": 3
           }
         },
         "required": [
@@ -539,32 +472,6 @@
               ]
             }
           ]
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "schema_version": {
-            "enum": [
-              1,
-              2,
-              3
-            ]
-          }
-        }
-      },
-      "then": {
-        "properties": {
-          "versions": {
-            "items": {
-              "not": {
-                "required": [
-                  "projects"
-                ]
-              }
-            }
-          }
         }
       }
     }

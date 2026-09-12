@@ -108,3 +108,5 @@
 @media (prefers-reduced-motion: reduce) {
   .version-trigger { transition: none; }
 }
+
+.project-delivery{display:flex;flex-direction:column;gap:10px}.project-delivery+.project-delivery{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}

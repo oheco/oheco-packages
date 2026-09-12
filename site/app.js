@@ -176,7 +176,8 @@ function card(pkg) {
   for (const person of pkg.maintainers) people.append(link(`@${person.github}`, `https://github.com/${encodeURIComponent(person.github)}`));
   article.append(people);
   const row = el('div', undefined, 'version-row');
-  const versions = pkg.versions.filter(version => manager === 'oheco' ? version.artifacts[target] : pkg.latest[target]).sort(compareVersions);
+  const versions = pkg.versions.filter(version => manager === 'oheco' ?
+    version.artifacts?.[target] || Object.keys(version.projects || {}).length : pkg.latest[target]).sort(compareVersions);
   const download = el('div');
   const command = el('div', undefined, 'command');
   const code = el('code');
@@ -187,17 +188,35 @@ function card(pkg) {
   const summary = el('summary');
   const hash = el('code');
   details.append(summary, hash);
+  const projects = el('div');
   function updateVersion(version) {
-    const artifacts = manager === 'pip' ? version.pip_artifacts : [manager === 'npm' ? version.npm_artifacts : version.artifacts[target]];
+    const artifacts = (manager === 'pip' ? version.pip_artifacts : [manager === 'npm' ? version.npm_artifacts : version.artifacts?.[target]]).filter(Boolean);
     download.replaceChildren(...artifacts.map(artifact => link(
       manager === 'pip' ? `${artifact.filename} ↗` : '下载软件包 ↗', artifact.url, 'download')));
     code.textContent = `oo install ${pkg.name}@${version.version}`;
     summary.textContent = `${(artifacts.reduce((total, artifact) => total + artifact.size, 0) / 1024 / 1024).toFixed(1)} MiB · SHA-256`;
     hash.textContent = artifacts.map(artifact => `${artifact.filename ? artifact.filename + '\n' : ''}${artifact.sha256}`).join('\n');
+    command.hidden = details.hidden = artifacts.length === 0;
+    projects.replaceChildren(...Object.entries(version.projects || {}).sort(([a], [b]) => a.localeCompare(b)).map(([name, project]) => {
+      const section = el('div', undefined, 'project-delivery');
+      const meta = el('div', undefined, 'metadata');
+      meta.append(el('span', `DevEco 项目 · ${name}`), link('下载项目 ↗', project.url, 'download'));
+      section.append(meta);
+      if (project.description) section.append(el('p', project.description, 'notes'));
+      const command = el('div', undefined, 'command');
+      const code = el('code', `oo export ${pkg.name}@${version.version} ${name} --output ./${pkg.name}-${name}`);
+      const button = el('button', '复制'); button.type = 'button';
+      button.addEventListener('click', () => copy(code.textContent, button));
+      command.append(code, button);
+      const details = el('details', undefined, 'details');
+      details.append(el('summary', `${(project.size / 1024 / 1024).toFixed(1)} MiB · SHA-256`), el('code', project.sha256));
+      section.append(command, details);
+      return section;
+    }));
   }
   if (versions.length) {
     row.append(versionPicker(pkg, versions, updateVersion), download);
-    article.append(row, command, details);
+    article.append(row, command, details, projects);
   }
   else article.append(el('p', '此平台暂无可用版本', 'notes'));
   if (pkg.notes) article.append(el('p', pkg.notes, 'notes'));
@@ -208,7 +227,8 @@ function render() {
   const query = search.value.trim().toLocaleLowerCase();
   const matches = packages.filter(pkg => {
     const commands = pkg.versions.flatMap(version => Object.values(version.artifacts || {}).flatMap(artifact => Object.keys(artifact.binaries)));
-    return [pkg.name, pkg.package_name || '', pkg.description, ...commands].join(' ').toLocaleLowerCase().includes(query);
+    const projects = pkg.versions.flatMap(version => Object.entries(version.projects || {}).flatMap(([name, project]) => [name, project.description || '']));
+    return [pkg.name, pkg.package_name || '', pkg.description, ...commands, ...projects].join(' ').toLocaleLowerCase().includes(query);
   });
   container.replaceChildren(...matches.map(card));
   document.querySelector('#count').textContent = String(matches.length);
@@ -222,10 +242,10 @@ async function refreshIndex() {
   loadingIndex = true;
   try {
     // Pages caches files for ten minutes; revalidate release metadata on each visit.
-    const response = await fetch('./index/v3/index.json', { cache: 'no-cache' });
+    const response = await fetch('./index/v4/index.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
-    if (index.schema_version !== 3 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+    if (index.schema_version !== 4 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
     const updatedPackages = JSON.stringify(index.packages);
     if (updatedPackages !== loadedPackages) {
       packages = index.packages;

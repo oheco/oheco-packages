@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "oheco",
-  "description": "鸿蒙原生软件包管理器，使用 oo 搜索、安装和切换开源工具",
+  "description": "鸿蒙原生软件包管理器，使用 oo 搜索、安装、导出项目和切换开源工具",
   "upstream": "https://github.com/oheco/oheco",
   "repository": "https://github.com/oheco/oheco",
   "maintainers": [
@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.5.0"
+    "ohos-arm64": "0.6.0"
   },
   "versions": [
     {
@@ -112,6 +112,21 @@
           "url": "https://github.com/oheco/oheco/releases/download/v0.5.0/oheco-0.5.0-ohos-arm64.tar.gz",
           "sha256": "ede302993c0b0d0ce4780c5ae90ecfa0a9d83e367f6de221028ef2dadf83d742",
           "size": 3090387,
+          "format": "tar.gz",
+          "strip_components": 0,
+          "binaries": {
+            "oo": "bin/oo"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.6.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco/releases/download/v0.6.0/oheco-0.6.0-ohos-arm64.tar.gz",
+          "sha256": "303fd9528aebbfc806f281b9e5bc46a0eb711ee36ee01095858dcbaa531f7c1f",
+          "size": 3106384,
           "format": "tar.gz",
           "strip_components": 0,
           "binaries": {
