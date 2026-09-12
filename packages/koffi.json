@@ -1,0 +1,72 @@
+{
+  "schema_version": 3,
+  "name": "koffi",
+  "package_manager": "npm",
+  "package_name": "koffi",
+  "description": "Node.js C FFI 库，提供鸿蒙 ARM64 原生函数、结构体和回调调用",
+  "upstream": "https://github.com/Koromix/rygel",
+  "repository": "https://github.com/oheco/rygel",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "latest": {
+    "ohos-arm64": "3.1.1-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "3.1.1-ohos.1",
+      "upstream_version": "3.1.1",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/rygel/releases/download/koffi-v3.1.1-ohos.1/koffi-3.1.1-ohos.1.tgz",
+        "sha256": "3e7236f2ada1698a398c82eb948f1537327813ce9e8abb46932ff8de3f96c925",
+        "size": 632573,
+        "filename": "koffi-3.1.1-ohos.1.tgz",
+        "package_json": {
+          "name": "koffi",
+          "version": "3.1.1-ohos.1",
+          "description": "Fast and easy-to-use dynamic C FFI (foreign function interface) for Node.js",
+          "keywords": [
+            "foreign",
+            "function",
+            "interface",
+            "ffi",
+            "binding",
+            "c",
+            "napi"
+          ],
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/rygel",
+            "directory": "src/koffi"
+          },
+          "homepage": "https://koffi.dev/",
+          "author": {
+            "name": "Niels Martignène",
+            "email": "niels.martignene@protonmail.com",
+            "url": "https://koromix.dev/"
+          },
+          "main": "./index.cjs",
+          "module": "./index.js",
+          "types": "./index.d.ts",
+          "license": "MIT",
+          "funding": "https://liberapay.com/Koromix",
+          "type": "module",
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          }
+        }
+      }
+    }
+  ],
+  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；原生扩展已签名，无安装脚本。"
+}
