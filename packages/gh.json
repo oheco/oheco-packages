@@ -1,0 +1,39 @@
+{
+  "schema_version": 2,
+  "name": "gh",
+  "description": "GitHub 官方命令行工具，支持仓库、Issue、PR、Release 与 Actions 操作，含手册页和 shell 补全",
+  "upstream": "https://github.com/cli/cli",
+  "repository": "https://github.com/oheco/gh",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "notes": "设备码（浏览器）登录不可用：该流程需要编译期内置的 OAuth 客户端 ID，本移植不含 OAuth 客户端凭据。请用 token 认证：printf '%s' \"$TOKEN\" | gh auth login --with-token，或设置 GH_TOKEN。gh 依据 XDG_CONFIG_HOME 定位配置目录，若该变量已设置则读取 $XDG_CONFIG_HOME/gh/ 而非 ~/.config/gh/，可用 GH_CONFIG_DIR 显式指定。Git 操作依赖系统已安装的 git 与用户自身凭据，oo 不会自动安装跨包依赖。",
+  "latest": {
+    "ohos-arm64": "2.100.0-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "2.100.0-ohos.1",
+      "upstream_version": "2.100.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/gh/releases/download/v2.100.0-ohos.1/gh-2.100.0-ohos.1-ohos-arm64.tar.gz",
+          "sha256": "403789a6196d24f2c959626fb7c8a18c751d0916809ac1b24f1caf884ab64c63",
+          "size": 13796368,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "gh": "bin/gh"
+          },
+          "launchers": [
+            "gh"
+          ]
+        }
+      }
+    }
+  ]
+}
