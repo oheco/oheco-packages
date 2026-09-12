@@ -384,13 +384,13 @@ Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件
 
 ## DeepSeek Harness
 
-`deepseek-harness` 收录 [DeepSeek Harness 0.1.5-rc.2-ohos.1](https://github.com/oheco/deepseek-harness/releases/tag/v0.1.5-rc.2-ohos.1)，
+`deepseek-harness` 收录 [DeepSeek Harness 0.1.5-rc.2-ohos.2](https://github.com/oheco/deepseek-harness/releases/tag/v0.1.5-rc.2-ohos.2)，
 提供鸿蒙 PC ARM64 上的 CLI/headless 和浏览器 Web。安装需要 oo 0.5.0 或更高版本、
 Node.js 24 及 `/usr/bin/zsh`：
 
 ```sh
 oo update
-oo npm install --global --prefix "$HOME/.local" @deepseek-ai/dsh@0.1.5-rc.2-ohos.1
+oo npm install --global --prefix "$HOME/.local" @deepseek-ai/dsh@0.1.5-rc.2-ohos.2
 export PATH="$HOME/.local/bin:$PATH"
 dsh --help
 ```
@@ -400,6 +400,9 @@ dsh --help
 并打开输出的认证地址。通过 `oo npm uninstall --global --prefix "$HOME/.local" @deepseek-ai/dsh`
 卸载。npm 管理安装目录和命令入口；node-pty、Koffi、sharp 及 ripgrep 的适配包作为
 固定版本依赖自动安装，不需要额外配置 npm 源或运行编译脚本。
+
+本修订版的 Harness Host、Client、Web、系统扩展，以及 ripgrep + PCRE2 均在鸿蒙构建。
+Rust 工具链和部分打包器使用官方鸿蒙预编译包；图片与 CSS 引擎等复用固定的上游 WASM。
 
 鸿蒙默认使用 zsh、完整文件系统和进程权限，关闭审批；此平台未提供沙箱。
 持久终端需要带 `termios` 的 Python 3。发行版基于上游候选版本，不包含 Electron 和
