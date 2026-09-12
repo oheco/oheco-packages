@@ -212,7 +212,7 @@ python -m pip --version
 
 ## Node.js 原生运行时
 
-`nodejs` 收录 [Node.js 24.21.0 的鸿蒙 ARM64 社区预发布版](https://github.com/oheco/node/releases/tag/v24.21.0-ohos.1)，
+`nodejs` 收录 [Node.js 24.21.0 的鸿蒙 ARM64 社区适配版](https://github.com/oheco/node/releases/tag/v24.21.0-ohos.1)，
 包版本为 `24.21.0-ohos.1`，包含 npm/npx 11.19.0、Corepack 0.36.0、开发头文件及扩展签名入口。
 
 ```sh
