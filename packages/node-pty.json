@@ -1,0 +1,66 @@
+{
+  "schema_version": 3,
+  "name": "node-pty",
+  "package_manager": "npm",
+  "package_name": "node-pty",
+  "description": "Node.js 伪终端库，提供鸿蒙原生 zsh 终端进程、输入输出和窗口调整",
+  "upstream": "https://github.com/microsoft/node-pty",
+  "repository": "https://github.com/oheco/node-pty",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "latest": {
+    "ohos-arm64": "1.2.0-beta.15-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "1.2.0-beta.15-ohos.1",
+      "upstream_version": "1.2.0-beta.15",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/node-pty/releases/download/v1.2.0-beta.15-ohos.1/node-pty-1.2.0-beta.15-ohos.1.tgz",
+        "sha256": "a369be8af7ff350455aa47efa0d137545ab1985ed027f058eca42429f06d0022",
+        "size": 106302,
+        "filename": "node-pty-1.2.0-beta.15-ohos.1.tgz",
+        "package_json": {
+          "name": "node-pty",
+          "description": "Fork pseudoterminals in Node.JS",
+          "author": {
+            "name": "Microsoft Corporation"
+          },
+          "version": "1.2.0-beta.15-ohos.1",
+          "license": "MIT",
+          "main": "./lib/index.js",
+          "types": "./typings/node-pty.d.ts",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/node-pty"
+          },
+          "homepage": "https://github.com/microsoft/node-pty",
+          "bugs": {
+            "url": "https://github.com/microsoft/node-pty/issues"
+          },
+          "keywords": [
+            "pty",
+            "tty",
+            "terminal",
+            "pseudoterminal",
+            "forkpty",
+            "openpty"
+          ],
+          "dependencies": {},
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ]
+        }
+      }
+    }
+  ],
+  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24.21.0；已签名，无安装脚本。库安装不会自动替换其他项目内的依赖。"
+}
