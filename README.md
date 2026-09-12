@@ -43,7 +43,7 @@ SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
 ZIP 额外验证 CRC，拒绝加密条目；保留目录 `.oo-launchers/` 仅由客户端生成启动器。
 软件包内的可执行文件必须带执行权限；其他内容可包含 `lib/`、`share/`、源码、许可证等。
-`oo` 不执行包内安装脚本，也不自动解析或安装跨包依赖；随包依赖应使用可重定位的目录布局。
+原生包安装不执行包内安装脚本，也不自动解析或安装跨包依赖；随包依赖应使用可重定位的目录布局。
 
 例如压缩包带有 `example/` 根目录时，使用 `strip_components: 1`，
 `binaries` 可为 `{"example":"bin/example"}`。
@@ -77,10 +77,12 @@ public/
   style.css
   app.js
   install.sh
-  index/v2/index.json          # 完整索引
+  index/v3/index.json          # 完整索引
+  index/v2/index.json          # v2 客户端兼容索引
   index/v1/index.json          # 旧客户端升级入口
   schema/{package,index}.schema.json
   schema/v1/{package,index}.schema.json
+  schema/v2/{package,index}.schema.json
   .nojekyll
 ```
 
@@ -288,3 +290,26 @@ native 的原始 ZIP 包含 8 对仅大小写不同且内容不同的头文件�
 文件名对应的原始内容，舍弃对应的大写变体，不受 ZIP 条目顺序影响，以兼容鸿蒙主目录
 文件系统。需要大写变体中定义的代码仍需另行适配；Release ZIP 及校验值保持不变。
 该规则由客户端统一实现，描述文件无需添加排除列表。
+
+## 语言包规范 v3
+
+v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时按原生包处理。
+语言包必须设置 `package_name` 表示真实的 Python/npm 包名；`name` 继续作为目录名称。
+`latest` 仍按目标平台指定版本。每个版本只允许一种产物字段：
+
+| 包管理器 | 版本字段 | 内容 |
+| --- | --- | --- |
+| oheco | `artifacts` | 原有的平台到归档映射 |
+| pip | `pip_artifacts` | 同一版本的多个 wheel，pip 按解释器、ABI 和平台选择 |
+| npm | `npm_artifacts` | 单个不可变 `.tgz` 及归档中的 `package.json` |
+
+语言产物共有 `url`、`sha256`、`size`、`filename`；Python 另有可选
+`requires_python`、`requires_dist`，npm 必须有 `package_json`。包名、版本、依赖和兼容性
+元数据来自实际归档，使用 oheco 的 `oo-index --inspect <文件> --package-manager pip|npm
+--url <发布地址>` 生成。`sh scripts/build.sh --verify-artifacts` 同时校验实际产物及元数据，
+并生成 v3 完整索引和 v1/v2 兼容索引；历史自举入口不变。
+
+语言包通过 oo 的临时源交给 pip/npm 安装，适配仓库仍属于 oheco，发行包仍使用 GitHub
+Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
+[oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。Pages 构建器固定到
+支持 v3 的 oo 0.5.0；发布顺序为先发布构建器，再提交依赖它的描述文件和网站。

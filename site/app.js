@@ -157,6 +157,7 @@ function versionPicker(pkg, versions, onChange) {
   return picker;
 }
 function card(pkg) {
+  const manager = pkg.package_manager || 'oheco';
   const article = el('article', undefined, 'package');
   const top = el('div', undefined, 'top');
   top.append(el('h3', pkg.name), el('span', 'OHOS · ARM64', 'badge'));
@@ -168,14 +169,15 @@ function card(pkg) {
     meta.append(link('上游项目 ↗', pkg.upstream), link('鸿蒙适配 ↗', pkg.repository));
   }
   meta.append(el('span', pkg.license));
+  if (manager !== 'oheco') meta.append(el('span', `${manager} · ${pkg.package_name}`));
   article.append(meta);
   const people = el('div', undefined, 'metadata');
   people.append(el('span', '移植维护：'));
   for (const person of pkg.maintainers) people.append(link(`@${person.github}`, `https://github.com/${encodeURIComponent(person.github)}`));
   article.append(people);
   const row = el('div', undefined, 'version-row');
-  const versions = pkg.versions.filter(version => version.artifacts[target]).sort(compareVersions);
-  const download = el('a', '下载软件包 ↗', 'download');
+  const versions = pkg.versions.filter(version => manager === 'oheco' ? version.artifacts[target] : pkg.latest[target]).sort(compareVersions);
+  const download = el('div');
   const command = el('div', undefined, 'command');
   const code = el('code');
   const button = el('button', '复制'); button.type = 'button';
@@ -186,11 +188,12 @@ function card(pkg) {
   const hash = el('code');
   details.append(summary, hash);
   function updateVersion(version) {
-    const artifact = version.artifacts[target];
-    download.href = link('', artifact.url).href;
+    const artifacts = manager === 'pip' ? version.pip_artifacts : [manager === 'npm' ? version.npm_artifacts : version.artifacts[target]];
+    download.replaceChildren(...artifacts.map(artifact => link(
+      manager === 'pip' ? `${artifact.filename} ↗` : '下载软件包 ↗', artifact.url, 'download')));
     code.textContent = `oo install ${pkg.name}@${version.version}`;
-    summary.textContent = `${(artifact.size / 1024 / 1024).toFixed(1)} MiB · SHA-256`;
-    hash.textContent = artifact.sha256;
+    summary.textContent = `${(artifacts.reduce((total, artifact) => total + artifact.size, 0) / 1024 / 1024).toFixed(1)} MiB · SHA-256`;
+    hash.textContent = artifacts.map(artifact => `${artifact.filename ? artifact.filename + '\n' : ''}${artifact.sha256}`).join('\n');
   }
   if (versions.length) {
     row.append(versionPicker(pkg, versions, updateVersion), download);
@@ -204,8 +207,8 @@ function render() {
   openVersionMenu?.close();
   const query = search.value.trim().toLocaleLowerCase();
   const matches = packages.filter(pkg => {
-    const commands = pkg.versions.flatMap(version => Object.values(version.artifacts).flatMap(artifact => Object.keys(artifact.binaries)));
-    return [pkg.name, pkg.description, ...commands].join(' ').toLocaleLowerCase().includes(query);
+    const commands = pkg.versions.flatMap(version => Object.values(version.artifacts || {}).flatMap(artifact => Object.keys(artifact.binaries)));
+    return [pkg.name, pkg.package_name || '', pkg.description, ...commands].join(' ').toLocaleLowerCase().includes(query);
   });
   container.replaceChildren(...matches.map(card));
   document.querySelector('#count').textContent = String(matches.length);
@@ -219,10 +222,10 @@ async function refreshIndex() {
   loadingIndex = true;
   try {
     // Pages caches files for ten minutes; revalidate release metadata on each visit.
-    const response = await fetch('./index/v2/index.json', { cache: 'no-cache' });
+    const response = await fetch('./index/v3/index.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
-    if (index.schema_version !== 2 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+    if (index.schema_version !== 3 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
     const updatedPackages = JSON.stringify(index.packages);
     if (updatedPackages !== loadedPackages) {
       packages = index.packages;
