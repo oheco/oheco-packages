@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "name": "nodejs",
+  "description": "Node.js 24 LTS 鸿蒙原生运行时，包含 npm、npx、Corepack 和开发头文件",
+  "upstream": "https://github.com/nodejs/node",
+  "repository": "https://github.com/oheco/node",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT (with bundled third-party licenses)",
+  "notes": "HarmonyOS PC ARM64 社区预发布版。已签名，保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL，支持含空格的安装路径。纯 JavaScript 使用无需 Python 或编译器。原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和 binary-sign-tool，并使用应用私有 TMPDIR。仅随包 node-gyp 包含适配；独立升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容；其他系统、架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
+  "latest": {
+    "ohos-arm64": "24.21.0-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "24.21.0-ohos.1",
+      "upstream_version": "24.21.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/node/releases/download/v24.21.0-ohos.1/node-v24.21.0-ohos.1-arm64.tar.gz",
+          "sha256": "645480717771f5eb51f8f4398d1bf706d47a5b08356d41ae51ca0a932ad01052",
+          "size": 56619315,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "node": "bin/node",
+            "npm": "bin/npm",
+            "npx": "bin/npx",
+            "corepack": "bin/corepack"
+          },
+          "launchers": [
+            "node",
+            "npm",
+            "npx",
+            "corepack"
+          ]
+        }
+      }
+    }
+  ]
+}

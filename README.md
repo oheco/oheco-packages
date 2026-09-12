@@ -1,6 +1,6 @@
 # oheco-packages
 
-oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Git、tmux 及
+oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go 原生工具链、Python、Node.js、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
@@ -209,6 +209,34 @@ python -m pip --version
 运行包保留 GNU Readline GPLv3 等第三方许可证，完整对应源码随 Release 发布。
 详见[构建说明](https://github.com/oheco/cpython/blob/v3.14.7-ohos.1/Tools/ohos/README.md)
 及[验证记录](https://github.com/oheco/cpython/blob/v3.14.7-ohos.1/Tools/ohos/VALIDATION.md)。
+
+## Node.js 原生运行时
+
+`nodejs` 收录 [Node.js 24.21.0 的鸿蒙 ARM64 社区预发布版](https://github.com/oheco/node/releases/tag/v24.21.0-ohos.1)，
+包版本为 `24.21.0-ohos.1`，包含 npm/npx 11.19.0、Corepack 0.36.0、开发头文件及扩展签名入口。
+
+```sh
+oo update
+oo install nodejs
+node --version
+npm --version
+node -p "process.platform + '/' + process.arch"
+```
+
+平台标识为 `openharmony/arm64`。采用 v2 包规范，提供 `node@24.21.0-ohos.1`、
+`npm@24.21.0-ohos.1`、`npx@24.21.0-ohos.1` 和 `corepack@24.21.0-ohos.1` 等版本入口。
+运行包已签名，解压时移除一层根目录，支持含空格的安装路径。
+
+保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL。纯 JavaScript 使用
+无需 Python 或 SDK；原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和
+`binary-sign-tool`，并使用应用私有的可写 `TMPDIR`。只有随包 node-gyp 包含适配，独立
+升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容，其他系统、架构和手机沙箱
+尚未验证。
+
+已通过 20 项原生集成检查、5 个上游 V8 回归文件和 57 个上游 Node 回归文件，并验证
+npm 下载、npx、隔离全局安装/卸载、离线签名 N-API 扩展及运行包迁移。
+完整对应源码随 Release 提供，详见[构建与使用说明](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/README.md)
+及[验证记录](https://github.com/oheco/node/blob/v24.21.0-ohos.1/tools/ohos/VALIDATION.md)。
 
 ## OpenHarmony SDK
 
