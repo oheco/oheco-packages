@@ -318,8 +318,8 @@ NativeAOT 保留上游对动态代码、反射和 Unix 命名互斥量的限制�
 各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。
 当前不支持 LLDB，描述文件不声明任何 lldb 命令。各包均保留原始 NOTICE 中的许可证。
 
-Pages 使用 v0.2.0 索引生成器。完整 v2 索引供新版 oo 和网站使用，v1 索引只包含
-`schema_version: 1` 的包，包含最新 oheco 版本。oheco 自举包持续使用 v1 / tar.gz，
+Pages 使用 v0.5.0 索引生成器。完整 v3 索引供新版 oo 和网站使用，v1/v2 索引供旧客户端
+读取兼容包，其中 v1 包含最新 oheco 版本。oheco 自举包持续使用 v1 / tar.gz，
 旧版客户端通过 `oo update && oo install oheco` 升级后，再次执行 `oo update` 获取 SDK。
 
 native 的原始 ZIP 包含 8 对仅大小写不同且内容不同的头文件。oo 解压默认保留全小写
@@ -349,3 +349,27 @@ v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时
 Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
 [oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。Pages 构建器固定到
 支持 v3 的 oo 0.5.0；发布顺序为先发布构建器，再提交依赖它的描述文件和网站。
+
+## DeepSeek Harness
+
+`deepseek-harness` 收录 [DeepSeek Harness 0.1.5-rc.2-ohos.1](https://github.com/oheco/deepseek-harness/releases/tag/v0.1.5-rc.2-ohos.1)，
+提供鸿蒙 PC ARM64 上的 CLI/headless 和浏览器 Web。安装需要 oo 0.5.0 或更高版本、
+Node.js 24 及 `/usr/bin/zsh`：
+
+```sh
+oo update
+oo npm install --global --prefix "$HOME/.local" @deepseek-ai/dsh@0.1.5-rc.2-ohos.1
+export PATH="$HOME/.local/bin:$PATH"
+dsh --help
+```
+
+将 `DSH_HOME` 设置为可写的应用私有目录，并配置 `DEEPSEEK_API_KEY`，然后使用
+`dsh --profile headless "你的任务"`，或运行 `dsh web --host 127.0.0.1 --port 0 --no-open`
+并打开输出的认证地址。通过 `oo npm uninstall --global --prefix "$HOME/.local" @deepseek-ai/dsh`
+卸载。npm 管理安装目录和命令入口；node-pty、Koffi、sharp 及 ripgrep 的适配包作为
+固定版本依赖自动安装，不需要额外配置 npm 源或运行编译脚本。
+
+鸿蒙默认使用 zsh、完整文件系统和进程权限，关闭审批；此平台未提供沙箱。
+持久终端需要带 `termios` 的 Python 3。发行版基于上游候选版本，不包含 Electron 和
+Python SDK；真实远程模型调用未使用 API 凭据验收。功能和原生验收范围见
+[适配说明](https://github.com/oheco/deepseek-harness/blob/ohos/0.1.5-rc.2/ohos/README.zh.md)。

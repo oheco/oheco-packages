@@ -1,0 +1,61 @@
+{
+  "schema_version": 3,
+  "name": "deepseek-harness",
+  "package_manager": "npm",
+  "package_name": "@deepseek-ai/dsh",
+  "description": "鸿蒙 PC ARM64 上的 DeepSeek Harness，提供 zsh 命令工具、持久会话、搜索、JavaScript PTC 和浏览器 Web 界面",
+  "upstream": "https://github.com/deepseek-ai/deepseek-harness",
+  "repository": "https://github.com/oheco/deepseek-harness",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT",
+  "latest": {
+    "ohos-arm64": "0.1.5-rc.2-ohos.1"
+  },
+  "versions": [
+    {
+      "version": "0.1.5-rc.2-ohos.1",
+      "upstream_version": "0.1.5-rc.2",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.1.5-rc.2-ohos.1/deepseek-harness-0.1.5-rc.2-ohos.1.tgz",
+        "sha256": "8efbd9f66224f4d89ab11231bf10671c377b08ddabf730083d85ab03e323ed76",
+        "size": 32601900,
+        "filename": "deepseek-harness-0.1.5-rc.2-ohos.1.tgz",
+        "package_json": {
+          "name": "@deepseek-ai/dsh",
+          "version": "0.1.5-rc.2-ohos.1",
+          "description": "DeepSeek Harness CLI and Web profiles for HarmonyOS PC ARM64",
+          "type": "module",
+          "bin": {
+            "dsh": "bin/dsh"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/deepseek-harness"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          },
+          "dependencies": {
+            "node-pty": "1.2.0-beta.15-ohos.1",
+            "koffi": "3.1.1-ohos.1",
+            "sharp": "0.35.3-ohos.1",
+            "@vscode/ripgrep": "1.18.0-ohos.1"
+          }
+        }
+      }
+    }
+  ],
+  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。可使用 oo npm install --global --prefix \"$HOME/.local\" @deepseek-ai/dsh 全局安装。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。"
+}
