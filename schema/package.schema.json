@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://oheco.github.io/oheco-packages/schema/package.schema.json",
+  "$id": "https://oheco.org/schema/package.schema.json",
   "title": "oheco package descriptor v5 (accepts v1/v2/v3/v4)",
   "type": "object",
   "additionalProperties": false,

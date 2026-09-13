@@ -7,6 +7,7 @@ contracts; it is not a replacement implementation of JSON Schema 2020-12.
 import argparse
 import json
 from pathlib import Path
+from urllib.parse import urljoin
 
 root = Path(__file__).resolve().parent.parent
 parser = argparse.ArgumentParser()
@@ -18,8 +19,17 @@ def load(path):
     return json.loads(path.read_text())
 
 
+def check_schema_urls(index, package, base):
+    assert index["$id"] == base + "index.schema.json"
+    assert package["$id"] == base + "package.schema.json"
+    ref = index["properties"]["packages"]["items"]["$ref"]
+    assert ref == "package.schema.json", "schema references must stay relative"
+    assert urljoin(index["$id"], ref) == package["$id"]
+
+
 package_schema = load(root / "schema/package.schema.json")
 index_schema = load(root / "schema/index.schema.json")
+check_schema_urls(index_schema, package_schema, "https://oheco.org/schema/")
 assert package_schema["properties"]["schema_version"]["enum"] == [1, 2, 3, 4, 5]
 assert index_schema["properties"]["schema_version"]["const"] == 5
 version_schema = package_schema["properties"]["versions"]["items"]
@@ -57,8 +67,8 @@ for schema in range(1, 5):
     package = load(root / f"schema/v{schema}/package.schema.json")
     index = load(root / f"schema/v{schema}/index.schema.json")
     assert index["properties"]["schema_version"]["const"] == schema
-    assert index["properties"]["packages"]["items"]["$ref"] == "package.schema.json"
-    assert package["$id"].endswith(f"/schema/v{schema}/package.schema.json")
+    # Historical IDs identify frozen protocols, not the current website URL.
+    check_schema_urls(index, package, f"https://oheco.github.io/oheco-packages/schema/v{schema}/")
     assert "dependencies" not in package["properties"]["versions"]["items"]["properties"]
 frozen = load(root / "schema/v4/package.schema.json")
 assert frozen["properties"]["schema_version"]["enum"] == [1, 2, 3, 4]
@@ -90,8 +100,22 @@ for schema in range(1, 6):
         assert all("dependencies" not in v for p in generated["packages"] for v in p["versions"])
     schema_dir = "schema" if schema == 5 else f"schema/v{schema}"
     for filename in ("package.schema.json", "index.schema.json"):
-        assert load(args.output / schema_dir / filename) == load(root / schema_dir / filename)
-assert (args.output / "app.js").read_bytes() == (root / "site/app.js").read_bytes()
-assert (args.output / "index.html").read_bytes() == (root / "site/index.html").read_bytes()
+        assert (args.output / schema_dir / filename).read_bytes() == (root / schema_dir / filename).read_bytes()
+# oo-index copies all regular site files recursively; CNAME must reach the output
+# without a special-case copier or a manual edit to public/.
+for source in sorted((root / "site").rglob("*")):
+    if source.is_file():
+        relative = source.relative_to(root / "site")
+        assert (args.output / relative).read_bytes() == source.read_bytes(), f"site file not copied: {relative}"
+assert (args.output / "CNAME").read_bytes() == b"oheco.org\n"
+html = (args.output / "index.html").read_text()
+assert '<link rel="canonical" href="https://oheco.org/">' in html
+assert '<code id="install-command">curl -fsSL https://oheco.org/install.sh | zsh</code>' in html
+assert "https://oheco.github.io/oheco-packages/" not in html
+for relative in ("./style.css", "./app.js", "./index/v5/index.json"):
+    assert f'"{relative}' in html
+    assert (args.output / relative).is_file(), f"relative site resource missing: {relative}"
+assert (args.output / "install.sh").is_file()
 print(f"PASS v5 schema contracts and generated v1-v5 indexes ({len(packages)} packages); bootstrap unchanged")
+print("PASS current schema IDs, frozen historical IDs and relative refs, generated install URL/canonical/CNAME and relative assets")
 print("Constraint/reference semantics are checked by the preceding Go oo-index build; no remote artifacts were fetched.")

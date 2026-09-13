@@ -5,6 +5,20 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
+const site = path.join(__dirname, '../site');
+const html = fs.readFileSync(path.join(site, 'index.html'), 'utf8');
+const installCommand = html.match(/<code id="install-command">([^<]+)<\/code>/)?.[1];
+assert.equal(installCommand, 'curl -fsSL https://oheco.org/install.sh | zsh');
+const canonicalLinks = [...html.matchAll(/<link\b[^>]*\brel="canonical"[^>]*>/g)];
+assert.equal(canonicalLinks.length, 1, 'the page must have exactly one canonical URL');
+assert.match(canonicalLinks[0][0], /\bhref="https:\/\/oheco\.org\/"/);
+assert.equal(fs.readFileSync(path.join(site, 'CNAME'), 'utf8'), 'oheco.org\n');
+assert.doesNotMatch(html, /https:\/\/oheco\.github\.io\/oheco-packages\//);
+// Keep local previews and project-path deployments working after the domain move.
+assert.match(html, /<link rel="stylesheet" href="\.\/style\.css">/);
+assert.match(html, /<script src="\.\/app\.js(?:\?[^"<>]*)?" defer><\/script>/);
+assert.match(html, /<a href="\.\/index\/v5\/index\.json">/);
+
 class Element {
   constructor(tag) {
     this.tagName = tag; this.children = []; this.attrs = {}; this.style = {};
@@ -28,6 +42,8 @@ class Element {
   getBoundingClientRect() { return { top: 0, bottom: 46, height: 46 }; }
 }
 const nodes = Object.fromEntries(['packages', 'status', 'search', 'copy-install', 'install-command', 'count'].map(id => ['#' + id, new Element('div')]));
+nodes['#install-command'].textContent = installCommand;
+const clipboardWrites = [];
 const artifact = { url: 'https://example.com/tool.tgz', sha256: 'a'.repeat(64), size: 100, binaries: {} };
 const meta = { description: 'fixture', upstream: 'https://example.com/upstream', repository: 'https://github.com/oheco/fixture', license: 'MIT', maintainers: [{ github: 'maintainer' }], latest: { 'ohos-arm64': '2.0' } };
 const fixtures = [
@@ -42,14 +58,14 @@ const requests = [];
 const context = vm.createContext({
   document: { querySelector: selector => nodes[selector], createElement: tag => new Element(tag), addEventListener() {} },
   window: { addEventListener() {}, innerHeight: 800 },
-  navigator: { clipboard: { async writeText() {} } },
+  navigator: { clipboard: { async writeText(text) { clipboardWrites.push(text); } } },
   URL, console, setTimeout,
   fetch: async (url, options) => {
     requests.push({ url, options });
     return { ok: true, json: async () => ({ schema_version: 5, packages: fixtures }) };
   },
 });
-vm.runInContext(fs.readFileSync(path.join(__dirname, '../site/app.js'), 'utf8'), context);
+vm.runInContext(fs.readFileSync(path.join(site, 'app.js'), 'utf8'), context);
 function all(node) { return [node, ...node.children.flatMap(all)]; }
 function hasClass(node, name) { return node.className.split(' ').includes(name); }
 
@@ -57,6 +73,11 @@ function hasClass(node, name) { return node.className.split(' ').includes(name);
   await new Promise(resolve => setImmediate(resolve));
   assert.equal(requests[0].url, './index/v5/index.json');
   assert.equal(requests[0].options.cache, 'no-cache');
+  for (const base of ['https://oheco.org/', 'https://oheco.github.io/oheco-packages/', 'http://127.0.0.1:8080/']) {
+    assert.equal(new URL(requests[0].url, base).href, `${base}index/v5/index.json`);
+  }
+  await nodes['#copy-install'].listeners.click({ currentTarget: nodes['#copy-install'] });
+  assert.deepEqual(clipboardWrites, ['curl -fsSL https://oheco.org/install.sh | zsh']);
   assert.equal(nodes['#count'].textContent, '3');
   assert.equal(nodes['#packages'].children.length, 3, 'all managers must be visible');
   const native = nodes['#packages'].children[0];
@@ -89,5 +110,5 @@ function hasClass(node, name) { return node.className.split(' ').includes(name);
     assert.equal(compare(a, b), want, `${a} vs ${b}`);
     assert.equal(compare(b, a), -want || 0, `${b} vs ${a}`);
   }
-  console.log('PASS v5 site loading, all managers, per-version dependencies, search and native sorting');
+  console.log('PASS official install URL and clipboard, canonical/CNAME, relative paths, v5 loading, all managers, per-version dependencies, search and native sorting');
 })().catch(error => { console.error(error); process.exitCode = 1; });

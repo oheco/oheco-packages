@@ -2,13 +2,30 @@
 
 oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go/Rust 原生工具链、Python、Node.js、.NET、Git、tmux 及
 5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
-[软件下载站](https://oheco.github.io/oheco-packages/)，软件包本身发布到对应适配仓库的 GitHub Releases。
+[软件下载站](https://oheco.org/)，软件包本身发布到对应适配仓库的 GitHub Releases。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
 
 > 完整索引使用 schema v5，Pages 生成器固定为已发布的 `oheco v0.7.0`。
 > 原生包可按版本声明依赖；npm/pip 依赖仍交给对应管理器，不在 oheco 建立安装镜像。
 > v1–v4 兼容索引保留升级入口，但不会把带新依赖语义的包删减字段后提供给旧客户端。
+
+## 官方域名与历史标识
+
+官网与软件下载站统一使用 **https://oheco.org/**，安装脚本为
+[https://oheco.org/install.sh](https://oheco.org/install.sh)，当前完整索引为
+[https://oheco.org/index/v5/index.json](https://oheco.org/index/v5/index.json)。
+网站资源和索引入口继续使用相对路径，以兼容本地预览及子路径部署。
+客户端自 `0.7.1` 起默认直连新域名；Pages 继续使用已支持 v5 的 `0.7.0` 生成器。
+二者版本不必相同：安装脚本根据 `packages/oheco.json` 的 `latest` 选择客户端发行包，
+而现有生成器已支持复制 CNAME 和当前 schema 文件。此次迁移无需修改工作流权限或 pin。
+
+当前 v5 的 `schema/{index,package}.schema.json` 使用
+`https://oheco.org/schema/` 下的 `$id`，索引到包 schema 的 `$ref` 仍为相对路径。
+`schema/v1`–`schema/v4` 的 8 个历史文件保持冻结，允许保留旧域名
+`https://oheco.github.io/oheco-packages/schema/vN/` 下的 `$id`；它们是历史协议标识，
+不是当前推荐的网站入口，不能全局替换。GitHub 仓库与 Release 链接、Go module 路径、
+软件产物 URL 和摘要，以及历史发布记录同样不因官网迁移而改写。
 
 ## 文件
 
@@ -81,6 +98,7 @@ public/
   index.html
   style.css
   app.js
+  CNAME                       # 固化官方域名 oheco.org
   install.sh
   index/v5/index.json          # 完整索引（开发版）
   index/v4/index.json          # v4 客户端兼容索引
@@ -107,15 +125,20 @@ public/
 3. 执行 `sh scripts/build.sh --verify-artifacts`，确认包描述和实际下载产物通过校验。
 4. 将包描述提交到 `main`（通过 PR 时先完成检查和合并）。工作流重新校验已发布产物后
    部署；产物校验失败时不部署，PR 检查本身也不部署。
-5. 确认 Pages 工作流部署成功，并在[软件下载站](https://oheco.github.io/oheco-packages/)
+5. 确认 Pages 工作流部署成功，并在[软件下载站](https://oheco.org/)
    核对版本、下载链接和安装命令。
 
 已发布版本的下载地址和产物不得被原地替换；适配修订应分配新版本。
 
 ### Pages 一次性配置
 
-本仓库已使用 GitHub Actions 部署 Pages。新建同类仓库时，在 Settings → Pages 中将
-Source 设为 GitHub Actions；后续发布由工作流完成，无需重复设置。
+本仓库已使用 GitHub Actions 部署 Pages（`build_type: workflow`），后台已绑定自定义域名
+`oheco.org` 并开启 Enforce HTTPS。`site/CNAME` 只在源码中固化域名；共享的 `oo-index`
+会递归复制 `site/` 中的所有普通文件，因此生成输出包含 `CNAME`，无需另改复制器。
+该文件不能代替 Pages 后台配置，也不能据其存在就认定域名、HTTPS 或部署已经生效。
+
+新建同类仓库时，在 Settings → Pages 中将 Source 设为 GitHub Actions，并单独配置自定义
+域名与 HTTPS；后续发布由工作流完成，无需重复设置。
 
 ## Rust 官方 OHOS 工具链
 
@@ -391,7 +414,8 @@ v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时
 Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
 [oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。pip/npm 的依赖继续由
 各自后端在所选环境中即时解析，不复制为版本级原生 `dependencies`，也不建立外部安装镜像。
-Pages 构建器目前仍固定到已发布的 oo 0.6.0；先发布支持 v5 的构建器，再改 pin 并部署。
+Pages 构建器目前固定为已发布的 `oheco v0.7.0`，已支持 v5；后续升级需先发布并验证
+新生成器，再更新工作流 pin 和部署，不把本地改动表述为新版已发布。
 
 ## DeepSeek Harness
 
