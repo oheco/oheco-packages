@@ -174,5 +174,5 @@
       }
     }
   ],
-  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。可使用 oo npm install --global --prefix \"$HOME/.local\" @deepseek-ai/dsh 全局安装。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。"
+  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。全局安装请显式指定作用域：oo install deepseek-harness -- --global --prefix \"$HOME/.local\"（oo 不注入作用域）。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。"
 }

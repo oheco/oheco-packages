@@ -441,16 +441,17 @@ Node.js 24 及 `/usr/bin/zsh`：
 
 ```sh
 oo update
-oo npm install --global --prefix "$HOME/.local" @deepseek-ai/dsh@0.1.5-rc.2-ohos.2
+oo install deepseek-harness -- --global --prefix "$HOME/.local"
 export PATH="$HOME/.local/bin:$PATH"
 dsh --help
 ```
 
 将 `DSH_HOME` 设置为可写的应用私有目录，并配置 `DEEPSEEK_API_KEY`，然后使用
 `dsh --profile headless "你的任务"`，或运行 `dsh web --host 127.0.0.1 --port 0 --no-open`
-并打开输出的认证地址。通过 `oo npm uninstall --global --prefix "$HOME/.local" @deepseek-ai/dsh`
-卸载。npm 管理安装目录和命令入口；node-pty、Koffi、sharp 及 ripgrep 的适配包作为
-固定版本依赖自动安装，不需要额外配置 npm 源或运行编译脚本。
+并打开输出的认证地址。通过 `oo remove deepseek-harness -- --global --prefix "$HOME/.local"`
+卸载。oo 不注入作用域，`--global` 与 `--prefix` 由你显式指定。npm 管理安装目录和命令入口；
+node-pty、Koffi、sharp 及 ripgrep 的适配包作为固定版本依赖自动安装，不需要额外配置 npm 源
+或运行编译脚本。
 
 本修订版的 Harness Host、Client、Web、系统扩展，以及 ripgrep + PCRE2 均在鸿蒙构建。
 Rust 工具链和部分打包器使用官方鸿蒙预编译包；图片与 CSS 引擎等复用固定的上游 WASM。
@@ -526,11 +527,10 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 JSON Schema 定义结构门槛；完整约束语法、按名称重复、自引用、引用目标与逐平台可满足性由
 共享的 Go `oo-index` 执行。根 `schema/` 对应 v5，`schema/v1`–`schema/v4` 冻结旧协议。
 网站展示所有 manager，切换版本会更新对应依赖；`<由npm管理>` / `<由pip管理>` 仅表示管理归属，
-不声称已经安装，不创建外部安装状态镜像。统一 `oo install/remove` 默认 global；旧 `oo npm`
-保持 npm-local 兼容，后端作用域参数写在 `--` 之后。`--prefix DIR` 只选择目录，不隐含 local：
-统一入口 `oo install npm:<name> -- --prefix DIR` 仍是 global；本地范围明确写
-`oo install npm:<name> -- --global=false --prefix DIR`（或显式 `--no-global` / `--local` /
-`--location=project`），卸载须使用相同作用域。升级后的 state schema 2 禁止旧客户端再管理
+不声称已经安装，不创建外部安装状态镜像。统一 `oo install/remove` **不注入作用域**：npm 默认
+装进当前项目的 `node_modules`、pip 默认装进所选解释器环境，要全局或指定目录就显式写
+`oo install deepseek-harness -- --global --prefix "$HOME/.local"`，卸载用相同参数。`oo npm` /
+`oo pip` 子命令已移除；安装之后直接用原生 `npm` / `pip` 查询和管理。升级后的 state schema 2 禁止旧客户端再管理
 同一 root；`installed.v1.backup.json` 仅供参考，不是修改安装目录后可直接恢复的快照。
 原生 `--autoremove` / `--cascade` 不适用于外部包，`-y` 不隐含清理；后端即时解析也不保证
 跨 root 的反向依赖保护，pip 卸载后的依赖保留由 pip 决定。
