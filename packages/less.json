@@ -11,7 +11,7 @@
     }
   ],
   "license": "(GPL-3.0-or-later OR BSD-2-Clause) AND MIT",
-  "notes": "静态集成 libtinfo 并随包提供常用 terminfo，可整体迁移。安装后 Git 默认分页器即可使用，无需修改 Git 配置。运行依赖宿主 libc；编辑器和 LESSOPEN 预处理器按用户配置另行提供。保留内置帮助和 less 文本/man 文档，不增加 Git 的完整帮助文档。",
+  "notes": "静态集成 libtinfo 并随包提供常用 terminfo，可整体迁移。安装后 Git 默认分页器即可使用，无需修改 Git 配置。编辑器和 LESSOPEN 预处理器按用户配置另行提供。保留内置帮助和 less 文本/man 文档，不增加 Git 的完整帮助文档。",
   "latest": {
     "ohos-arm64": "704-ohos.1"
   },

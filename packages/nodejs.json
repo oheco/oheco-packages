@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT (with bundled third-party licenses)",
-  "notes": "HarmonyOS PC ARM64 社区适配版。已签名，保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL，支持含空格的安装路径。纯 JavaScript 使用无需 Python 或编译器。原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和 binary-sign-tool，并使用应用私有 TMPDIR。仅随包 node-gyp 包含适配；独立升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容；其他系统、架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
+  "notes": "HarmonyOS PC ARM64 社区适配版。已签名，保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL，支持含空格的安装路径。纯 JavaScript 使用无需 Python 或编译器。原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和 binary-sign-tool（来自 ohos-sdk-toolchains 包），并使用应用私有 TMPDIR。仅随包 node-gyp 包含适配；独立升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容；其他系统、架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
   "latest": {
     "ohos-arm64": "24.21.0-ohos.1"
   },

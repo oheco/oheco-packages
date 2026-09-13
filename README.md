@@ -100,7 +100,7 @@ public/
   app.js
   CNAME                       # 固化官方域名 oheco.org
   install.sh
-  index/v5/index.json          # 完整索引（开发版）
+  index/v5/index.json          # 完整索引（schema v5）
   index/v4/index.json          # v4 客户端兼容索引
   index/v3/index.json          # v3 客户端兼容索引
   index/v2/index.json          # v2 客户端兼容索引
@@ -142,9 +142,9 @@ public/
 
 ## Rust 官方 OHOS 工具链
 
-`rust` 收录 [Rust 1.98.1 官方 OHOS 宿主工具链适配包](https://github.com/oheco/rust/releases/tag/v1.98.1-ohos.1)，
+`rust` 收录 [Rust 1.98.1 官方 OHOS 工具链适配包](https://github.com/oheco/rust/releases/tag/v1.98.1-ohos.1)，
 包版本为 `1.98.1-ohos.1`。包含 rustc、Cargo、rustfmt、Clippy、rust-analyzer 和 Rust 库源码。
-OpenSSL 在鸿蒙原生构建并随包提供；Rust/LLVM 复用官方 OHOS 组件，未在宿主从源码自举。
+OpenSSL 在鸿蒙原生构建并随包提供；Rust/LLVM 复用官方 OHOS 组件，未在鸿蒙上从源码自举。
 
 ```zsh
 oo update
@@ -159,10 +159,10 @@ cargo test --all-targets
 ```
 
 启动器需要 Python 3.11+ 和系统 zsh；编译需要 PATH 中的 SDK Clang、compiler-rt 和
-`binary-sign-tool`，这些外部依赖不会自动安装。链接后自动签名程序、构建脚本及过程宏；
+`binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），这些外部依赖不会自动安装。链接后自动签名程序、构建脚本及过程宏；
 Cargo 使用系统 CA 验证 HTTPS。支持 `rustc@1.98.1-ohos.1` 和 `cargo@1.98.1-ohos.1` 等版本入口。
 官方组件不包含 rustdoc，因此不支持 `cargo doc` 和文档测试。
-已完成当前 HarmonyOS PC ARM64 宿主的原生编译、C 依赖、过程宏、测试、工具及迁移验收；
+已完成 HarmonyOS PC ARM64 上的原生编译、C 依赖、过程宏、测试、工具及迁移验收；
 详见[适配说明](https://github.com/oheco/rust/blob/ohos/1.98.1/ohos/README.md)和 Release 验证附件。
 
 ## Go 原生工具链
@@ -181,12 +181,12 @@ go version
 安装时使用 `strip_components: 1`，提供 `go` 和 `gofmt` 命令，并保留完整工具链布局。
 使用 v1 包规范，兼容现有客户端。
 
-构建需要 PATH 中的 `binary-sign-tool`（可通过 `oo install ohos-sdk-toolchains` 安装）；
+构建需要 PATH 中的 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包，可用 `oo install ohos-sdk-toolchains` 安装）；
 cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk-native`）。
 将 `TMPDIR` 指向当前应用的私有可写目录；如配置过旧工具链的 `GOROOT`，先执行
 `unset GOROOT`，让 Go 自动定位安装目录。客户端不会自动安装这些依赖。
 
-已验证原生构建、运行、测试、cgo 等功能。完整支持范围和宿主限制见
+已验证原生构建、运行、测试、cgo 等功能。完整支持范围和平台限制见
 [适配说明](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/README.md)及
 [验证记录](https://github.com/oheco/go/blob/go1.27.1-ohos.1/misc/harmony/VALIDATION.md)。
 
@@ -230,7 +230,7 @@ git lfs install --local
 git lfs track '*.psd'
 ```
 
-Git 必须可从 PATH 调用；本开发目录已把此版本升为 schema v5，声明 `git *` 原生运行依赖，
+Git 必须可从 PATH 调用；本目录已把此版本升为 schema v5，声明 `git *` 原生运行依赖，
 新版客户端会自动解析，不虚构未经验证的最低版本。旧客户端的兼容索引将不再包含此 v5 包。
 通常先执行 `git lfs install`
 启用用户过滤器，再克隆已有 LFS 仓库；包安装本身不会改动 Git 配置和 hooks。
@@ -239,7 +239,7 @@ Git 必须可从 PATH 调用；本开发目录已把此版本升为 schema v5，
 `git lfs help track` 查看。
 
 已通过鸿蒙原生 Go 单元测试、clean/smudge/filter-process、HTTPS 认证上传下载、
-克隆自动还原、fsck、历史迁移，以及共享目录/含空格路径和本地复制回退验证。
+克隆自动还原、fsck、历史迁移，以及含空格路径和本地复制回退验证。
 HTTPS 默认校验系统 CA，私有 CA 可用 `http.sslCAInfo` 配置。SSH 使用系统 `ssh`；
 真实 SSH/pure-SSH 和 Kerberos/NTLM 场景尚未验收。详见
 [适配说明](https://github.com/oheco/git-lfs/blob/ohos/3.8.0/README.ohos.md)及
@@ -265,7 +265,7 @@ Ctrl+B 后按 `%` 左右分屏、`"` 上下分屏、`c` 新建窗口、`d` 脱�
 或使用 `-S` 指定允许创建 Unix socket 的路径，共享目录及只读 `/tmp` 不适用。
 包采用 v1 规范，`strip_components: 0`，保留 `bin/` 和 `share/` 的相对布局。
 
-已验证分屏、窗口、中文输出、复制粘贴、缓冲区编辑、窗口缩放及 zshc 断线重连。
+已验证分屏、窗口、中文输出、复制粘贴、缓冲区编辑、窗口缩放及断线重连。
 终端应用完全退出、系统休眠或后台回收后的保活尚未验证。详细范围见
 [适配说明](https://github.com/oheco/tmux/blob/3.5a-ohos.1/README.ohos.md)和
 [验收记录](https://github.com/oheco/tmux/blob/3.5a-ohos.1/ohos/validation.md)。
@@ -288,7 +288,7 @@ python -m pip --version
 命令启动器保留真实安装路径，支持 `python3@3.14.7-ohos.1`、`pip3@3.14.7-ohos.1`
 及 `python3-config@3.14.7-ohos.1` 等版本入口。运行包已签名，解压时移除一层根目录。
 
-原生扩展编译需 PATH 中的 OHOS SDK Clang 和 `binary-sign-tool`，客户端不会自动安装
+原生扩展编译需 PATH 中的 OHOS SDK Clang 和 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），客户端不会自动安装
 这些工具。涉及 Unix socket 或严格 POSIX 权限时，将 `TMPDIR` 指向应用私有可写目录。
 本版未包含 Tk、gdbm/ndbm 和可选 libuuid 扩展；Python `uuid` 和 `dbm.sqlite3` 可用。
 通用 Linux/musllinux 二进制 wheel 不兼容。仅验证了 HarmonyOS PC ARM64 原生终端，
@@ -318,7 +318,7 @@ node -p "process.platform + '/' + process.arch"
 
 保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL。纯 JavaScript 使用
 无需 Python 或 SDK；原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和
-`binary-sign-tool`，并使用应用私有的可写 `TMPDIR`。只有随包 node-gyp 包含适配，独立
+`binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），并使用应用私有的可写 `TMPDIR`。只有随包 node-gyp 包含适配，独立
 升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容，其他系统、架构和手机沙箱
 尚未验证。
 
@@ -347,7 +347,7 @@ cd hello-web
 dotnet run --urls http://127.0.0.1:5080
 ```
 
-构建需 PATH 中的 `binary-sign-tool`，NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
+构建需 PATH 中的 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
 和 llvm-objcopy；本描述未将这些构建工具声明为自动安装依赖。SDK 无需另装运行包。原生工具已签名，
 构建/发布的本机文件自动签名，发布时保留 ICU、OpenSSL 和 C++ 运行库。
 NativeAOT 保留上游限制；Web AOT 适用于支持裁剪的 Minimal API，可使用
@@ -382,7 +382,7 @@ Kerberos/GSSAPI 未启用。通用 Linux 原生 NuGet 依赖需要鸿蒙适配�
 各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。
 当前不支持 LLDB，描述文件不声明任何 lldb 命令。各包均保留原始 NOTICE 中的许可证。
 
-本开发版的完整 v5 索引供新版 oo 和网站使用，v1/v2/v3/v4 索引供旧客户端
+本版的完整 v5 索引供新版 oo 和网站使用，v1/v2/v3/v4 索引供旧客户端
 读取兼容包，按整个包的 schema fail-closed 过滤，不删除 dependencies 后伪装为旧包。
 其中 v1 包含已发布的 oheco 自举包，持续使用 v1 / tar.gz；其 Release 版本本次不变。
 Pages pin 的发布前置条件见开头；不要把本地生成成功当成线上部署完成。
@@ -458,7 +458,7 @@ v4 在每个版本中增加可选的 `projects`，与 `artifacts` 并列。项�
 核对摘要和大小，并在隔离临时目录解压验证；目录验证不执行项目代码。
 
 `latest` 继续按目标平台填写版本；只含项目的版本也可被引用。`oo export` 默认取
-当前平台的 latest；其他宿主在各平台 latest 一致时也可导出，存在歧义时指定版本。
+当前平台的 latest；在其他平台导出时，如果各平台 latest 指向同一版本也可直接引用，存在歧义时指定版本。
 只有一个项目可省略项目名，多项目需要指定。以下以 `example-project` 为示例包名，
 使用时替换为目录中实际收录的包及版本：
 
@@ -472,9 +472,9 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 归档必须保留许可证，包含构建所需资源，并排除个人账号、签名证书和本机 SDK 路径。
 
 仅使用项目功能的包继续采用 `schema_version: 4`；新增原生安装依赖时才升到 v5。
-当前开发版网站读取 v5，v1–v4 索引仅保留各自能够读取的完整包描述。
+当前网站读取 v5，v1–v4 索引仅保留各自能够读取的完整包描述。
 
-## 原生软件依赖规范 v5（开发版）
+## 原生软件依赖规范 v5
 
 在**每个版本**中可选声明 `dependencies`，不是包级全版本通用字段。例如 Git LFS 的真实
 运行要求使用 `{"name":"git","constraint":"*"}`；不把 Go、LLVM、SDK 等构建工具批量附加为运行依赖。

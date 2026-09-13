@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "rust",
-  "description": "Rust 1.98.1 官方 OHOS 宿主工具链，包含 Cargo、rustfmt、Clippy 和 rust-analyzer",
+  "description": "Rust 1.98.1 官方 OHOS 工具链，可直接在鸿蒙上运行，包含 Cargo、rustfmt、Clippy 和 rust-analyzer",
   "upstream": "https://github.com/rust-lang/rust",
   "repository": "https://github.com/oheco/rust",
   "maintainers": [
@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT OR Apache-2.0 (with bundled third-party notices)",
-  "notes": "HarmonyOS PC ARM64 原生验收；复用官方 OHOS 工具链，OpenSSL 3.5.8 在宿主原生构建并随包提供。需先安装 python3、ohos-sdk-native、ohos-sdk-toolchains 并使 Clang 和 binary-sign-tool 位于 PATH；oo 不自动安装这些依赖。链接后自动签名可执行文件、构建脚本和过程宏，使用系统 CA 验证 Cargo HTTPS。官方组件未包含 rustdoc，故不支持 cargo doc 和文档测试；普通测试使用 cargo test --all-targets。未在鸿蒙从源码自举 Rust/LLVM，其他设备未验证。",
+  "notes": "HarmonyOS PC ARM64 原生验收；复用官方 OHOS 工具链，OpenSSL 3.5.8 在鸿蒙上原生构建并随包提供。需先安装 python3、ohos-sdk-native、ohos-sdk-toolchains，并使 Clang（ohos-sdk-native）和 binary-sign-tool（ohos-sdk-toolchains）位于 PATH；oo 不自动安装这些依赖。链接后自动签名可执行文件、构建脚本和过程宏，使用系统 CA 验证 Cargo HTTPS。官方组件未包含 rustdoc，故不支持 cargo doc 和文档测试；普通测试使用 cargo test --all-targets。未在鸿蒙从源码自举 Rust/LLVM，其他设备未验证。",
   "latest": {
     "ohos-arm64": "1.98.1-ohos.1"
   },

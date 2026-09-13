@@ -11,7 +11,7 @@
     }
   ],
   "license": "PSF-2.0 (with bundled GPL-3.0-or-later Readline and other dependency licenses)",
-  "notes": "HarmonyOS PC ARM64 社区预发布版。已签名，包含 SSL、ctypes、SQLite、压缩库、readline/curses；支持含空格的安装路径。原生扩展编译需 OHOS SDK Clang 和 binary-sign-tool；涉及 Unix socket 或严格 POSIX 权限时使用应用私有 TMPDIR。未包含 Tk、gdbm/ndbm 及可选 libuuid 扩展。通用 Linux/musllinux 二进制 wheel 不兼容；其他架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
+  "notes": "HarmonyOS PC ARM64 社区预发布版。已签名，包含 SSL、ctypes、SQLite、压缩库、readline/curses；支持含空格的安装路径。原生扩展编译需 OHOS SDK Clang 和 binary-sign-tool（来自 ohos-sdk-toolchains 包）；涉及 Unix socket 或严格 POSIX 权限时使用应用私有 TMPDIR。未包含 Tk、gdbm/ndbm 及可选 libuuid 扩展。通用 Linux/musllinux 二进制 wheel 不兼容；其他架构和手机沙箱未验证。对应源码与验证记录见 Release 附件。",
   "latest": {
     "ohos-arm64": "3.14.7-ohos.1"
   },

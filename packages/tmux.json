@@ -11,7 +11,7 @@
     }
   ],
   "license": "ISC (with bundled BSD and ncurses licenses)",
-  "notes": "已签名，静态集成 libevent 和 libtinfo，随包提供 terminfo。默认 socket 位于应用私有目录；其他终端环境可设置 TMUX_TMPDIR 或使用 -S，共享目录及只读 /tmp 不适用。已验证 zshc 断线重连；终端应用退出、休眠或后台回收后的保活尚未验证。",
+  "notes": "已签名，静态集成 libevent 和 libtinfo，随包提供 terminfo。默认 socket 位于应用私有目录；其他终端环境可设置 TMUX_TMPDIR 或使用 -S，共享目录及只读 /tmp 不适用。已验证断线重连；终端应用退出、休眠或后台回收后的保活尚未验证。",
   "latest": {
     "ohos-arm64": "3.5a-ohos.1"
   },
