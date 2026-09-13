@@ -14,9 +14,48 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.1.5-rc.2-ohos.2"
+    "ohos-arm64": "0.1.5-rc.2-ohos.3"
   },
   "versions": [
+    {
+      "version": "0.1.5-rc.2-ohos.3",
+      "upstream_version": "0.1.5-rc.2",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.1.5-rc.2-ohos.3/deepseek-harness-0.1.5-rc.2-ohos.3.tgz",
+        "sha256": "7bbcec9c89af1a5709fb3ff8addbe8cc2056544698f0249dd47e17ff9bca97dc",
+        "size": 32757082,
+        "filename": "deepseek-harness-0.1.5-rc.2-ohos.3.tgz",
+        "package_json": {
+          "name": "@deepseek-ai/dsh",
+          "version": "0.1.5-rc.2-ohos.3",
+          "description": "DeepSeek Harness CLI and Web profiles for HarmonyOS PC ARM64",
+          "type": "module",
+          "bin": {
+            "dsh": "bin/dsh"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/deepseek-harness"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          },
+          "dependencies": {
+            "node-pty": "1.2.0-beta.15-ohos.1",
+            "koffi": "3.1.1-ohos.1",
+            "sharp": "0.35.3-ohos.1",
+            "@vscode/ripgrep": "1.18.0-ohos.2"
+          }
+        }
+      }
+    },
     {
       "version": "0.1.5-rc.2-ohos.2",
       "upstream_version": "0.1.5-rc.2",
