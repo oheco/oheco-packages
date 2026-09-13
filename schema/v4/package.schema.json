@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oheco.github.io/oheco-packages/schema/v4/package.schema.json",
+  "title": "oheco package descriptor v4 (accepts v1/v2/v3)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "name", "description", "upstream", "repository", "maintainers", "license", "latest", "versions"],
+  "properties": {
+    "schema_version": {"enum": [1, 2, 3, 4]},
+    "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._+-]{0,127}$"},
+    "description": {"type": "string", "minLength": 1},
+    "upstream": {"type": "string", "format": "uri", "pattern": "^https://"},
+    "repository": {"type": "string", "pattern": "^https://github\\.com/oheco/[A-Za-z0-9][A-Za-z0-9._+-]{0,127}/?$"},
+    "maintainers": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["github"],
+        "properties": {
+          "github": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,38}$"},
+          "name": {"type": "string"}
+        }
+      }
+    },
+    "license": {"type": "string", "minLength": 1},
+    "notes": {"type": "string"},
+    "latest": {
+      "type": "object", "minProperties": 1,
+      "propertyNames": {"pattern": "^[a-z0-9]+-[a-z0-9]+$"},
+      "additionalProperties": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"}
+    },
+    "versions": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false, "required": ["version"],
+        "properties": {
+          "version": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"},
+          "upstream_version": {"type": "string"},
+          "artifacts": {
+            "type": "object", "minProperties": 1,
+            "propertyNames": {"pattern": "^[a-z0-9]+-[a-z0-9]+$"},
+            "additionalProperties": {"$ref": "#/$defs/artifact"}
+          },
+          "pip_artifacts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/pip_artifact"}},
+          "npm_artifacts": {"$ref": "#/$defs/npm_artifact"},
+          "projects": {
+            "type": "object", "minProperties": 1,
+            "propertyNames": {"pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"},
+            "additionalProperties": {"$ref": "#/$defs/project"}
+          }
+        }
+      }
+    },
+    "package_manager": {"enum": ["oheco", "pip", "npm"]},
+    "package_name": {"type": "string", "minLength": 1, "maxLength": 214}
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["url", "sha256", "size", "format", "strip_components", "binaries"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "format": {"enum": ["tar.gz", "zip"]},
+        "strip_components": {"type": "integer", "minimum": 0, "maximum": 8},
+        "binaries": {
+          "type": "object", "minProperties": 0,
+          "propertyNames": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"},
+          "additionalProperties": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?!.*\\\\)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*(?:^|/)\\.(?:/|$))(?!.*//)[^\\u0000]+$"}
+        },
+        "launchers": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$"}}
+      }
+    },
+    "pip_artifact": {
+      "type": "object", "additionalProperties": false, "required": ["url", "sha256", "size", "filename"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "filename": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\\\r\\n]+$"},
+        "requires_python": {"type": "string"},
+        "requires_dist": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "npm_artifact": {
+      "type": "object", "additionalProperties": false, "required": ["url", "sha256", "size", "filename", "package_json"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "filename": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\\\r\\n]+$"},
+        "package_json": {
+          "type": "object", "required": ["name", "version"],
+          "properties": {"name": {"type": "string"}, "version": {"type": "string"}},
+          "not": {"required": ["dist"]}
+        }
+      }
+    },
+    "project": {
+      "type": "object", "additionalProperties": false, "required": ["url", "sha256", "size", "format", "strip_components"],
+      "properties": {
+        "url": {"type": "string", "format": "uri", "pattern": "^https?://"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "size": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "format": {"enum": ["tar.gz", "zip"]},
+        "strip_components": {"type": "integer", "minimum": 0, "maximum": 8},
+        "description": {"type": "string"}
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"schema_version": {"const": 1}}},
+      "then": {"properties": {"versions": {"items": {"properties": {"artifacts": {"additionalProperties": {
+        "properties": {"format": {"const": "tar.gz"}, "binaries": {"minProperties": 1}},
+        "not": {"required": ["launchers"]}
+      }}}}}}}
+    },
+    {
+      "if": {"properties": {"package_manager": {"const": "oheco"}}},
+      "then": {
+        "properties": {"versions": {"items": {
+          "not": {"anyOf": [{"required": ["pip_artifacts"]}, {"required": ["npm_artifacts"]}]},
+          "anyOf": [{"required": ["artifacts"]}, {"required": ["projects"]}]
+        }}},
+        "not": {"required": ["package_name"]}
+      }
+    },
+    {
+      "if": {"properties": {"package_manager": {"const": "pip"}}, "required": ["package_manager"]},
+      "then": {
+        "properties": {
+          "versions": {"items": {"required": ["pip_artifacts"], "not": {"anyOf": [{"required": ["artifacts"]}, {"required": ["npm_artifacts"]}]}}},
+          "schema_version": {"enum": [3, 4]}
+        },
+        "required": ["package_name"]
+      }
+    },
+    {
+      "if": {"properties": {"package_manager": {"const": "npm"}}, "required": ["package_manager"]},
+      "then": {
+        "properties": {
+          "versions": {"items": {"required": ["npm_artifacts"], "not": {"anyOf": [{"required": ["artifacts"]}, {"required": ["pip_artifacts"]}]}}},
+          "schema_version": {"enum": [3, 4]}
+        },
+        "required": ["package_name"]
+      }
+    },
+    {
+      "if": {"properties": {"schema_version": {"enum": [1, 2]}}},
+      "then": {"not": {"anyOf": [{"required": ["package_manager"]}, {"required": ["package_name"]}]}}
+    },
+    {
+      "if": {"properties": {"schema_version": {"enum": [1, 2, 3]}}},
+      "then": {"properties": {"versions": {"items": {"not": {"required": ["projects"]}}}}}
+    }
+  ]
+}

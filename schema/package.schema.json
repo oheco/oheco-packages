@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://oheco.github.io/oheco-packages/schema/package.schema.json",
-  "title": "oheco package descriptor v4 (accepts v1/v2/v3)",
+  "title": "oheco package descriptor v5 (accepts v1/v2/v3/v4)",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -21,7 +21,8 @@
         1,
         2,
         3,
-        4
+        4,
+        5
       ]
     },
     "name": {
@@ -116,6 +117,12 @@
           "npm_artifacts": {
             "$ref": "#/$defs/npm_artifact"
           },
+          "dependencies": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"$ref": "#/$defs/dependency"},
+            "description": "Native install dependencies for this version only; duplicate names, self references and catalog/platform availability are checked by oo-index."
+          },
           "projects": {
             "type": "object",
             "minProperties": 1,
@@ -143,6 +150,27 @@
     }
   },
   "$defs": {
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "constraint"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._+-]{0,127}$"},
+        "constraint": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "\\S",
+          "description": "=, ==, !=, >, >=, <, <=, exact or *; AND via whitespace/comma/AND/&&, OR via OR/||. Full native-version grammar is validated by oo-index, not global SemVer."
+        },
+        "version_basis": {"enum": ["package", "upstream"], "default": "package"},
+        "platforms": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9]+-[a-z0-9]+$"},
+          "description": "Omitted or empty means every source artifact platform; explicit names must exist on the source version."
+        }
+      }
+    },
     "artifact": {
       "type": "object",
       "additionalProperties": false,
@@ -339,6 +367,24 @@
   },
   "allOf": [
     {
+      "if": {"properties": {"schema_version": {"enum": [1, 2, 3, 4]}}},
+      "then": {"properties": {"versions": {"items": {"not": {"required": ["dependencies"]}}}}}
+    },
+    {
+      "if": {"properties": {"package_manager": {"enum": ["pip", "npm"]}}, "required": ["package_manager"]},
+      "then": {"properties": {"versions": {"items": {"not": {"required": ["dependencies"]}}}}}
+    },
+    {
+      "properties": {"versions": {"items": {
+        "if": {"required": ["dependencies"]},
+        "then": {"required": ["artifacts"]}
+      }}}
+    },
+    {
+      "if": {"properties": {"name": {"const": "oheco"}}},
+      "then": {"properties": {"schema_version": {"const": 1}}}
+    },
+    {
       "if": {
         "properties": {
           "schema_version": {
@@ -459,7 +505,8 @@
           "schema_version": {
             "enum": [
               3,
-              4
+              4,
+              5
             ]
           }
         },
@@ -505,7 +552,8 @@
           "schema_version": {
             "enum": [
               3,
-              4
+              4,
+              5
             ]
           }
         },

@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 5,
   "name": "git-lfs",
   "description": "Git LFS 鸿蒙原生大文件管理工具，支持 HTTPS 和本地大文件传输",
   "upstream": "https://github.com/git-lfs/git-lfs",
@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT",
-  "notes": "需另行安装 Git 并加入 PATH；oo 不自动安装跨包依赖。安装包不修改 Git 配置和 hooks，请在目标仓库执行 git lfs install --local；克隆前可用 git lfs install 启用用户过滤器。已签名并静态集成 Go 网络/TLS 和全部运行模块，无需运行时安装 Go、curl 或 OpenSSL。HTTPS 默认校验系统 CA；SSH 及外部凭据/传输程序按配置另行提供。已验收 HTTPS、本地传输、共享目录和含空格路径；真实 SSH/pure-SSH、Kerberos/NTLM 和 reflink/dedup 尚未验收。本地 Git 克隆需 --no-hardlinks。",
+  "notes": "需 Git 并加入 PATH；schema v5 客户端按本版本的 dependencies 安装原生 git 包（不声明未经验证的最低版本）。安装包不修改 Git 配置和 hooks，请在目标仓库执行 git lfs install --local；克隆前可用 git lfs install 启用用户过滤器。已签名并静态集成 Go 网络/TLS 和全部运行模块，无需运行时安装 Go、curl 或 OpenSSL。HTTPS 默认校验系统 CA；SSH 及外部凭据/传输程序按配置另行提供。已验收 HTTPS、本地传输、共享目录和含空格路径；真实 SSH/pure-SSH、Kerberos/NTLM 和 reflink/dedup 尚未验收。本地 Git 克隆需 --no-hardlinks。",
   "latest": {
     "ohos-arm64": "3.8.0-ohos.1"
   },
@@ -19,6 +19,9 @@
     {
       "version": "3.8.0-ohos.1",
       "upstream_version": "3.8.0",
+      "dependencies": [
+        {"name": "git", "constraint": "*"}
+      ],
       "artifacts": {
         "ohos-arm64": {
           "url": "https://github.com/oheco/git-lfs/releases/download/v3.8.0-ohos.1/git-lfs-3.8.0-ohos.1-ohos-arm64.tar.gz",

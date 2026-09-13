@@ -17,7 +17,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: oheco/oheco
-          ref: v0.6.0
+          # Published schema-v5 generator; legacy indexes remain fail-closed.
+          ref: v0.7.0
           path: .tools/oheco
       - uses: actions/setup-go@v5
         with:

@@ -27,20 +27,53 @@ async function copy(text, button) {
   } catch { status.textContent = '无法自动复制，请选择命令文本后手动复制。'; }
 }
 document.querySelector('#copy-install').addEventListener('click', event => copy(document.querySelector('#install-command').textContent, event.currentTarget));
-const versionOrder = new Intl.Collator('en', { numeric: true, sensitivity: 'base' });
-function compareVersions(a, b) {
-  // Compare numeric releases first, including SDK versions with four components.
-  const parse = value => value.replace(/^v(?=\d)/i, '').split('+')[0].match(/^(\d+(?:\.\d+)*)(.*)$/);
-  const left = parse(a.version), right = parse(b.version);
-  if (left && right) {
-    const release = versionOrder.compare(right[1], left[1]);
-    if (release) return release;
-    // OHOS revisions follow a release; alpha/beta/rc versions precede it.
-    const stage = suffix => /^-ohos(?:[.-]|$)/i.test(suffix) ? 1 : suffix ? -1 : 0;
-    return stage(right[2]) - stage(left[2]) || versionOrder.compare(right[2], left[2]);
-  }
-  return versionOrder.compare(b.version, a.version);
+const compareText = (a, b) => a < b ? -1 : a > b ? 1 : 0;
+function compareNumber(a, b) {
+  a = a.replace(/^0+/, ''); b = b.replace(/^0+/, '');
+  return Math.sign(a.length - b.length) || compareText(a, b);
 }
+function naturalCompare(a, b) {
+  const left = a.match(/[0-9]+|[^0-9]+/g) || [], right = b.match(/[0-9]+|[^0-9]+/g) || [];
+  for (let i = 0; i < Math.min(left.length, right.length); i++) {
+    const an = /^[0-9]/.test(left[i]), bn = /^[0-9]/.test(right[i]);
+    const result = an && bn ? compareNumber(left[i], right[i]) : an !== bn ? (an ? -1 : 1) : compareText(left[i], right[i]);
+    if (result) return result;
+  }
+  return Math.sign(left.length - right.length);
+}
+function nativeVersion(value) {
+  if (!/^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$/.test(value)) return null;
+  const revision = value.match(/-ohos\.([0-9]+)$/);
+  if (revision) value = value.slice(0, revision.index);
+  if (value.includes('-ohos.')) return null;
+  const match = value.match(/^([0-9]+(?:\.[0-9]+)*)([a-z]?)(?:-([0-9A-Za-z]+(?:[.-][0-9A-Za-z]+)*))?$/);
+  return match && { core: match[1].split('.'), letter: match[2], pre: match[3] || '', revision: revision?.[1] || '0' };
+}
+function comparePrerelease(a, b) {
+  if (a === b) return 0;
+  if (!a || !b) return a ? -1 : 1;
+  const left = a.split(/[.-]/), right = b.split(/[.-]/);
+  for (let i = 0; i < Math.min(left.length, right.length); i++) {
+    const result = naturalCompare(left[i], right[i]);
+    if (result) return result;
+  }
+  return Math.sign(left.length - right.length);
+}
+function compareVersionNames(a, b) {
+  // Display order mirrors catalog.CompareVersions, not a global SemVer parser.
+  // External package installation/version resolution remains with npm or pip.
+  const left = nativeVersion(a), right = nativeVersion(b);
+  if (left && right) {
+    for (let i = 0; i < Math.max(left.core.length, right.core.length); i++) {
+      const result = compareNumber(left.core[i] || '0', right.core[i] || '0');
+      if (result) return result;
+    }
+    return compareText(left.letter, right.letter) || comparePrerelease(left.pre, right.pre) || compareNumber(left.revision, right.revision);
+  }
+  if (Boolean(left) !== Boolean(right)) return left ? 1 : -1;
+  return naturalCompare(a, b) || compareText(a, b);
+}
+function compareVersions(a, b) { return -compareVersionNames(a.version, b.version); }
 function projectURL(href) {
   const url = new URL(href);
   const path = url.pathname.replace(/\/+$/, '').replace(/\.git$/i, '');
@@ -169,7 +202,8 @@ function card(pkg) {
     meta.append(link('上游项目 ↗', pkg.upstream), link('鸿蒙适配 ↗', pkg.repository));
   }
   meta.append(el('span', pkg.license));
-  if (manager !== 'oheco') meta.append(el('span', `${manager} · ${pkg.package_name}`));
+  meta.append(el('span', manager === 'oheco' ? 'oheco · 原生' : `${manager} · ${pkg.package_name}`));
+  if (manager !== 'oheco') meta.append(el('span', `<由${manager}管理> · 非安装状态`));
   article.append(meta);
   const people = el('div', undefined, 'metadata');
   people.append(el('span', '移植维护：'));
@@ -189,8 +223,26 @@ function card(pkg) {
   const hash = el('code');
   details.append(summary, hash);
   const projects = el('div');
+  const dependencies = el('section', undefined, 'dependencies');
   function updateVersion(version) {
-    const artifacts = (manager === 'pip' ? version.pip_artifacts : [manager === 'npm' ? version.npm_artifacts : version.artifacts?.[target]]).filter(Boolean);
+    dependencies.replaceChildren();
+    if (manager === 'oheco') {
+      dependencies.append(el('strong', `原生软件依赖 · ${version.version}`));
+      if (!version.dependencies?.length) dependencies.append(el('p', '此版本未声明原生软件依赖。', 'notes'));
+      else {
+        const list = el('ul');
+        for (const dependency of version.dependencies) {
+          const item = el('li');
+          const basis = dependency.version_basis === 'upstream' ? '上游版本' : '包版本';
+          const platforms = dependency.platforms?.length ? dependency.platforms.join(', ') : '全部产物平台';
+          const applies = !dependency.platforms?.length || dependency.platforms.includes(target);
+          item.append(el('code', `${dependency.name} ${dependency.constraint}`), el('span', ` · ${basis} · ${platforms}${applies ? '' : '（不适用于当前平台）'}`));
+          list.append(item);
+        }
+        dependencies.append(list);
+      }
+    } else dependencies.append(el('p', `依赖由 ${manager} 在所选环境中即时解析；此页面不记录或判断安装状态。`, 'notes'));
+    const artifacts = (manager === 'pip' ? version.pip_artifacts || [] : [manager === 'npm' ? version.npm_artifacts : version.artifacts?.[target]]).filter(Boolean);
     download.replaceChildren(...artifacts.map(artifact => link(
       manager === 'pip' ? `${artifact.filename} ↗` : '下载软件包 ↗', artifact.url, 'download')));
     code.textContent = `oo install ${pkg.name}@${version.version}`;
@@ -216,7 +268,7 @@ function card(pkg) {
   }
   if (versions.length) {
     row.append(versionPicker(pkg, versions, updateVersion), download);
-    article.append(row, command, details, projects);
+    article.append(row, command, details, dependencies, projects);
   }
   else article.append(el('p', '此平台暂无可用版本', 'notes'));
   if (pkg.notes) article.append(el('p', pkg.notes, 'notes'));
@@ -228,7 +280,8 @@ function render() {
   const matches = packages.filter(pkg => {
     const commands = pkg.versions.flatMap(version => Object.values(version.artifacts || {}).flatMap(artifact => Object.keys(artifact.binaries)));
     const projects = pkg.versions.flatMap(version => Object.entries(version.projects || {}).flatMap(([name, project]) => [name, project.description || '']));
-    return [pkg.name, pkg.package_name || '', pkg.description, ...commands, ...projects].join(' ').toLocaleLowerCase().includes(query);
+    const dependencies = pkg.versions.flatMap(version => (version.dependencies || []).map(dependency => dependency.name));
+    return [pkg.name, pkg.package_manager || 'oheco', pkg.package_name || '', pkg.description, ...commands, ...projects, ...dependencies].join(' ').toLocaleLowerCase().includes(query);
   });
   container.replaceChildren(...matches.map(card));
   document.querySelector('#count').textContent = String(matches.length);
@@ -242,10 +295,10 @@ async function refreshIndex() {
   loadingIndex = true;
   try {
     // Pages caches files for ten minutes; revalidate release metadata on each visit.
-    const response = await fetch('./index/v4/index.json', { cache: 'no-cache' });
+    const response = await fetch('./index/v5/index.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
-    if (index.schema_version !== 4 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+    if (index.schema_version !== 5 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
     const updatedPackages = JSON.stringify(index.packages);
     if (updatedPackages !== loadedPackages) {
       packages = index.packages;

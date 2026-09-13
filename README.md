@@ -6,6 +6,10 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oh
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
 
+> 完整索引使用 schema v5，Pages 生成器固定为已发布的 `oheco v0.7.0`。
+> 原生包可按版本声明依赖；npm/pip 依赖仍交给对应管理器，不在 oheco 建立安装镜像。
+> v1–v4 兼容索引保留升级入口，但不会把带新依赖语义的包删减字段后提供给旧客户端。
+
 ## 文件
 
 - `packages/<name>.json`：人工维护的包描述，也是唯一版本信息来源。
@@ -43,7 +47,8 @@ SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
 ZIP 额外验证 CRC，拒绝加密条目；保留目录 `.oo-launchers/` 仅由客户端生成启动器。
 软件包内的可执行文件必须带执行权限；其他内容可包含 `lib/`、`share/`、源码、许可证等。
-原生包安装不执行包内安装脚本，也不自动解析或安装跨包依赖；随包依赖应使用可重定位的目录布局。
+原生包安装不执行包内安装脚本。schema v5 可按版本声明原生运行依赖，由新版客户端
+解析与安装；未声明的运行环境和构建工具不自动安装。随包库仍应使用可重定位布局。
 
 例如压缩包带有 `example/` 根目录时，使用 `strip_components: 1`，
 `binaries` 可为 `{"example":"bin/example"}`。
@@ -77,7 +82,8 @@ public/
   style.css
   app.js
   install.sh
-  index/v4/index.json          # 完整索引
+  index/v5/index.json          # 完整索引（开发版）
+  index/v4/index.json          # v4 客户端兼容索引
   index/v3/index.json          # v3 客户端兼容索引
   index/v2/index.json          # v2 客户端兼容索引
   index/v1/index.json          # 旧客户端升级入口
@@ -85,6 +91,7 @@ public/
   schema/v1/{package,index}.schema.json
   schema/v2/{package,index}.schema.json
   schema/v3/{package,index}.schema.json
+  schema/v4/{package,index}.schema.json
   .nojekyll
 ```
 
@@ -200,7 +207,9 @@ git lfs install --local
 git lfs track '*.psd'
 ```
 
-Git 必须另行安装并加入 PATH；`oo` 不会自动安装跨包依赖。通常先执行 `git lfs install`
+Git 必须可从 PATH 调用；本开发目录已把此版本升为 schema v5，声明 `git *` 原生运行依赖，
+新版客户端会自动解析，不虚构未经验证的最低版本。旧客户端的兼容索引将不再包含此 v5 包。
+通常先执行 `git lfs install`
 启用用户过滤器，再克隆已有 LFS 仓库；包安装本身不会改动 Git 配置和 hooks。
 程序静态集成 Go 网络/TLS 和依赖，无需运行时安装 Go、curl 或 OpenSSL。已签名，
 支持整体迁移及 `git-lfs@3.8.0-ohos.1 version`。内置 Git LFS 帮助可用
@@ -316,7 +325,7 @@ dotnet run --urls http://127.0.0.1:5080
 ```
 
 构建需 PATH 中的 `binary-sign-tool`，NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
-和 llvm-objcopy；客户端不自动安装跨包依赖。SDK 无需另装运行包。原生工具已签名，
+和 llvm-objcopy；本描述未将这些构建工具声明为自动安装依赖。SDK 无需另装运行包。原生工具已签名，
 构建/发布的本机文件自动签名，发布时保留 ICU、OpenSSL 和 C++ 运行库。
 NativeAOT 保留上游限制；Web AOT 适用于支持裁剪的 Minimal API，可使用
 `dotnet new webapiaot`，以 `dotnet publish -c Release -r openharmony-arm64` 发布。
@@ -350,9 +359,10 @@ Kerberos/GSSAPI 未启用。通用 Linux 原生 NuGet 依赖需要鸿蒙适配�
 各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。
 当前不支持 LLDB，描述文件不声明任何 lldb 命令。各包均保留原始 NOTICE 中的许可证。
 
-Pages 使用 v0.6.0 索引生成器。完整 v4 索引供新版 oo 和网站使用，v1/v2/v3 索引供旧客户端
-读取兼容包，其中 v1 包含最新 oheco 版本。oheco 自举包持续使用 v1 / tar.gz，
-旧版客户端通过 `oo update && oo install oheco` 升级后，再次执行 `oo update` 获取 SDK。
+本开发版的完整 v5 索引供新版 oo 和网站使用，v1/v2/v3/v4 索引供旧客户端
+读取兼容包，按整个包的 schema fail-closed 过滤，不删除 dependencies 后伪装为旧包。
+其中 v1 包含已发布的 oheco 自举包，持续使用 v1 / tar.gz；其 Release 版本本次不变。
+Pages pin 的发布前置条件见开头；不要把本地生成成功当成线上部署完成。
 
 native 的原始 ZIP 包含 8 对仅大小写不同且内容不同的头文件。oo 解压默认保留全小写
 文件名对应的原始内容，舍弃对应的大写变体，不受 ZIP 条目顺序影响，以兼容鸿蒙主目录
@@ -375,12 +385,13 @@ v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时
 `requires_python`、`requires_dist`，npm 必须有 `package_json`。包名、版本、依赖和兼容性
 元数据来自实际归档，使用 oheco 的 `oo-index --inspect <文件> --package-manager pip|npm
 --url <发布地址>` 生成。`sh scripts/build.sh --verify-artifacts` 同时校验实际产物及元数据，
-并生成 v3 完整索引和 v1/v2 兼容索引；历史自举入口不变。
+并生成当前完整索引和各历史版本兼容索引；历史自举入口不变。
 
 语言包通过 oo 的临时源交给 pip/npm 安装，适配仓库仍属于 oheco，发行包仍使用 GitHub
 Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
-[oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。Pages 构建器固定到
-支持 v4 的 oo 0.6.0；发布顺序为先发布构建器，再提交依赖它的描述文件和网站。
+[oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。pip/npm 的依赖继续由
+各自后端在所选环境中即时解析，不复制为版本级原生 `dependencies`，也不建立外部安装镜像。
+Pages 构建器目前仍固定到已发布的 oo 0.6.0；先发布支持 v5 的构建器，再改 pin 并部署。
 
 ## DeepSeek Harness
 
@@ -436,5 +447,60 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 项目导出后由用户在 DevEco 中构建、签名和安装，不计入 `oo list` 或 `oo remove`。
 归档必须保留许可证，包含构建所需资源，并排除个人账号、签名证书和本机 SDK 路径。
 
-发布时使用 `schema_version: 4`。网站和新版客户端读取 v4；v1–v3 索引仅保留各自
-能够读取的包描述，旧客户端可通过持续保持 v1 的 oheco 自举包升级至 0.6.0。
+仅使用项目功能的包继续采用 `schema_version: 4`；新增原生安装依赖时才升到 v5。
+当前开发版网站读取 v5，v1–v4 索引仅保留各自能够读取的完整包描述。
+
+## 原生软件依赖规范 v5（开发版）
+
+在**每个版本**中可选声明 `dependencies`，不是包级全版本通用字段。例如 Git LFS 的真实
+运行要求使用 `{"name":"git","constraint":"*"}`；不把 Go、LLVM、SDK 等构建工具批量附加为运行依赖。
+以下只是版本字段片段，完整版本还必须含合法的 `artifacts`：
+
+```json
+{
+  "version": "1.2.0-ohos.1",
+  "dependencies": [
+    {"name": "runtime", "constraint": ">=2 <3 OR =4.0", "version_basis": "upstream", "platforms": ["ohos-arm64"]}
+  ]
+}
+```
+
+示例中的 `runtime` 是占位名称；真实声明必须引用目录中有匹配产物的原生包。
+
+- `name`、`constraint` 必填；`version_basis` 省略默认 `package`，按目标的 `version` 判断。
+  `upstream` 按显式 `upstream_version` 判断，缺失报错，不猜测或去除 `-ohos.N`。
+- `platforms` 省略或 `[]` 表示源版本所有产物平台；显式列表不可重复，必须属于源版本的
+  `artifacts`。目标在每个适用平台都必须至少有一个满足约束的可安装版本，不要求都是 latest。
+- 字段存在即需包 schema 5；字段必须是数组，不接受 `null`。源版本必须有原生 `artifacts`，
+  项目专用版本、pip/npm 版本不能声明；引用目标也不能是语言包或项目专用产物。
+- 同一版本按依赖名称去重，禁止自身引用。约束冲突及**实际选择**的版本图循环由安装 resolver
+  判断；目录校验不把所有可选版本边合并后误报循环。精确依赖和范围都不会触发外部安装器。
+- 支持 `>`、`>=`、`=`、`==`、`!=`、`<`、`<=`、裸精确版本和 `*`。空白、逗号、`AND`/`&&`
+  表示 AND，`OR`/`||` 表示 OR，AND 优先；所有分支都验证，不支持括号、局部通配符、`^` 或 `~`。
+- 不是全局 SemVer：数值核心任意段，忽略前导/尾随补零；`1 == 01.0.0`、四段 SDK 按数字比较。
+  `3.5 < 3.5a < 3.5b < 3.6`；预发布早于同版本正式版，标识大小写敏感且数字自然排序，
+  如 `26.0.0.35-Beta2 < 26.0.0.35-Beta10 < 26.0.0.35`。
+  `-ohos.N` 在基础版本之后按数字修订比较，未声明相当于 0；`ohos.10 > ohos.2`。
+  其他 opaque 字符串仅精确/不等/`*` 匹配，涉及范围明确拒绝；`v` 前缀和 `+metadata` 没有特殊语义。
+
+JSON Schema 定义结构门槛；完整约束语法、按名称重复、自引用、引用目标与逐平台可满足性由
+共享的 Go `oo-index` 执行。根 `schema/` 对应 v5，`schema/v1`–`schema/v4` 冻结旧协议。
+网站展示所有 manager，切换版本会更新对应依赖；`<由npm管理>` / `<由pip管理>` 仅表示管理归属，
+不声称已经安装，不创建外部安装状态镜像。统一 `oo install/remove` 默认 global；旧 `oo npm`
+保持 npm-local 兼容，后端作用域参数写在 `--` 之后。`--prefix DIR` 只选择目录，不隐含 local：
+统一入口 `oo install npm:<name> -- --prefix DIR` 仍是 global；本地范围明确写
+`oo install npm:<name> -- --global=false --prefix DIR`（或显式 `--no-global` / `--local` /
+`--location=project`），卸载须使用相同作用域。升级后的 state schema 2 禁止旧客户端再管理
+同一 root；`installed.v1.backup.json` 仅供参考，不是修改安装目录后可直接恢复的快照。
+原生 `--autoremove` / `--cascade` 不适用于外部包，`-y` 不隐含清理；后端即时解析也不保证
+跨 root 的反向依赖保护，pip 卸载后的依赖保留由 pip 决定。
+
+离线开发验证（不下载发行产物）可以运行：
+
+```sh
+GOPROXY=off GOSUMDB=off sh scripts/build.sh
+python3 scripts/test-v5.py --output public
+node scripts/test-site.cjs
+```
+
+发布仍须另行运行 `--verify-artifacts` 并完成原生安装验收；本轮只做本地验证，不联网、不提交、不发布。

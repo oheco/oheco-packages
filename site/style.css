@@ -110,3 +110,7 @@
 }
 
 .project-delivery{display:flex;flex-direction:column;gap:10px}.project-delivery+.project-delivery{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+.dependencies{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.dependencies strong{font-size:12px;font-weight:600}
+.dependencies ul{margin:6px 0;padding-left:18px}
+.dependencies code{font-size:12px}

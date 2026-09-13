@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://oheco.github.io/oheco-packages/schema/index.schema.json",
-  "title": "oheco index v4",
+  "title": "oheco index v5",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -11,7 +11,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": 4
+      "const": 5
     },
     "generated_at": {
       "type": "string",
