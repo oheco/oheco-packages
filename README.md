@@ -20,6 +20,10 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oh
 二者版本不必相同：安装脚本根据 `packages/oheco.json` 的 `latest` 选择客户端发行包，
 而现有生成器已支持复制 CNAME 和当前 schema 文件。此次迁移无需修改工作流权限或 pin。
 
+安装脚本模板取自生成器 checkout，也就是 `oheco` 仓库的 `scripts/install.sh.tmpl`；
+修改安装脚本行为需要把 Pages 的 pin 升到包含该模板的提交。`site/` 页面资源和
+`packages/` 描述文件不受 pin 影响，推送到 `main` 后即随 Pages 生效。
+
 当前 v5 的 `schema/{index,package}.schema.json` 使用
 `https://oheco.org/schema/` 下的 `$id`，索引到包 schema 的 `$ref` 仍为相对路径。
 `schema/v1`–`schema/v4` 的 8 个历史文件保持冻结，允许保留旧域名

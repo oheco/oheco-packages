@@ -18,6 +18,17 @@ assert.doesNotMatch(html, /https:\/\/oheco\.github\.io\/oheco-packages\//);
 assert.match(html, /<link rel="stylesheet" href="\.\/style\.css">/);
 assert.match(html, /<script src="\.\/app\.js(?:\?[^"<>]*)?" defer><\/script>/);
 assert.match(html, /<a href="\.\/index\/v5\/index\.json">/);
+// The logo is the "oo" mark glued into an infinity sign: the favicon file and
+// the inline header mark must carry the same two rings.
+const logo = fs.readFileSync(path.join(site, 'logo.svg'), 'utf8');
+const circles = text => [...text.matchAll(/<circle\b[^>]*>/g)].map(match => match[0].replace(/\s+/g, ' ').trim());
+const logoCircles = circles(logo);
+assert.equal(logoCircles.length, 2, 'the logo is built from two joined rings');
+const headerMark = html.match(/<svg class="brand-mark"[\s\S]*?<\/svg>/)?.[0];
+assert.ok(headerMark, 'the header shows the logo mark');
+assert.deepEqual(circles(headerMark), logoCircles, 'the header mark matches logo.svg');
+assert.match(html, /<link rel="icon" type="image\/svg\+xml" href="\.\/logo\.svg">/);
+assert.match(html, /<span>oheco<\/span>/);
 
 class Element {
   constructor(tag) {

@@ -6,11 +6,12 @@
   <meta name="description" content="oheco 鸿蒙开源工具目录：使用 oo 搜索、安装和管理原生软件包。">
   <title>oheco · 鸿蒙开源工具</title>
   <link rel="canonical" href="https://oheco.org/">
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
   <link rel="stylesheet" href="./style.css">
   <script src="./app.js?v=schema-v5-dependencies-1" defer></script>
 </head>
 <body>
-  <header><a class="brand" href="./" aria-label="oheco 首页">oo<span>oheco</span></a><a href="https://github.com/oheco">GitHub ↗</a></header>
+  <header><a class="brand" href="./" aria-label="oheco 首页"><svg class="brand-mark" viewBox="0 0 48 32" width="48" height="32" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="4.5"><circle cx="14.25" cy="16" r="10"/><circle cx="33.75" cy="16" r="10"/></g></svg><span>oheco</span></a><a href="https://github.com/oheco">GitHub ↗</a></header>
   <main>
     <section class="intro">
       <p class="eyebrow">OPEN SOURCE ON OPENHARMONY &amp; HARMONYOS</p>
@@ -24,7 +25,7 @@
         </ol>
       </section>
       <div class="install"><code id="install-command">curl -fsSL https://oheco.org/install.sh | zsh</code><button id="copy-install" type="button">复制</button></div>
-      <p class="hint">在鸿蒙原生 zsh 终端执行 · 安装至 ~/.oheco · 当前支持 ARM64<br>安装成功后自动配置 zsh PATH，重新打开终端即可使用 oo。</p>
+      <p class="hint">在鸿蒙原生 zsh 终端执行 · 安装至 ~/.oheco · 当前支持 ARM64<br>安装时会先询问是否把 ~/.oheco/bin 写入 zsh 的 PATH，再询问是否写入 XDG/TMPDIR，重新打开终端即可使用 oo。</p>
     </section>
     <section aria-labelledby="packages-title">
       <div class="catalog-heading"><h2 id="packages-title">工具目录 <span id="count"></span></h2><label class="search"><span class="sr-only">搜索工具名称、描述或命令</span><input id="search" type="search" placeholder="搜索名称、描述或命令…" autocomplete="off"></label></div>
