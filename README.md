@@ -60,6 +60,18 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oh
 
 SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
 
+### 语言包制品的 URL 要求（0.8.0 起）
+
+`npm_artifacts` / `pip_artifacts` 的 `url` 必须直连不可变的发布地址（通常是本仓库对应适配
+仓库的 GitHub Release 资产），客户端据此直接下载并由 npm/pip 校验完整性。
+
+- **pip**：`url` 的**最后一段路径必须等于 `filename`**（例如 `.../foo-1.0.0-py3-none-any.whl`）。
+  在 HTML 索引下 pip 用 URL 的 basename 判定 wheel 名，文件名不一致会被静默判为无效 wheel；
+  `oo-index` 现在会在构建阶段直接报错。
+- **npm**：客户端把 `sha256` 转成 `integrity` 交给 npm，npm 会校验从 `url` 下载的 tarball。
+- 0.7.x 生成器尚无 pip URL 校验；Pages 工作流仍在固定 `v0.7.0`（升级它需要带 `workflow`
+  权限的推送），因此该校验先在本仓库/本地构建生效，升级 pin 后由 CI 强制执行。
+
 名字和版本不允许 `/`、`@`、空格及路径跳转。包内路径不得越界。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
 ZIP 额外验证 CRC，拒绝加密条目；保留目录 `.oo-launchers/` 仅由客户端生成启动器。
