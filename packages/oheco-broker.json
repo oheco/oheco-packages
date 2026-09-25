@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "仅供可信本机开发：服务没有鉴权或加密，本机可连接端口的进程可请求以终端身份执行命令，使用完应关闭，不应以 root 运行。安装不自动启动服务；在终端运行 oheco-broker，前台监听随机回环端口并写入 ~/.oheco/broker/endpoint（一行 IP:端口），Ctrl+C 停止。已签名服务仅依赖系统 libc.so，无需 Go 或 .NET 运行时；实际执行的工具需自行安装。包内 sdk/c 可直接编译进宿主，sdk/dotnet 提供纯 .NET 10 源码项目；无需单独原生 SDK 库。两套 SDK 均将发现文件或连接失败归为 UNAVAILABLE。不包含 PTY、文件同步、任务恢复或系统服务安装，未接入 Godot。",
+  "notes": "仅供可信本机开发：没有鉴权或加密，本机可连接端口的进程可请求以终端身份执行命令，不以 root 运行。安装不自动启动服务；运行 oheco-broker，前台监听随机回环端口并写入 ~/.oheco/broker/endpoint（一行 IP:端口）。0.2.0 起支持独立后台启动：客户端断开及 broker 正常退出不取消成功启动的程序，由调用方自行停止；系统强停整个终端应用后的存活不保证。原受管理任务断开仍取消；重复启动确认已有服务时退出0。升级请先停止旧服务再启动新版本，不自动替换运行中的进程。0.2.0 包精简为已签名服务、C/.NET 源码 SDK、必要文档与许可证；完整服务源码和测试留在 GitHub。服务只依赖系统 libc.so，无需 Go/.NET；执行工具需另装。sdk/c 直接编译进宿主，sdk/dotnet 为纯 .NET 10，不依赖独立原生 SDK 库。发现文件/连接失败统一为 UNAVAILABLE。不含 PTY、文件同步、任务恢复或系统自启动，未接入 Godot。",
   "latest": {
-    "ohos-arm64": "0.1.0"
+    "ohos-arm64": "0.2.0"
   },
   "versions": [
     {
@@ -23,6 +23,21 @@
           "url": "https://github.com/oheco/oheco-broker/releases/download/v0.1.0/oheco-broker-0.1.0-ohos-arm64.tar.gz",
           "sha256": "b36048757a045bc4b3ff02dd203e89494dc66f8706407d452faf58536d5a8791",
           "size": 2101299,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "oheco-broker": "bin/oheco-broker"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.2.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco-broker/releases/download/v0.2.0/oheco-broker-0.2.0-ohos-arm64.tar.gz",
+          "sha256": "9f06af1ad45cf59f33feb2e4bfc0deaf4082e256417229f9db2a55d801e1fb60",
+          "size": 2183397,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
