@@ -14,9 +14,58 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.1.5-rc.2-ohos.5"
+    "ohos-arm64": "0.1.7-rc.2-ohos.1"
   },
   "versions": [
+    {
+      "version": "0.1.7-rc.2-ohos.1",
+      "upstream_version": "0.1.7-rc.2",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.1.7-rc.2-ohos.1/deepseek-harness-0.1.7-rc.2-ohos.1.tgz",
+        "sha256": "3ce4cc7183f3efa00e9855d9bc34fd633902e78d6dfaf316d18a33c84f89426f",
+        "size": 45812570,
+        "filename": "deepseek-harness-0.1.7-rc.2-ohos.1.tgz",
+        "package_json": {
+          "name": "@deepseek-ai/dsh",
+          "version": "0.1.7-rc.2-ohos.1",
+          "description": "DeepSeek Harness CLI and Web profiles for HarmonyOS PC ARM64",
+          "type": "module",
+          "bin": {
+            "dsh": "bin/dsh"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/deepseek-harness"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          },
+          "dependencies": {
+            "node-pty": "1.2.0-beta.15-ohos.1",
+            "koffi": "3.1.1-ohos.1",
+            "sharp": "0.35.3-ohos.1",
+            "@vscode/ripgrep": "1.18.0-ohos.2"
+          }
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "两步模式 DSH 鸿蒙 App 启动器工程：终端启动已安装的 dsh，应用读取日志地址并在内置 WebView 打开；含搜索、右键菜单、外链转交、文件管理器查看与深浅色适配",
+          "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.1.7-rc.2-ohos.1/deepseek-harness-app-0.1.7-rc.2-ohos.1.zip",
+          "sha256": "0ef6f7f5028d040210f72600b6710719eab1e786c6609ac7390f20d4c2d02d07",
+          "size": 195497,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
     {
       "version": "0.1.5-rc.2-ohos.5",
       "upstream_version": "0.1.5-rc.2",
