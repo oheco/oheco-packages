@@ -101,11 +101,16 @@ python3 -m http.server 8080 --directory public --bind 127.0.0.1
 ```
 
 用 `OHECO_SOURCE` 指定 oheco 源码路径，用 `GO` 指定开发环境 Go 的绝对路径，
-用 `OHECO_SITE_OUTPUT` 指定输出目录。发布前必须校验实际下载：
+用 `OHECO_SITE_OUTPUT` 指定输出目录。构建会校验全部包描述、索引结构和自举入口，但不联网、
+不下载发行产物：
 
 ```sh
-sh scripts/build.sh --verify-artifacts
+sh scripts/build.sh
 ```
+
+描述里的 `size` 和 `sha256` 由维护者在更新描述时自行与已上传产物核对。需要重新从远端
+核对全部产物时，可另行运行 `sh scripts/build.sh --verify-artifacts`；它会下载目录中的
+每一个产物（当前约 2.5 GiB），耗时很长，不进入常规发布流程。
 
 `public/` 是生成目录，不提交到 Git。输出：
 
@@ -138,9 +143,10 @@ public/
    和校验文件。
 2. 新增或更新 `packages/<name>.json`，确认维护者、项目地址、版本、平台、下载地址、
    文件大小和 SHA-256 与已发布产物一致，并设置对应平台的 `latest`。
-3. 执行 `sh scripts/build.sh --verify-artifacts`，确认包描述和实际下载产物通过校验。
-4. 将包描述提交到 `main`（通过 PR 时先完成检查和合并）。工作流重新校验已发布产物后
-   部署；产物校验失败时不部署，PR 检查本身也不部署。
+3. 执行 `sh scripts/build.sh`，确认包描述、索引结构和自举入口通过校验（该步骤不联网，
+   不下载发行产物）。
+4. 将包描述提交到 `main`（通过 PR 时先完成检查和合并）。工作流构建并校验描述后
+   部署；描述校验失败时不部署，PR 检查本身也不部署。
 5. 确认 Pages 工作流部署成功，并在[软件下载站](https://oheco.org/)
    核对版本、下载链接和安装命令。
 
@@ -423,8 +429,9 @@ v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时
 语言产物共有 `url`、`sha256`、`size`、`filename`；Python 另有可选
 `requires_python`、`requires_dist`，npm 必须有 `package_json`。包名、版本、依赖和兼容性
 元数据来自实际归档，使用 oheco 的 `oo-index --inspect <文件> --package-manager pip|npm
---url <发布地址>` 生成。`sh scripts/build.sh --verify-artifacts` 同时校验实际产物及元数据，
-并生成当前完整索引和各历史版本兼容索引；历史自举入口不变。
+--url <发布地址>` 生成。`sh scripts/build.sh` 只校验描述字段本身，并生成当前完整索引和
+各历史版本兼容索引；历史自举入口不变。需要重新从远端核对全部产物及元数据时，可另行运行
+`sh scripts/build.sh --verify-artifacts`。
 
 语言包通过 oo 的临时源交给 pip/npm 安装，适配仓库仍属于 oheco，发行包仍使用 GitHub
 Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
@@ -471,8 +478,8 @@ v4 在每个版本中增加可选的 `projects`，与 `artifacts` 并列。项�
 `description`，字段含义与安装归档一致。项目名使用字母/数字开头，允许字母、数字、点、
 下划线、加号和连字符，最多 128 字符；不声明 `binaries` 或 `launchers`。
 支持 `zip` 和 `tar.gz`，大小、摘要、解压层级和路径限制沿用安装归档规则；
-项目中的大小写冲突直接拒绝，保留源码完整性。`--verify-artifacts` 会实际下载项目，
-核对摘要和大小，并在隔离临时目录解压验证；目录验证不执行项目代码。
+项目中的大小写冲突在解压验证时直接拒绝，保留源码完整性。可选的 `--verify-artifacts`
+会实际下载项目，核对摘要和大小，并在隔离临时目录解压验证；目录验证不执行项目代码。
 
 `latest` 继续按目标平台填写版本；只含项目的版本也可被引用。`oo export` 默认取
 当前平台的 latest；在其他平台导出时，如果各平台 latest 指向同一版本也可直接引用，存在歧义时指定版本。
@@ -543,4 +550,4 @@ python3 scripts/test-v5.py --output public
 node scripts/test-site.cjs
 ```
 
-发布仍须另行运行 `--verify-artifacts` 并完成原生安装验收；本轮只做本地验证，不联网、不提交、不发布。
+发布仍须另行完成原生安装验收；本轮只做本地验证，不联网、不提交、不发布。
