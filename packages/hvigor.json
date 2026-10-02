@@ -1,0 +1,71 @@
+{
+  "schema_version": 3,
+  "name": "hvigor",
+  "package_manager": "npm",
+  "package_name": "@oheco/hvigor",
+  "description": "鸿蒙 PC 的独立 Hvigor 原生打包签名适配入口；官方包原样从华为 npm 源获取，无 Java",
+  "upstream": "https://repo.harmonyos.com/npm/",
+  "repository": "https://github.com/oheco/hvigor",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "MIT (adapter only; official dependencies separately licensed)",
+  "latest": {
+    "ohos-arm64": "6.26.4-ohos.1"
+  },
+  "notes": "Requires nodejs >=24 and matching SDK components. Install with NPM_CONFIG_REGISTRY=https://repo.harmonyos.com/npm/ oo install hvigor; dependencies must come from Huawei registry. oheco >=0.10.0 provides default global scope and SDK views. SDK26 HAP/APP file signing verified; device installation trust, Godot Editor sandbox export and HSP/incremental workflows not certified.",
+  "versions": [
+    {
+      "version": "6.26.4-ohos.1",
+      "upstream_version": "6.26.4",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/hvigor/releases/download/v6.26.4-ohos.1/oheco-hvigor-6.26.4-ohos.1.tgz",
+        "sha256": "20acc6f050ee3b6e471bf5b1324ac6f306d48ffdc73687c41fed8524efa8abab",
+        "size": 34574,
+        "filename": "oheco-hvigor-6.26.4-ohos.1.tgz",
+        "package_json": {
+          "name": "@oheco/hvigor",
+          "version": "6.26.4-ohos.1",
+          "description": "Read-only HarmonyOS PC runtime adapter for Huawei Hvigor",
+          "license": "MIT",
+          "author": "Guo Wei",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/hvigor.git"
+          },
+          "engines": {
+            "node": ">=24"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "bin": {
+            "hvigor": "bin/hvigor.cjs"
+          },
+          "files": [
+            "bin",
+            "lib",
+            "upstream-lock.json",
+            "npm-shrinkwrap.json",
+            "README.md",
+            "LICENSE"
+          ],
+          "scripts": {
+            "test": "node --test test/*.test.cjs",
+            "check": "node scripts/check.cjs"
+          },
+          "dependencies": {
+            "@ohos/hvigor": "6.26.4",
+            "@ohos/hvigor-ohos-plugin": "6.26.4"
+          }
+        }
+      }
+    }
+  ]
+}

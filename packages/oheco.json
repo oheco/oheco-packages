@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "oheco",
-  "description": "鸿蒙原生软件包管理器，使用 oo 统一批量安装/卸载、管理原生依赖、导出项目和切换开源工具",
+  "description": "\u9e3f\u8499\u539f\u751f\u8f6f\u4ef6\u5305\u7ba1\u7406\u5668\uff0c\u4f7f\u7528 oo \u7edf\u4e00\u6279\u91cf\u5b89\u88c5/\u5378\u8f7d\u3001\u7ba1\u7406\u539f\u751f\u4f9d\u8d56\u3001\u5bfc\u51fa\u9879\u76ee\u548c\u5207\u6362\u5f00\u6e90\u5de5\u5177",
   "upstream": "https://github.com/oheco/oheco",
   "repository": "https://github.com/oheco/oheco",
   "maintainers": [
@@ -12,7 +12,7 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.9.0"
+    "ohos-arm64": "0.10.0"
   },
   "versions": [
     {
@@ -202,6 +202,21 @@
           "url": "https://github.com/oheco/oheco/releases/download/v0.9.0/oheco-0.9.0-ohos-arm64.tar.gz",
           "sha256": "60ba5106edcec61d46ac08507ee1b421d2a83fce596cb65f9092528c0cc13bb5",
           "size": 3235708,
+          "format": "tar.gz",
+          "strip_components": 0,
+          "binaries": {
+            "oo": "bin/oo"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.10.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco/releases/download/v0.10.0/oheco-0.10.0-ohos-arm64.tar.gz",
+          "sha256": "096eb589dc93370153ae2a80ffc578103bc7ee1eca489d040e65aaab8578c701",
+          "size": 3279029,
           "format": "tar.gz",
           "strip_components": 0,
           "binaries": {
