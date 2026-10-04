@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "oheco-broker",
-  "description": "带账号审批、WSS 信令和 STUN/TURN 的加密端口映射工具，提供独立服务端及完整 C/Go/.NET 源码 SDK",
+  "description": "支持自动重连和有条件 TCP 续传的加密端口映射工具，提供独立服务端及完整 C/Go/.NET 源码 SDK",
   "upstream": "https://github.com/oheco/oheco-broker",
   "repository": "https://github.com/oheco/oheco-broker",
   "maintainers": [
@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "0.3.0 提供认证管理服务、C peer 与 Go/cgo CLI，注册默认审批且 relay 默认禁用，审批与 relay 授权分开。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库；安装不自动启动或部署服务。0.3.0 另提供 Linux amd64/arm64 Docker 镜像 ghcr.io/oheco/oheco-broker:0.3.0，包含完整 CLI 与独立服务端，支持内置 ACME 和外部证书两种 TLS 模式；部署说明：https://github.com/oheco/oheco-broker/blob/main/docs/DOCKER.md 。无参数显示帮助，原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。SDK 以完整源码随包提供，独立源码附件从 GitHub Release 下载解压；原生依赖、固定清单、补丁、许可和离线构建资源齐全，无预编译 SDK 库。源码 SDK 构建需原生 C/C++、CMake、Ninja、Python；Go 消费需 Go/cgo，.NET 本机命令 SDK 需 .NET 10。TURN 当前 UDP/IPv4，UDP 为尽力交付，无 TUN 或透明 TCP 续传，不保证所有 NAT 拓扑。升级请由操作者停止并重启原服务，不替换正在运行的进程；旧 0.1/0.2 产物保持原样。",
+  "notes": "0.4.0 的 C SDK、Go/cgo SDK 与 CLI 提供有限自动重连、非阻塞手动重连、状态查询与可选事件；逻辑 peer、映射句柄和本地监听端口在恢复中保持。透明 TCP 续传要求双方支持映射 v2、原授权有效、原逻辑上下文和目标 socket 存活，并在原流期限内完成恢复；交付 ACK 不代表应用层持久化确认。旧版对端使用 v1，旧 TCP 流在断线后结束。CLI 可用 SIGUSR1 请求手动重连。TURN 使用预编译 SQL 和正向授权内存缓存，保留租约到期检查；服务内撤销立即清除相应缓存，直接数据库修改由后台异步观察。注册默认审批且 relay 默认禁用，审批与 relay 授权分开。升级会把 SQLite schema 1 事务迁移到 schema 2；升级前使用 SQLite 正规备份，旧服务拒绝 schema 2，回退需恢复升级前备份。升级请由操作者停止并重启服务，安装不自动部署或替换运行中的进程。Linux amd64/arm64 Docker 镜像 ghcr.io/oheco/oheco-broker:0.4.0 包含完整 CLI 和独立服务端，支持内置 ACME 与外部证书 TLS；部署说明：https://github.com/oheco/oheco-broker/blob/v0.4.0/docs/DOCKER.md 。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库。安装后的 sdk/ 提供 C、Go、.NET 完整源码、固定依赖、许可证及离线构建资源；独立源码附件：https://github.com/oheco/oheco-broker/releases/download/v0.4.0/oheco-broker-0.4.0-sdk-source.tar.gz 。源码 SDK 不提供预编译 SDK 库；构建需要原生 C/C++、CMake、Ninja、Python，Go 消费需要 Go/cgo，.NET 本机命令 SDK 需要 .NET 10。TURN 当前使用 UDP/IPv4，UDP 为尽力交付；无 TUN，不保证所有 NAT 拓扑。原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。0.1.0、0.2.0、0.3.0 的发行文件及下载地址保持不可变。",
   "latest": {
-    "ohos-arm64": "0.3.0"
+    "ohos-arm64": "0.4.0"
   },
   "versions": [
     {
@@ -53,6 +53,22 @@
           "url": "https://github.com/oheco/oheco-broker/releases/download/v0.3.0/oheco-broker-0.3.0-ohos-arm64.tar.gz",
           "sha256": "57b17ebf1bcb768d1c480fca0207027719b9f54ae0830fcf2a016d779d2a973a",
           "size": 110389864,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "oheco-broker": "bin/oheco-broker",
+            "oheco-broker-server": "bin/oheco-broker-server"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.4.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco-broker/releases/download/v0.4.0/oheco-broker-0.4.0-ohos-arm64.tar.gz",
+          "sha256": "1ee0359efe71ab64695659abc3ae999503c22af6e461950881d15819a047800d",
+          "size": 110560203,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
