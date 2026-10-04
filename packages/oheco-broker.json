@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT",
-  "notes": "0.3.0 提供认证管理服务、C peer 与 Go/cgo CLI，注册默认审批且 relay 默认禁用，审批与 relay 授权分开。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库；安装不自动启动或部署服务。无参数显示帮助，原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。SDK 以完整源码随包提供，独立源码附件从 GitHub Release 下载解压；原生依赖、固定清单、补丁、许可和离线构建资源齐全，无预编译 SDK 库。源码 SDK 构建需原生 C/C++、CMake、Ninja、Python；Go 消费需 Go/cgo，.NET 本机命令 SDK 需 .NET 10。TURN 当前 UDP/IPv4，UDP 为尽力交付，无 TUN 或透明 TCP 续传，不保证所有 NAT 拓扑。升级请由操作者停止并重启原服务，不替换正在运行的进程；旧 0.1/0.2 产物保持原样。",
+  "notes": "0.3.0 提供认证管理服务、C peer 与 Go/cgo CLI，注册默认审批且 relay 默认禁用，审批与 relay 授权分开。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库；安装不自动启动或部署服务。0.3.0 另提供 Linux amd64/arm64 Docker 镜像 ghcr.io/oheco/oheco-broker:0.3.0，包含完整 CLI 与独立服务端，支持内置 ACME 和外部证书两种 TLS 模式；部署说明：https://github.com/oheco/oheco-broker/blob/main/docs/DOCKER.md 。无参数显示帮助，原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。SDK 以完整源码随包提供，独立源码附件从 GitHub Release 下载解压；原生依赖、固定清单、补丁、许可和离线构建资源齐全，无预编译 SDK 库。源码 SDK 构建需原生 C/C++、CMake、Ninja、Python；Go 消费需 Go/cgo，.NET 本机命令 SDK 需 .NET 10。TURN 当前 UDP/IPv4，UDP 为尽力交付，无 TUN 或透明 TCP 续传，不保证所有 NAT 拓扑。升级请由操作者停止并重启原服务，不替换正在运行的进程；旧 0.1/0.2 产物保持原样。",
   "latest": {
     "ohos-arm64": "0.3.0"
   },
