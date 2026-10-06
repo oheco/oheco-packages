@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "oheco-broker",
-  "description": "支持自动重连和有条件 TCP 续传的加密端口映射工具，提供独立服务端及完整 C/Go/.NET 源码 SDK",
+  "description": "支持账户 token 自动刷新、自动重连和有条件 TCP 续传的加密端口映射工具，提供独立服务端及完整 C/Go/.NET 源码 SDK",
   "upstream": "https://github.com/oheco/oheco-broker",
   "repository": "https://github.com/oheco/oheco-broker",
   "maintainers": [
@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "0.4.0 的 C SDK、Go/cgo SDK 与 CLI 提供有限自动重连、非阻塞手动重连、状态查询与可选事件；逻辑 peer、映射句柄和本地监听端口在恢复中保持。透明 TCP 续传要求双方支持映射 v2、原授权有效、原逻辑上下文和目标 socket 存活，并在原流期限内完成恢复；交付 ACK 不代表应用层持久化确认。旧版对端使用 v1，旧 TCP 流在断线后结束。CLI 可用 SIGUSR1 请求手动重连。TURN 使用预编译 SQL 和正向授权内存缓存，保留租约到期检查；服务内撤销立即清除相应缓存，直接数据库修改由后台异步观察。注册默认审批且 relay 默认禁用，审批与 relay 授权分开。升级会把 SQLite schema 1 事务迁移到 schema 2；升级前使用 SQLite 正规备份，旧服务拒绝 schema 2，回退需恢复升级前备份。升级请由操作者停止并重启服务，安装不自动部署或替换运行中的进程。Linux amd64/arm64 Docker 镜像 ghcr.io/oheco/oheco-broker:0.4.0 包含完整 CLI 和独立服务端，支持内置 ACME 与外部证书 TLS；部署说明：https://github.com/oheco/oheco-broker/blob/v0.4.0/docs/DOCKER.md 。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库。安装后的 sdk/ 提供 C、Go、.NET 完整源码、固定依赖、许可证及离线构建资源；独立源码附件：https://github.com/oheco/oheco-broker/releases/download/v0.4.0/oheco-broker-0.4.0-sdk-source.tar.gz 。源码 SDK 不提供预编译 SDK 库；构建需要原生 C/C++、CMake、Ninja、Python，Go 消费需要 Go/cgo，.NET 本机命令 SDK 需要 .NET 10。TURN 当前使用 UDP/IPv4，UDP 为尽力交付；无 TUN，不保证所有 NAT 拓扑。原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。0.1.0、0.2.0、0.3.0 的发行文件及下载地址保持不可变。",
+  "notes": "0.5.0 的 C SDK、Go/cgo SDK 与 CLI 提供可选账户 token 自动刷新：access 默认24小时、提前10分钟并加入抖动刷新，refresh 闲置30天滑动期限，绝对登录寿命默认无限；服务器只保存凭据摘要。轮转保持原 peer、TCP socket、映射端口、逻辑连接代数及 TURN allocation，退出、禁用及显式撤销仍立即撤权。CLI v2 配置不保存密码；旧配置显式 tenant login 一次后进入自动刷新，tenant refresh 可手动触发。共享配置使用原锁、fsync journal 和原子提交，支持多进程、丢回包与提交后崩溃恢复；--legacy-auth 可生成旧配置，混用旧客户端需独立 --config。机制与迁移：https://github.com/oheco/oheco-broker/blob/v0.5.0/docs/AUTH-REFRESH.md 。保留有限自动重连、非阻塞手动重连、状态查询与可选事件；CLI 可用 SIGUSR1 请求手动重连。透明 TCP 续传要求双方支持映射 v2、原授权有效、逻辑上下文和目标 socket 存活，并在原流期限内恢复；交付 ACK 不代表应用持久化确认。旧版对端使用 v1。TURN 正向授权缓存失效按具体权限范围处理，保留租约检查；直接数据库修改由后台异步观察。注册默认审批且 relay 默认禁用，审批与 relay 授权分开。升级把 SQLite schema 1/2 事务迁移到3；升级前做 SQLite 正规备份，旧服务拒绝 schema3，回退必须恢复升级前数据库。安装不自动部署或替换运行中的进程。Linux amd64/arm64 Docker 镜像 ghcr.io/oheco/oheco-broker:0.5.0 包含完整 CLI 和独立服务端，支持内置 ACME 与外部证书 TLS；部署说明：https://github.com/oheco/oheco-broker/blob/v0.5.0/docs/DOCKER.md 。CLI 启动器加载随包签名 C++ runtime，独立服务端只依赖系统 C 运行库。安装后的 sdk/ 提供 C、Go、.NET 完整源码、固定依赖、许可证及离线构建资源；独立源码附件：https://github.com/oheco/oheco-broker/releases/download/v0.5.0/oheco-broker-0.5.0-sdk-source.tar.gz 。源码 SDK 不提供预编译 SDK 库；构建需要原生 C/C++、CMake、Ninja、Python，Go 消费需要 Go/cgo，.NET 本机命令 SDK 需要 .NET 10。TURN 当前使用 UDP/IPv4，UDP 为尽力交付；无 TUN，不保证所有 NAT 拓扑。原无鉴权本机命令服务须显式 shell serve，仅适合可信本机开发。0.1.0、0.2.0、0.3.0、0.4.0 的发行文件及下载地址保持不可变。",
   "latest": {
-    "ohos-arm64": "0.4.0"
+    "ohos-arm64": "0.5.0"
   },
   "versions": [
     {
@@ -69,6 +69,22 @@
           "url": "https://github.com/oheco/oheco-broker/releases/download/v0.4.0/oheco-broker-0.4.0-ohos-arm64.tar.gz",
           "sha256": "1ee0359efe71ab64695659abc3ae999503c22af6e461950881d15819a047800d",
           "size": 110560203,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "oheco-broker": "bin/oheco-broker",
+            "oheco-broker-server": "bin/oheco-broker-server"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.5.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco-broker/releases/download/v0.5.0/oheco-broker-0.5.0-ohos-arm64.tar.gz",
+          "sha256": "190c89f60dacbe0855b42f567abda873cecca37bac8d6f2d2fceb2f338b589d0",
+          "size": 110700967,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
