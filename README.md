@@ -442,8 +442,8 @@ Pages 构建器目前固定为已发布的 `oheco v0.7.0`，已支持 v5；后�
 
 ## DeepSeek Harness
 
-`deepseek-harness` 收录 [DeepSeek Harness 0.1.5-rc.2-ohos.2](https://github.com/oheco/deepseek-harness/releases/tag/v0.1.5-rc.2-ohos.2)，
-提供鸿蒙 PC ARM64 上的 CLI/headless 和浏览器 Web。安装需要 oo 0.5.0 或更高版本、
+`deepseek-harness` 收录 [DeepSeek Harness 0.2.0-rc.2-ohos.1](https://github.com/oheco/deepseek-harness/releases/tag/v0.2.0-rc.2-ohos.1)，
+提供鸿蒙 PC ARM64 上的 CLI/headless、浏览器 Web 和鸿蒙 App 连接管理工程。安装使用 oo 0.10.0 或更高版本、
 Node.js 24 及 `/usr/bin/zsh`：
 
 ```sh
@@ -456,17 +456,28 @@ dsh --help
 将 `DSH_HOME` 设置为可写的应用私有目录，并配置 `DEEPSEEK_API_KEY`，然后使用
 `dsh --profile headless "你的任务"`，或运行 `dsh web --host 127.0.0.1 --port 0 --no-open`
 并打开输出的认证地址。通过 `oo remove deepseek-harness -- --global --prefix "$HOME/.local"`
-卸载。oo 不注入作用域，`--global` 与 `--prefix` 由你显式指定。npm 管理安装目录和命令入口；
+卸载。oo 0.10.0 起，不带 `--` 时 npm 默认使用全局作用域；使用 `--` 后由后端参数指定作用域，
+上例显式使用 `--global` 和 `--prefix`。隔离验证请将 prefix 指向独立目录。npm 管理安装目录和命令入口；
 node-pty、Koffi、sharp 及 ripgrep 的适配包作为固定版本依赖自动安装，不需要额外配置 npm 源
 或运行编译脚本。
 
-本修订版的 Harness Host、Client、Web、系统扩展，以及 ripgrep + PCRE2 均在鸿蒙构建。
-Rust 工具链和部分打包器使用官方鸿蒙预编译包；图片与 CSS 引擎等复用固定的上游 WASM。
+完整运行包保留已验证的 Host、Client、Web 和原生系统扩展构建，之后单独更新 CLI 与客户端资源；
+最终提交未全量重建。Rust 工具链和部分打包器使用官方鸿蒙预编译包；图片与 CSS 引擎等复用固定的上游 WASM。
+
+App 工程支持保存本地与远程连接，并原样接入 broker 0.4 SDK。导出后由用户自行构建和签名：
+
+```sh
+oo export deepseek-harness@0.2.0-rc.2-ohos.1 app --output ./DeepseekHarnessApp
+```
+
+App versionCode `1000005` 已在两个设备完成安装，物理验收仅覆盖安装；未启动应用、执行 UI 操作或
+验证网络续传。个人签名 HAP 和设备签名资料不作为公开附件。
 
 鸿蒙默认使用 zsh、完整文件系统和进程权限，关闭审批；此平台未提供沙箱。
 持久终端需要带 `termios` 的 Python 3。发行版基于上游候选版本，不包含 Electron 和
-Python SDK；真实远程模型调用未使用 API 凭据验收。功能和原生验收范围见
-[适配说明](https://github.com/oheco/deepseek-harness/blob/ohos/0.1.5-rc.2/ohos/README.zh.md)。
+Python SDK；本地确定性模型和 Web 验收已通过，真实远程模型调用未验收。功能和原生验收范围见
+[适配说明](https://github.com/oheco/deepseek-harness/blob/ohos/0.2.0-rc.2/ohos/README.zh.md)与
+[发行验证记录](https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-0.2.0-rc.2-ohos.1-validation.json)。
 
 ## DevEco 项目规范 v4
 
@@ -534,9 +545,10 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 JSON Schema 定义结构门槛；完整约束语法、按名称重复、自引用、引用目标与逐平台可满足性由
 共享的 Go `oo-index` 执行。根 `schema/` 对应 v5，`schema/v1`–`schema/v4` 冻结旧协议。
 网站展示所有 manager，切换版本会更新对应依赖；`<由npm管理>` / `<由pip管理>` 仅表示管理归属，
-不声称已经安装，不创建外部安装状态镜像。统一 `oo install/remove` **不注入作用域**：npm 默认
-装进当前项目的 `node_modules`、pip 默认装进所选解释器环境，要全局或指定目录就显式写
-`oo install deepseek-harness -- --global --prefix "$HOME/.local"`，卸载用相同参数。`oo npm` /
+不声称已经安装，不创建外部安装状态镜像。oo 0.10.0 起，`oo install/remove` 在没有 `--` 时为 npm
+使用默认全局作用域；pip 默认装进所选解释器环境。使用 `--` 后不注入默认作用域，其后参数原样传给后端。
+要指定 npm 安装目录可写 `oo install deepseek-harness -- --global --prefix "$HOME/.local"`，
+卸载用相同参数；隔离验证请将 prefix 指向独立目录。`oo npm` /
 `oo pip` 子命令已移除；安装之后直接用原生 `npm` / `pip` 查询和管理。升级后的 state schema 2 禁止旧客户端再管理
 同一 root；`installed.v1.backup.json` 仅供参考，不是修改安装目录后可直接恢复的快照。
 原生 `--autoremove` / `--cascade` 不适用于外部包，`-y` 不隐含清理；后端即时解析也不保证

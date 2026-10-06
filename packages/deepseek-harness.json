@@ -3,7 +3,7 @@
   "name": "deepseek-harness",
   "package_manager": "npm",
   "package_name": "@deepseek-ai/dsh",
-  "description": "鸿蒙 PC ARM64 上的 DeepSeek Harness，提供 zsh 命令工具、持久会话、搜索、JavaScript PTC 和浏览器 Web 界面",
+  "description": "鸿蒙 PC ARM64 上的 DeepSeek Harness CLI 和浏览器 Web，提供 zsh、持久会话、搜索与 JavaScript PTC，附带支持本地及 broker 远程连接的鸿蒙 App 工程",
   "upstream": "https://github.com/deepseek-ai/deepseek-harness",
   "repository": "https://github.com/oheco/deepseek-harness",
   "maintainers": [
@@ -14,9 +14,58 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.1.7-rc.2-ohos.1"
+    "ohos-arm64": "0.2.0-rc.2-ohos.1"
   },
   "versions": [
+    {
+      "version": "0.2.0-rc.2-ohos.1",
+      "upstream_version": "0.2.0-rc.2",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-0.2.0-rc.2-ohos.1.tgz",
+        "sha256": "3b84e207cca573d485974b4ea023ba96aa14e590d1f03cdd31a8503c482ee06f",
+        "size": 45518960,
+        "filename": "deepseek-harness-0.2.0-rc.2-ohos.1.tgz",
+        "package_json": {
+          "name": "@deepseek-ai/dsh",
+          "version": "0.2.0-rc.2-ohos.1",
+          "description": "DeepSeek Harness CLI and Web profiles for HarmonyOS PC ARM64",
+          "type": "module",
+          "bin": {
+            "dsh": "bin/dsh"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/deepseek-harness"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          },
+          "dependencies": {
+            "node-pty": "1.2.0-beta.15-ohos.1",
+            "koffi": "3.1.1-ohos.1",
+            "sharp": "0.35.3-ohos.1",
+            "@vscode/ripgrep": "1.18.0-ohos.2"
+          }
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "DSH 鸿蒙 App 连接管理工程（本地连接与 broker 远程连接）",
+          "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-app-0.2.0-rc.2-ohos.1.zip",
+          "sha256": "e4f01c5b0f7ee1eaf381c5e8d955ed9da07ef7c8d62b5954831d7494dbf5e43f",
+          "size": 91668757,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
     {
       "version": "0.1.7-rc.2-ohos.1",
       "upstream_version": "0.1.7-rc.2",
@@ -272,5 +321,5 @@
       }
     }
   ],
-  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。全局安装请显式指定作用域：oo install deepseek-harness -- --global --prefix \"$HOME/.local\"（oo 不注入作用域）。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。本版本起 Web 客户端使用上游 official 品牌配置；同一版本还提供实验性的 App 工程，用 oo export deepseek-harness app 导出后由用户自行构建签名。"
+  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。oo 0.10.0 起，不带 -- 时 npm 默认使用全局作用域；如需指定目录，可用 oo install deepseek-harness -- --global --prefix \"$HOME/.local\"。-- 后的参数原样传给 npm，由其指定作用域；隔离验证请将 prefix 指向独立目录。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。0.2.0-rc.2-ohos.1 基于上游候选版本，运行包沿用已验证的完整构建并单独更新 CLI 与客户端资源，不声称最终提交全量重建；本地确定性模型与 Web 验收已通过，真实远程模型未验收。App 工程支持保存本地及远程连接、broker 0.4 映射，SDK 原样使用；用 oo export deepseek-harness app 导出后自行构建签名。App versionCode 1000005 已在两个设备完成安装，未启动应用或执行 UI 验收；个人签名 HAP 与设备签名资料不公开。完整验证记录：https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-0.2.0-rc.2-ohos.1-validation.json 。"
 }
