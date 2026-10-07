@@ -1,0 +1,38 @@
+{
+  "schema_version": 5,
+  "name": "godot-editor",
+  "description": "Godot 4.7.2 .NET 鸿蒙 PC ARM64 编辑器，提供开发 CLI 和可导出的 DevEco 图形工程",
+  "upstream": "https://github.com/godotengine/godot",
+  "repository": "https://github.com/oheco/godot",
+  "maintainers": [{"github": "kdada", "name": "Guo Wei"}],
+  "license": "MIT",
+  "notes": "godot 命令用于 headless 导入和 .NET 开发任务；图形 Editor 通过 oo export godot-editor app 导出 DevEco 工程并用自己的签名安装，bundle 为 org.oheco.godoteditor。外部依赖精确为 dotnet-sdk 10.0.401-ohos.2，完整 .NET SDK 不捆入 native 包或 App；随包包含 GodotSharp、GodotTools、Godot.NET.Sdk 4.7.2-ohos.3 和固定离线 NuGet 依赖。host ABI 3，SDK API 26，声明 minAPI 23，Editor 仅支持 2in1；已在 MateBook Pro S / HarmonyOS 7.0.0.107 验收，不代表所有旧设备。工程不含个人 key/profile/UDID；安装用户配置签名及 READ_WRITE_USER_FILE、ALLOW_EXTERNAL_NATIVE_CODE、LOAD_INDEPENDENT_LIBRARY、ALLOW_WRITABLE_CODE_MEMORY、CUSTOM_SANDBOX 所需 profile ACL。终端和外部编辑器入口显示随 Editor 语言翻译的 unsupported 提示；内部脚本编辑、文件管理器、浏览器链接保留。READ_PASTEBOARD 未新增，剪贴板验收延期。Godot 为 MIT，第三方组件遵循各自原条款；原 Microsoft .NET Library 条款和版权/NOTICE 保留，不改标 MIT。CLI .NET 任务应将 DOTNET_ROOT 和 DOTNET_ROOT_ARM64 指向外部 SDK，并将其 bin 加入 PATH。",
+  "latest": {"ohos-arm64": "4.7.2-ohos.4"},
+  "versions": [{
+    "version": "4.7.2-ohos.4",
+    "upstream_version": "4.7.2",
+    "dependencies": [{
+      "name": "dotnet-sdk",
+      "constraint": "=10.0.401-ohos.2",
+      "version_basis": "package",
+      "platforms": ["ohos-arm64"]
+    }],
+    "artifacts": {"ohos-arm64": {
+      "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-4.7.2-ohos.4-ohos-arm64.tar.gz",
+      "sha256": "1311a39ea8a8c6c5cdccad98cce4d2c022cfcb29db56996900408d131048b1c4",
+      "size": 344890723,
+      "format": "tar.gz",
+      "strip_components": 1,
+      "binaries": {"godot": "bin/godot"},
+      "launchers": ["godot"]
+    }},
+    "projects": {"app": {
+      "description": "Godot Editor DevEco 工程；已签名 native 输入，个人应用签名及 profile ACL 由安装用户配置",
+      "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-app-4.7.2-ohos.4.zip",
+      "sha256": "c25d387f68e8a3efd97df7a940d0e0f1d590b00d30636f3482cf8ce84f83e031",
+      "size": 345743978,
+      "format": "zip",
+      "strip_components": 1
+    }}
+  }]
+}
