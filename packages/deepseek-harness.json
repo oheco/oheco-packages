@@ -63,6 +63,14 @@
           "size": 91668757,
           "format": "zip",
           "strip_components": 1
+        },
+        "app-0.2.0-rc.2-ohos.2": {
+          "description": "DSH 鸿蒙 App 0.2.0-rc.2-ohos.2 源码工程（broker 0.5 刷新、页面保留与端口复用；CLI/Web 运行包仍为 0.2.0-rc.2-ohos.1）",
+          "url": "https://github.com/oheco/deepseek-harness/releases/download/app-v0.2.0-rc.2-ohos.2/deepseek-harness-app-0.2.0-rc.2-ohos.2.zip",
+          "sha256": "22c159f0cabcc85ebbaf76cc02d47e2b056439830ba938c66302882eded43fdc",
+          "size": 91739776,
+          "format": "zip",
+          "strip_components": 1
         }
       }
     },
@@ -321,5 +329,5 @@
       }
     }
   ],
-  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。oo 0.10.0 起，不带 -- 时 npm 默认使用全局作用域；如需指定目录，可用 oo install deepseek-harness -- --global --prefix \"$HOME/.local\"。-- 后的参数原样传给 npm，由其指定作用域；隔离验证请将 prefix 指向独立目录。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。0.2.0-rc.2-ohos.1 基于上游候选版本，运行包沿用已验证的完整构建并单独更新 CLI 与客户端资源，不声称最终提交全量重建；本地确定性模型与 Web 验收已通过，真实远程模型未验收。App 工程支持保存本地及远程连接、broker 0.4 映射，SDK 原样使用；用 oo export deepseek-harness app 导出后自行构建签名。App versionCode 1000005 已在两个设备完成安装，未启动应用或执行 UI 验收；个人签名 HAP 与设备签名资料不公开。完整验证记录：https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-0.2.0-rc.2-ohos.1-validation.json 。"
+  "notes": "由 npm 管理，需要鸿蒙 ARM64 Node.js 24 和 /usr/bin/zsh。oo 0.10.0 起，不带 -- 时 npm 默认使用全局作用域；如需指定目录，可用 oo install deepseek-harness -- --global --prefix \"$HOME/.local\"。-- 后的参数原样传给 npm，由其指定作用域；隔离验证请将 prefix 指向独立目录。DSH_HOME 应设置为可写应用私有目录；默认全权限且关闭审批，未提供沙箱。持久终端需要带 termios 的 Python 3。包含 CLI/headless 与浏览器 Web，不包含 Electron 和 Python SDK；真实模型调用需要自行配置 API 凭据。0.2.0-rc.2-ohos.1 基于上游候选版本，运行包沿用已验证的完整构建并单独更新 CLI 与客户端资源，不声称最终提交全量重建；本地确定性模型与 Web 验收已通过，真实远程模型未验收。App 工程支持保存本地及远程连接、broker 0.4 映射，SDK 原样使用；用 oo export deepseek-harness app 导出后自行构建签名。App versionCode 1000005 已在两个设备完成安装，未启动应用或执行 UI 验收；个人签名 HAP 与设备签名资料不公开。完整验证记录：https://github.com/oheco/deepseek-harness/releases/download/v0.2.0-rc.2-ohos.1/deepseek-harness-0.2.0-rc.2-ohos.1-validation.json 。独立 App 0.2.0-rc.2-ohos.2 使用未修改的正式 broker 0.5 SDK，支持账号刷新持久化、最近页面保留与本地端口优先复用；CLI/Web 版本和旧 app 工程保持不变。使用 oo export deepseek-harness@0.2.0-rc.2-ohos.1 app-0.2.0-rc.2-ohos.2 导出新版源码工程。versionCode 1000006 已在电脑和手机安装，未启动或执行 UI 验收；个人签名 HAP 不公开。新版验证记录：https://github.com/oheco/deepseek-harness/releases/download/app-v0.2.0-rc.2-ohos.2/deepseek-harness-app-0.2.0-rc.2-ohos.2-validation.json 。"
 }
