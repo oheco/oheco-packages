@@ -11,7 +11,7 @@
     }
   ],
   "license": "GPL-2.0-only (with compatible bundled licenses)",
-  "notes": "支持 merge、rebase、stash 和本地、SSH、HTTP/HTTPS clone/push/fetch/pull。HTTPS 静态集成 libcurl 与 Mbed TLS，默认校验系统 CA 和主机名；SSH 使用系统 ssh。本地克隆请使用 --no-hardlinks。共享目录若提示 dubious ownership，请确认路径后仅信任具体仓库。 交互分页请另行执行 oo install less；oo 不自动安装跨包依赖。大文件版本管理可另行执行 oo install git-lfs，并按仓库配置 git lfs install --local。命令简短帮助使用 git <command> -h，本版未打包完整帮助文档。",
+  "notes": "本地克隆请加 --no-hardlinks；共享目录出现 dubious ownership 时，核对路径后只为具体仓库设置 safe.directory。HTTPS 默认校验系统 CA，私有 CA 可用 http.sslCAInfo 配置；SSH 需系统 ssh 和自己的密钥。交互分页另装 less，大文件管理另装 git-lfs 并在仓库执行 git lfs install --local。HTTP 传输使用 HTTP/1.1，不支持 HTTP/2/3 或旧式 WebDAV push；简短帮助可用 git <command> -h。",
   "latest": {
     "ohos-arm64": "2.55.0-ohos.2"
   },

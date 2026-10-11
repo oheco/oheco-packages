@@ -70,5 +70,5 @@
       }
     }
   ],
-  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
+  "notes": "通常由 @vscode/ripgrep 自动安装；单独作为项目依赖时执行 oo install vscode-ripgrep-openharmony-arm64 --，不带 -- 默认全局安装。需要 Node.js 24，程序路径宜通过 @vscode/ripgrep 的 rgPath 获取。此 npm 包不创建全局 rg 入口，只需终端命令时请安装 ripgrep。"
 }

@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT OR Apache-2.0 (with bundled third-party notices)",
-  "notes": "HarmonyOS PC ARM64 原生验收；复用官方 OHOS 工具链，OpenSSL 3.5.8 在鸿蒙上原生构建并随包提供。需先安装 python3、command-line-tools，并使其中的 Clang 和 binary-sign-tool 位于 PATH；oo 不自动安装这些依赖。链接后自动签名可执行文件、构建脚本和过程宏，使用系统 CA 验证 Cargo HTTPS。官方组件未包含 rustdoc，故不支持 cargo doc 和文档测试；普通测试使用 cargo test --all-targets。未在鸿蒙从源码自举 Rust/LLVM，其他设备未验证。",
+  "notes": "需要 Python 3.11+ 和 /usr/bin/zsh，编译前另装 command-line-tools，并让 SDK Clang/Clang++、llvm-ar、链接器和 binary-sign-tool 位于 PATH；oo 不会自动安装这些工具。默认链接器会签名可执行文件、构建脚本和过程宏，自定义链接器需自行处理签名，TMPDIR 应放在应用私有可写目录。不包含 rustdoc，不能运行 cargo doc 或文档测试，普通测试用 cargo test --all-targets。",
   "latest": {
     "ohos-arm64": "1.98.1-ohos.1"
   },

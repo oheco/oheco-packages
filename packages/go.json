@@ -11,7 +11,7 @@
     }
   ],
   "license": "BSD-3-Clause",
-  "notes": "编译生成的二进制需使用 command-line-tools 包中的 binary-sign-tool 进行签名，否则运行时会出现 permission denied。",
+  "notes": "使用 go build、go run 或 go test 前，需另装 command-line-tools 并让 binary-sign-tool 位于 PATH，工具链会自动签名输出，外部修改或 strip 后需重新签名。cgo 还需 SDK Clang/Clang++、LLD、llvm-ar 和 sysroot。TMPDIR 应指向应用私有可写目录；清除遗留 GOROOT 设置，让工具链自动定位安装目录。",
   "latest": {
     "ohos-arm64": "1.27.1-ohos.1"
   },

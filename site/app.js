@@ -4,6 +4,7 @@ const container = document.querySelector('#packages');
 const status = document.querySelector('#status');
 const search = document.querySelector('#search');
 let packages = [];
+let visibleCards = [];
 const el = (tag, text, className) => {
   const node = document.createElement(tag);
   if (text !== undefined) node.textContent = text;
@@ -79,11 +80,49 @@ function projectURL(href) {
   const path = url.pathname.replace(/\/+$/, '').replace(/\.git$/i, '');
   return url.origin + (url.hostname === 'github.com' ? path.toLowerCase() : path);
 }
+const singleColumn = window.matchMedia('(max-width: 700px)');
+let layoutPending = false;
+let lastLayoutWidth = 0;
+const cardSizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(entries => {
+  if (entries.some(entry => entry.target !== container || entry.contentRect.width !== lastLayoutWidth)) scheduleLayout();
+}) : null;
+function layoutCards() {
+  if (!cardSizeObserver) return;
+  const width = container.getBoundingClientRect().width;
+  if (!width) return;
+  lastLayoutWidth = width;
+  const columns = singleColumn.matches ? 1 : 2;
+  const gap = parseFloat(getComputedStyle(container).columnGap) || 0;
+  const cardWidth = (width - gap * (columns - 1)) / columns;
+  // Measure at the new column width before assigning positions.
+  for (const card of visibleCards) card.style.width = `${cardWidth}px`;
+  const sizes = visibleCards.map(card => card.getBoundingClientRect().height);
+  const heights = Array(columns).fill(0);
+  visibleCards.forEach((card, index) => {
+    const column = heights.indexOf(Math.min(...heights));
+    card.style.left = `${column * (cardWidth + gap)}px`;
+    card.style.top = `${heights[column]}px`;
+    heights[column] += sizes[index] + gap;
+  });
+  container.style.height = `${visibleCards.length ? Math.max(...heights) - gap : 0}px`;
+}
+function scheduleLayout() {
+  if (!cardSizeObserver || layoutPending) return;
+  layoutPending = true;
+  requestAnimationFrame(() => {
+    layoutPending = false;
+    layoutCards();
+  });
+}
+singleColumn.addEventListener('change', scheduleLayout);
 let openVersionMenu;
 document.addEventListener('pointerdown', event => {
   if (openVersionMenu && !openVersionMenu.node.contains(event.target)) openVersionMenu.close();
 });
-window.addEventListener('resize', () => openVersionMenu?.close());
+window.addEventListener('resize', () => {
+  openVersionMenu?.close();
+  scheduleLayout();
+});
 function versionPicker(pkg, versions, onChange) {
   const picker = el('div', undefined, 'version-picker');
   const trigger = el('button', undefined, 'version-trigger');
@@ -306,15 +345,14 @@ function render() {
     const projects = pkg.versions.flatMap(version => Object.entries(version.projects || {}).flatMap(([name, project]) => [name, project.description || '']));
     const dependencies = pkg.versions.flatMap(version => (version.dependencies || []).map(dependency => dependency.name));
     return [pkg.name, originLabel(pkg), managerLabel(pkg), ...architectures(pkg), pkg.package_name || '', pkg.description, ...commands, ...projects, ...dependencies].join(' ').toLocaleLowerCase().includes(query);
-  });
-  const cards = matches.map(card);
-  const middle = Math.ceil(cards.length / 2);
-  const columns = [cards.slice(0, middle), cards.slice(middle)].filter(column => column.length).map(cards => {
-    const column = el('div', undefined, 'package-column');
-    column.append(...cards);
-    return column;
-  });
-  container.replaceChildren(...columns);
+  }).sort((a, b) => compareText(a.name, b.name));
+  cardSizeObserver?.disconnect();
+  visibleCards = matches.map(card);
+  container.classList.toggle('is-masonry', Boolean(cardSizeObserver));
+  container.replaceChildren(...visibleCards);
+  layoutCards();
+  cardSizeObserver?.observe(container);
+  for (const card of visibleCards) cardSizeObserver?.observe(card);
   document.querySelector('#count').textContent = String(matches.length);
   status.textContent = matches.length ? '' : '没有找到匹配的工具。';
 }

@@ -96,5 +96,5 @@
       }
     }
   ],
-  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
+  "notes": "在项目目录执行 oo install vscode-ripgrep -- 安装依赖，不带 -- 默认全局安装；需要 Node.js 24，会自动安装匹配的平台程序包。通过 @vscode/ripgrep 的 rgPath 获取路径，再用子进程调用搜索程序。它不创建独立的全局 rg 命令，终端直接搜索请安装 ripgrep。"
 }

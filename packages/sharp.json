@@ -195,5 +195,5 @@
       }
     }
   ],
-  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。使用官方 WASM 引擎，保留其内存和格式限制。"
+  "notes": "作为项目依赖时，在项目目录执行 oo install sharp --，再用 require('sharp') 加载；不带 -- 默认全局安装。需要 Node.js 24，使用随包 WASM 引擎，安装无需本地编译器。WASM 存在内存上限且不支持原生文本渲染，处理额外格式和复杂 API 前请检查 sharp.format，不能假定与完整 libvips 的格式和性能一致。"
 }

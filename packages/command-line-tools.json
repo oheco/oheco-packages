@@ -11,7 +11,7 @@
     }
   ],
   "license": "Multiple (see bundled component NOTICE.txt and license files)",
-  "notes": "需要 oo >=0.11.0（索引 v6）。原始官方 tar.gz 使用固定 R2 公共 URL，SDK 26.0.0.105/API26、Hvigor 7.26.8、OHPM 6.0.1。65 个兼容 SDK 命令及 hvigor/hvigorw/ohpm；js_rawheap_translator 已退出。Node/npm/npx/corepack 仅在包内，不创建全局入口；Hvigor/OHPM 子进程使用官方 Node 和 SDK。旧 SDK 同名入口先用 oo unlink 释放并保留文件；旧 npm @oheco/hvigor 按原作用域移除，迁移说明见仓库。压缩包约2.03GiB、展开约6.98GiB，保留8对大小写冲突头文件的全小写版本。未新增 LLDB/CodeLinter 命令；Godot Editor 迁移暂缓。许可分别遵循华为组件条款及随包第三方通知。",
+  "notes": "需要 oo >=0.11.0；安装前为约 2.03 GiB 下载缓存、6.98 GiB 安装内容及暂存预留空间，SDK 安装路径不要包含 $ 等 shell 元字符。Hvigor 首次使用会安装 pnpm 10.28.2，离线使用应提前准备；包内 Node 仅供工具调用，需要独立 node/npm 命令时另装 nodejs。旧同名命令先用 oo unlink 释放，保留旧工程仍依赖的组件和 SDK 视图。自行生成的本机 ELF 需用 binary-sign-tool 签名；若产物继承了 .codesign 段，重签前先移除该段，HAP 另需自己的工程签名配置。",
   "latest": {
     "ohos-arm64": "26.0.0.201"
   },

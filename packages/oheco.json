@@ -11,6 +11,7 @@
     }
   ],
   "license": "MIT",
+  "notes": "oo update 只刷新索引，安装用 oo install 包名或包名@版本，切换已装版本用 oo switch 包名 版本，卸载用 oo remove 包名@版本。npm 默认全局安装；项目依赖请在项目目录执行 oo install 包名 --，卸载也使用同一作用域，npm/pip 包不由 oo list 或 oo switch 管理。只释放命令入口并保留文件可用 oo unlink；工程用 oo export 包名 项目名 --output 新目录 导出后自行构建签名。工具集和 unlink 需要 oo >=0.11.0；升级客户端可依次执行 oo update、oo install oheco、oo update，升级后不要混用旧客户端管理同一安装根。自定义 OHECO_ROOT 后需持续使用同一设置，并将其 bin 加入 PATH。",
   "latest": {
     "ohos-arm64": "0.11.0"
   },

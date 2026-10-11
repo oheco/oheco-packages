@@ -11,7 +11,7 @@
     }
   ],
   "license": "ISC (with bundled BSD and ncurses licenses)",
-  "notes": "已签名，静态集成 libevent 和 libtinfo，随包提供 terminfo。默认 socket 位于应用私有目录；其他终端环境可设置 TMUX_TMPDIR 或使用 -S，共享目录及只读 /tmp 不适用。已验证断线重连；终端应用退出、休眠或后台回收后的保活尚未验证。",
+  "notes": "用 tmux new-session -s work 创建会话，Ctrl+B 后按 d 脱离，再用 tmux attach-session -t work 恢复。socket 必须放在应用私有可写目录，用 TMUX_TMPDIR 或 -S 指定，客户端和服务端需能访问同一路径；共享目录和只读 /tmp 不适用。会话脱离不会阻止系统关闭后台进程，不能依赖终端 App 完全退出或系统回收后任务仍保活。需要锁屏功能时自行配置 lock-command。",
   "latest": {
     "ohos-arm64": "3.5a-ohos.1"
   },

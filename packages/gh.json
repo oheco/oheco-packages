@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT",
-  "notes": "设备码（浏览器）登录不可用：该流程需要编译期内置的 OAuth 客户端 ID，本移植不含 OAuth 客户端凭据。请用 token 认证：printf '%s' \"$TOKEN\" | gh auth login --with-token，或设置 GH_TOKEN。gh 依据 XDG_CONFIG_HOME 定位配置目录，若该变量已设置则读取 $XDG_CONFIG_HOME/gh/ 而非 ~/.config/gh/，可用 GH_CONFIG_DIR 显式指定。Git 操作依赖系统已安装的 git 与用户自身凭据，oo 不会自动安装跨包依赖。",
+  "notes": "设备码和浏览器登录不可用，请设置 GH_TOKEN，或用 gh auth login --with-token 从标准输入读取令牌。用 GH_CONFIG_DIR 指定应用私有配置目录，避免把持久凭据放在不能落实私有权限的共享 HOME。涉及克隆、提交和推送时需另装 git，并配置 Git 的认证凭据。",
   "latest": {
     "ohos-arm64": "2.100.0-ohos.1"
   },
