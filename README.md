@@ -1,32 +1,32 @@
 # oheco-packages
 
 oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oheco 包管理器、Go/Rust 原生工具链、Python、Node.js、.NET、Git、tmux 及
-5 个 `ohos-sdk-*` 组件，目标平台为 `ohos-arm64`。可用版本见
-[软件下载站](https://oheco.org/)，软件包本身发布到对应适配仓库的 GitHub Releases。
+官方 `command-line-tools`，目标平台为 `ohos-arm64`。可用版本见
+[软件下载站](https://oheco.org/)。开源适配包发布到对应仓库的 GitHub Releases；官方工具大于 GitHub 单资产限制，使用固定 R2 公共地址。
 
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
 
-> 完整索引使用 schema v5，Pages 生成器固定为已发布的 `oheco v0.7.0`。
-> 原生包可按版本声明依赖；npm/pip 依赖仍交给对应管理器，不在 oheco 建立安装镜像。
-> v1–v4 兼容索引保留升级入口，但不会把带新依赖语义的包删减字段后提供给旧客户端。
+> 完整索引使用 schema v6，Pages 生成器随本次 `oheco v0.11.0` 发布升级。
+> 原生包可按版本声明依赖和命令内运行环境；npm/pip 依赖仍交给对应管理器。
+> v1–v5 兼容索引保留升级入口，省略不兼容的整个包，不删减运行环境或依赖语义。
 
 ## 官方域名与历史标识
 
 官网与软件下载站统一使用 **https://oheco.org/**，安装脚本为
 [https://oheco.org/install.sh](https://oheco.org/install.sh)，当前完整索引为
-[https://oheco.org/index/v5/index.json](https://oheco.org/index/v5/index.json)。
+[https://oheco.org/index/v6/index.json](https://oheco.org/index/v6/index.json)。
 网站资源和索引入口继续使用相对路径，以兼容本地预览及子路径部署。
-客户端自 `0.7.1` 起默认直连新域名；Pages 继续使用已支持 v5 的 `0.7.0` 生成器。
-二者版本不必相同：安装脚本根据 `packages/oheco.json` 的 `latest` 选择客户端发行包，
-而现有生成器已支持复制 CNAME 和当前 schema 文件。此次迁移无需修改工作流权限或 pin。
+客户端 `0.11.0` 默认使用 v6；工作流 pin 对应已验证、已发布的同版生成器提交。
+安装脚本根据 `packages/oheco.json` 的 `latest` 选择客户端发行包；升级 pin 时保留
+当前 CNAME、安装模板以及 v1–v5 兼容索引。
 
 安装脚本模板取自生成器 checkout，也就是 `oheco` 仓库的 `scripts/install.sh.tmpl`；
 修改安装脚本行为需要把 Pages 的 pin 升到包含该模板的提交。`site/` 页面资源和
 `packages/` 描述文件不受 pin 影响，推送到 `main` 后即随 Pages 生效。
 
-当前 v5 的 `schema/{index,package}.schema.json` 使用
+当前 v6 的 `schema/{index,package}.schema.json` 使用
 `https://oheco.org/schema/` 下的 `$id`，索引到包 schema 的 `$ref` 仍为相对路径。
-`schema/v1`–`schema/v4` 的 8 个历史文件保持冻结，允许保留旧域名
+`schema/v1`–`schema/v5` 的历史文件保持冻结，允许保留旧域名
 `https://oheco.github.io/oheco-packages/schema/vN/` 下的 `$id`；它们是历史协议标识，
 不是当前推荐的网站入口，不能全局替换。GitHub 仓库与 Release 链接、Go module 路径、
 软件产物 URL 和摘要，以及历史发布记录同样不因官网迁移而改写。
@@ -73,8 +73,7 @@ SDK 等新功能包使用 `schema_version: 2`；原有 v1 包仍可收录。
   在 HTML 索引下 pip 用 URL 的 basename 判定 wheel 名，文件名不一致会被静默判为无效 wheel；
   `oo-index` 现在会在构建阶段直接报错。
 - **npm**：客户端把 `sha256` 转成 `integrity` 交给 npm，npm 会校验从 `url` 下载的 tarball。
-- 0.7.x 生成器尚无 pip URL 校验；Pages 工作流仍在固定 `v0.7.0`（升级它需要带 `workflow`
-  权限的推送），因此该校验先在本仓库/本地构建生效，升级 pin 后由 CI 强制执行。
+- Pages 使用 `v0.11.0` 生成器，CI 同样检查产物文件名、平台和不可变下载元数据。
 
 名字和版本不允许 `/`、`@`、空格及路径跳转。包内路径不得越界。
 允许有效的包内相对软链接，不允许硬链接、特殊文件、重复条目或悬空软链接。
@@ -121,7 +120,8 @@ public/
   app.js
   CNAME                       # 固化官方域名 oheco.org
   install.sh
-  index/v5/index.json          # 完整索引（schema v5）
+  index/v6/index.json          # 完整索引（schema v6）
+  index/v5/index.json          # v5 客户端兼容索引
   index/v4/index.json          # v4 客户端兼容索引
   index/v3/index.json          # v3 客户端兼容索引
   index/v2/index.json          # v2 客户端兼容索引
@@ -131,6 +131,7 @@ public/
   schema/v2/{package,index}.schema.json
   schema/v3/{package,index}.schema.json
   schema/v4/{package,index}.schema.json
+  schema/v5/{package,index}.schema.json
   .nojekyll
 ```
 
@@ -171,8 +172,7 @@ OpenSSL 在鸿蒙原生构建并随包提供；Rust/LLVM 复用官方 OHOS 组�
 ```zsh
 oo update
 oo install python3
-oo install ohos-sdk-native
-oo install ohos-sdk-toolchains
+oo install command-line-tools
 oo install rust
 cargo new hello --vcs none
 cd hello
@@ -181,7 +181,7 @@ cargo test --all-targets
 ```
 
 启动器需要 Python 3.11+ 和系统 zsh；编译需要 PATH 中的 SDK Clang、compiler-rt 和
-`binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），这些外部依赖不会自动安装。链接后自动签名程序、构建脚本及过程宏；
+`binary-sign-tool`（来自 `command-line-tools` 包），这些外部依赖不会自动安装。链接后自动签名程序、构建脚本及过程宏；
 Cargo 使用系统 CA 验证 HTTPS。支持 `rustc@1.98.1-ohos.1` 和 `cargo@1.98.1-ohos.1` 等版本入口。
 官方组件不包含 rustdoc，因此不支持 `cargo doc` 和文档测试。
 已完成 HarmonyOS PC ARM64 上的原生编译、C 依赖、过程宏、测试、工具及迁移验收；
@@ -203,8 +203,8 @@ go version
 安装时使用 `strip_components: 1`，提供 `go` 和 `gofmt` 命令，并保留完整工具链布局。
 使用 v1 包规范，兼容现有客户端。
 
-构建需要 PATH 中的 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包，可用 `oo install ohos-sdk-toolchains` 安装）；
-cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install ohos-sdk-native`）。
+构建需要 PATH 中的 `binary-sign-tool`（来自 `command-line-tools` 包，可用 `oo install command-line-tools` 安装）；
+cgo 另需 OHOS SDK 的 Clang、LLD、llvm-ar 和 sysroot（`oo install command-line-tools`）。
 将 `TMPDIR` 指向当前应用的私有可写目录；如配置过旧工具链的 `GOROOT`，先执行
 `unset GOROOT`，让 Go 自动定位安装目录。客户端不会自动安装这些依赖。
 
@@ -310,7 +310,7 @@ python -m pip --version
 命令启动器保留真实安装路径，支持 `python3@3.14.7-ohos.1`、`pip3@3.14.7-ohos.1`
 及 `python3-config@3.14.7-ohos.1` 等版本入口。运行包已签名，解压时移除一层根目录。
 
-原生扩展编译需 PATH 中的 OHOS SDK Clang 和 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），客户端不会自动安装
+原生扩展编译需 PATH 中的 OHOS SDK Clang 和 `binary-sign-tool`（来自 `command-line-tools` 包），客户端不会自动安装
 这些工具。涉及 Unix socket 或严格 POSIX 权限时，将 `TMPDIR` 指向应用私有可写目录。
 本版未包含 Tk、gdbm/ndbm 和可选 libuuid 扩展；Python `uuid` 和 `dbm.sqlite3` 可用。
 通用 Linux/musllinux 二进制 wheel 不兼容。仅验证了 HarmonyOS PC ARM64 原生终端，
@@ -340,7 +340,7 @@ node -p "process.platform + '/' + process.arch"
 
 保留 JIT、WebAssembly、完整 ICU、Inspector、SQLite 和 OpenSSL。纯 JavaScript 使用
 无需 Python 或 SDK；原生扩展需另装 Python 3、OHOS SDK Clang、GNU Make 和
-`binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），并使用应用私有的可写 `TMPDIR`。只有随包 node-gyp 包含适配，独立
+`binary-sign-tool`（来自 `command-line-tools` 包），并使用应用私有的可写 `TMPDIR`。只有随包 node-gyp 包含适配，独立
 升级 npm 可能覆盖补丁。通用 Linux ARM64 预编译扩展不兼容，其他系统、架构和手机沙箱
 尚未验证。
 
@@ -360,8 +360,7 @@ MVC/Razor、Razor Pages、Blazor 服务端、SignalR 和托管 gRPC。
 
 ```sh
 oo update
-oo install ohos-sdk-toolchains
-oo install ohos-sdk-native
+oo install command-line-tools
 oo install dotnet-sdk
 dotnet --info
 dotnet new web -o hello-web
@@ -369,7 +368,7 @@ cd hello-web
 dotnet run --urls http://127.0.0.1:5080
 ```
 
-构建需 PATH 中的 `binary-sign-tool`（来自 `ohos-sdk-toolchains` 包），NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
+构建需 PATH 中的 `binary-sign-tool`（来自 `command-line-tools` 包），NativeAOT 还需鸿蒙 LLVM 的 Clang、LLD
 和 llvm-objcopy；本描述未将这些构建工具声明为自动安装依赖。SDK 无需另装运行包。原生工具已签名，
 构建/发布的本机文件自动签名，发布时保留 ICU、OpenSSL 和 C++ 运行库。
 NativeAOT 保留上游限制；Web AOT 适用于支持裁剪的 Minimal API，可使用
@@ -390,29 +389,37 @@ Kerberos/GSSAPI 未启用。通用 Linux 原生 NuGet 依赖需要鸿蒙适配�
 [ASP.NET Core Release](https://github.com/oheco/dotnet-aspnetcore/releases/tag/v10.0.12-ohos.1)
 和 [SDK Release](https://github.com/oheco/dotnet-sdk/releases/tag/v10.0.401-ohos.2)。
 
-## OpenHarmony SDK
+## 官方 command-line-tools
 
-5 个组件分别维护一个 `packages/ohos-sdk-<component>.json`，当前版本统一为
-`26.0.0.35-Beta`，直接引用 `oheco/ohos-sdk` Release 的原始 ZIP，不重新打包。
-每个压缩包带有对应组件的根目录，故均设置 `strip_components: 1`；版本目录内保留完整组件布局。
+`command-line-tools@26.0.0.201` 原样镜像华为官方归档，包含 SDK 26.0.0.105 / API26、
+Hvigor 7.26.8、OHPM 6.0.1、LLVM、CMake 和签名工具。归档为 tar.gz、2183292474 字节，
+SHA-256 为 `60929c00ae486cc038ea48145497ad34dbd4ac6a25c3f2fa895ce74afb4607f5`，
+公共地址 `https://s3.oheco.org/command-line-tools/26.0.0.201/commandline-tools-harmonyos-26.0.0.201.tar.gz`。
+大于 GitHub 的单资产限制，因此 Release 提供固定外部链接；不重打归档。
 
-- `native`：LLVM 15.0.4、sysroot、CMake/CTest/CPack 3.28.2、Ninja 1.13.2。
-- `toolchains`：`lib/binary-sign-tool`、`lib/hap-sign-tool`、`lib/ohos_packing_tool` 和目录根部的工具。
-- `ets` / `js`：作为开发资源包提供，不创建编译器命令链接；完整应用构建需另行配置相应运行环境。
-- `previewer`：当前只有元数据和 NOTICE，`binaries: {}`，不提供预览器程序。
+安装保留 `sdk/default/{openharmony,hms}` 及组件相邻资源，提供65个原 SDK 命令和
+`hvigor`、`hvigorw`、`ohpm`。`js_rawheap_translator` 退出；不新增 LLDB/CodeLinter 命令。
+包内 Node/npm/npx/corepack 不创建全局命令，Hvigor/OHPM 启动器只对子进程设置私有 Node
+目录、PATH 和 SDK 根。完整许可遵循华为组件条款与随包第三方 NOTICE/LICENSE。
 
-各 SDK 命令使用生成的启动器，避免添加 `@版本` 后改变 LLD 等程序的模式。
-当前不支持 LLDB，描述文件不声明任何 lldb 命令。各包均保留原始 NOTICE 中的许可证。
+五个旧 SDK 组件和旧 npm `@oheco/hvigor` 从所有当前兼容索引退出，历史描述移入 `retired/`。
+升级不会卸载用户旧文件；`oo unlink` 可释放旧 native/toolchains 命令，保留原始收据和版本。
+旧 npm 适配器按原作用域卸载。`oo sdk` 和视图卸载保护已删除，保留旧工程时保留源组件，
+显式 remove/cascade/autoremove 可能使视图失效。Godot Editor 本次不迁移。
 
-本版的完整 v5 索引供新版 oo 和网站使用，v1/v2/v3/v4 索引供旧客户端
-读取兼容包，按整个包的 schema fail-closed 过滤，不删除 dependencies 后伪装为旧包。
-其中 v1 包含已发布的 oheco 自举包，持续使用 v1 / tar.gz；其 Release 版本本次不变。
-Pages pin 的发布前置条件见开头；不要把本地生成成功当成线上部署完成。
+完整 v6 索引用于新版 oo 和网站，v1–v5 只保留可解码的整个包；不得删除启动环境配置
+伪装成旧格式。自举包持续使用 schema1 / tar.gz，使旧客户端可以升级到0.11.0。
+原始归档包含8对大小写冲突头文件，客户端保留全小写版本；需要大写变体定义的代码需另行适配。
+更多说明见 [发布仓库](https://github.com/oheco/command-line-tools) 和
+[oo 迁移说明](https://github.com/oheco/oheco/blob/main/docs/MIGRATION.md)。
 
-native 的原始 ZIP 包含 8 对仅大小写不同且内容不同的头文件。oo 解压默认保留全小写
-文件名对应的原始内容，舍弃对应的大写变体，不受 ZIP 条目顺序影响，以兼容鸿蒙主目录
-文件系统。需要大写变体中定义的代码仍需另行适配；Release ZIP 及校验值保持不变。
-该规则由客户端统一实现，描述文件无需添加排除列表。
+### 按命令启动环境 v6
+
+`artifacts.<platform>.launcher_options` 是命令到选项的映射，名称必须在 `launchers` 中。
+`environment` 的值和 `path` 的条目都为包内相对路径；`interpreter` 可为 `sh`。
+`arguments` 是原始参数数组，`${PACKAGE_ROOT}` 替换为实际包根，其他内容按字面传递。
+这些配置仅作用于启动的进程；旧空选项启动器保持相同字节。含选项的安装收据需要状态schema3，
+先升级 active oo 到0.11.0；`--no-switch` 也需要相同状态格式。
 
 ## 语言包规范 v3
 
@@ -437,8 +444,8 @@ v3 在包级增加 `package_manager`（`oheco`、`pip`、`npm`）。不设置时
 Release。无需维护常驻 PyPI/npm 服务。安装环境、代理、锁文件及预编译要求见
 [oheco 语言包说明](https://github.com/oheco/oheco#python-与-nodejs-包)。pip/npm 的依赖继续由
 各自后端在所选环境中即时解析，不复制为版本级原生 `dependencies`，也不建立外部安装镜像。
-Pages 构建器目前固定为已发布的 `oheco v0.7.0`，已支持 v5；后续升级需先发布并验证
-新生成器，再更新工作流 pin 和部署，不把本地改动表述为新版已发布。
+Pages 构建器固定到已验证的 `oheco v0.11.0` 提交，支持 v6 和全部兼容索引；
+后续升级同样先发布并验证生成器，再更新 pin 和部署。
 
 ## DeepSeek Harness
 
@@ -507,7 +514,7 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
 归档必须保留许可证，包含构建所需资源，并排除个人账号、签名证书和本机 SDK 路径。
 
 仅使用项目功能的包继续采用 `schema_version: 4`；新增原生安装依赖时才升到 v5。
-当前网站读取 v5，v1–v4 索引仅保留各自能够读取的完整包描述。
+当前网站读取 v6，v1–v5 索引仅保留各自能够读取的完整包描述。
 
 ## 原生软件依赖规范 v5
 
@@ -543,7 +550,7 @@ oo export example-project@1.0.0-ohos.1 editor --output './Example Project'
   其他 opaque 字符串仅精确/不等/`*` 匹配，涉及范围明确拒绝；`v` 前缀和 `+metadata` 没有特殊语义。
 
 JSON Schema 定义结构门槛；完整约束语法、按名称重复、自引用、引用目标与逐平台可满足性由
-共享的 Go `oo-index` 执行。根 `schema/` 对应 v5，`schema/v1`–`schema/v4` 冻结旧协议。
+共享的 Go `oo-index` 执行。根 `schema/` 对应 v6，`schema/v1`–`schema/v5` 冻结旧协议。
 网站展示所有 manager，切换版本会更新对应依赖；`<由npm管理>` / `<由pip管理>` 仅表示管理归属，
 不声称已经安装，不创建外部安装状态镜像。oo 0.10.0 起，`oo install/remove` 在没有 `--` 时为 npm
 使用默认全局作用域；pip 默认装进所选解释器环境。使用 `--` 后不注入默认作用域，其后参数原样传给后端。

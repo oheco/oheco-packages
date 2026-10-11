@@ -11,7 +11,7 @@
     }
   ],
   "license": "MIT",
-  "notes": "SDK 10.0.401-ohos.2 内含 .NET Runtime 与 ASP.NET Core 10.0.12，无需额外安装运行包；旧 ohos.1 不含 ASP.NET Core。支持 Web 模板、MVC/Razor、Razor Pages、Blazor 服务端、SignalR 和托管 gRPC。构建需 PATH 中的 binary-sign-tool（ohos-sdk-toolchains）；NativeAOT 另需鸿蒙 LLVM 的 Clang、LLD、llvm-objcopy（ohos-sdk-native）。oo 不自动安装这些依赖。原生工具已签名，构建/发布的本机文件自动签名，发布目录保留 ICU、OpenSSL 和 C++ 运行库。入口使用应用私有临时目录，可用 DOTNET_OHOS_TMPDIR 配置；NuGet 支持 HTTP_PROXY/HTTPS_PROXY。已在 HarmonyOS PC ARM64 API 26 / 7.0.0.105 验证原生构建、JIT/R2R/AOT、Web 协议及模板；支持含空格路径。Web NativeAOT 遵循上游 Minimal API 限制，MVC/Razor 和 Blazor 服务端使用 CoreCLR。HTTP/3 所需 MsQuic 未随包提供；IIS/HTTP.sys 属于 Windows 功能。GUI、workloads、原生 Grpc.Tools/protoc 和系统开发证书信任未验证；Kerberos/GSSAPI 未启用，手机沙箱未验证。目标 RID 为 openharmony-arm64，其他平台的原生 NuGet 依赖需要适配。",
+  "notes": "SDK 10.0.401-ohos.2 内含 .NET Runtime 与 ASP.NET Core 10.0.12，无需额外安装运行包；旧 ohos.1 不含 ASP.NET Core。支持 Web 模板、MVC/Razor、Razor Pages、Blazor 服务端、SignalR 和托管 gRPC。构建需 PATH 中的 binary-sign-tool（command-line-tools）；NativeAOT 另需其中鸿蒙 LLVM 的 Clang、LLD、llvm-objcopy。oo 不自动安装这些依赖。原生工具已签名，构建/发布的本机文件自动签名，发布目录保留 ICU、OpenSSL 和 C++ 运行库。入口使用应用私有临时目录，可用 DOTNET_OHOS_TMPDIR 配置；NuGet 支持 HTTP_PROXY/HTTPS_PROXY。已在 HarmonyOS PC ARM64 API 26 / 7.0.0.105 验证原生构建、JIT/R2R/AOT、Web 协议及模板；支持含空格路径。Web NativeAOT 遵循上游 Minimal API 限制，MVC/Razor 和 Blazor 服务端使用 CoreCLR。HTTP/3 所需 MsQuic 未随包提供；IIS/HTTP.sys 属于 Windows 功能。GUI、workloads、原生 Grpc.Tools/protoc 和系统开发证书信任未验证；Kerberos/GSSAPI 未启用，手机沙箱未验证。目标 RID 为 openharmony-arm64，其他平台的原生 NuGet 依赖需要适配。",
   "latest": {
     "ohos-arm64": "10.0.401-ohos.2"
   },

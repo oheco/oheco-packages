@@ -11,7 +11,7 @@
     }
   ],
   "license": "BSD-3-Clause",
-  "notes": "编译生成的二进制需使用 ohos-sdk-toolchains 包中的 binary-sign-tool 进行签名，否则运行时会出现 permission denied。",
+  "notes": "编译生成的二进制需使用 command-line-tools 包中的 binary-sign-tool 进行签名，否则运行时会出现 permission denied。",
   "latest": {
     "ohos-arm64": "1.27.1-ohos.1"
   },

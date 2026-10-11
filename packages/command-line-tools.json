@@ -1,0 +1,277 @@
+{
+  "schema_version": 6,
+  "name": "command-line-tools",
+  "description": "华为官方鸿蒙命令行工具，包含 SDK、LLVM/Clang、CMake、签名工具、Hvigor 和 OHPM",
+  "upstream": "https://developer.huawei.com/consumer/cn/download/",
+  "repository": "https://github.com/oheco/command-line-tools",
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
+  "license": "Multiple (see bundled component NOTICE.txt and license files)",
+  "notes": "需要 oo >=0.11.0（索引 v6）。原始官方 tar.gz 使用固定 R2 公共 URL，SDK 26.0.0.105/API26、Hvigor 7.26.8、OHPM 6.0.1。65 个兼容 SDK 命令及 hvigor/hvigorw/ohpm；js_rawheap_translator 已退出。Node/npm/npx/corepack 仅在包内，不创建全局入口；Hvigor/OHPM 子进程使用官方 Node 和 SDK。旧 SDK 同名入口先用 oo unlink 释放并保留文件；旧 npm @oheco/hvigor 按原作用域移除，迁移说明见仓库。压缩包约2.03GiB、展开约6.98GiB，保留8对大小写冲突头文件的全小写版本。未新增 LLDB/CodeLinter 命令；Godot Editor 迁移暂缓。许可分别遵循华为组件条款及随包第三方通知。",
+  "latest": {
+    "ohos-arm64": "26.0.0.201"
+  },
+  "versions": [
+    {
+      "version": "26.0.0.201",
+      "upstream_version": "26.0.0.201",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://s3.oheco.org/command-line-tools/26.0.0.201/commandline-tools-harmonyos-26.0.0.201.tar.gz",
+          "sha256": "60929c00ae486cc038ea48145497ad34dbd4ac6a25c3f2fa895ce74afb4607f5",
+          "size": 2183292474,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "FileCheck": "sdk/default/openharmony/native/llvm/bin/FileCheck",
+            "aarch64-unknown-linux-ohos-clang": "sdk/default/openharmony/native/llvm/bin/clang",
+            "aarch64-unknown-linux-ohos-clang++": "sdk/default/openharmony/native/llvm/bin/clang++",
+            "ark_disasm": "sdk/default/openharmony/toolchains/ark_disasm",
+            "armv7-unknown-linux-ohos-clang": "sdk/default/openharmony/native/llvm/bin/clang",
+            "armv7-unknown-linux-ohos-clang++": "sdk/default/openharmony/native/llvm/bin/clang++",
+            "binary-sign-tool": "sdk/default/openharmony/toolchains/lib/binary-sign-tool",
+            "clang": "sdk/default/openharmony/native/llvm/bin/clang",
+            "clang++": "sdk/default/openharmony/native/llvm/bin/clang++",
+            "clang-15": "sdk/default/openharmony/native/llvm/bin/clang-15",
+            "clang-check": "sdk/default/openharmony/native/llvm/bin/clang-check",
+            "clang-cl": "sdk/default/openharmony/native/llvm/bin/clang-cl",
+            "clang-cpp": "sdk/default/openharmony/native/llvm/bin/clang-cpp",
+            "clang-format": "sdk/default/openharmony/native/llvm/bin/clang-format",
+            "clang-tidy": "sdk/default/openharmony/native/llvm/bin/clang-tidy",
+            "clangd": "sdk/default/openharmony/native/llvm/bin/clangd",
+            "cmake": "sdk/default/openharmony/native/build-tools/cmake/bin/cmake",
+            "cpack": "sdk/default/openharmony/native/build-tools/cmake/bin/cpack",
+            "ctest": "sdk/default/openharmony/native/build-tools/cmake/bin/ctest",
+            "dsymutil": "sdk/default/openharmony/native/llvm/bin/dsymutil",
+            "hap-sign-tool": "sdk/default/openharmony/toolchains/lib/hap-sign-tool",
+            "hdc": "sdk/default/openharmony/toolchains/hdc",
+            "hvigor": "hvigor/bin/hvigorw",
+            "hvigorw": "hvigor/bin/hvigorw",
+            "ld.lld": "sdk/default/openharmony/native/llvm/bin/ld.lld",
+            "ld64.lld": "sdk/default/openharmony/native/llvm/bin/ld64.lld",
+            "llc": "sdk/default/openharmony/native/llvm/bin/llc",
+            "lld": "sdk/default/openharmony/native/llvm/bin/lld",
+            "lld-link": "sdk/default/openharmony/native/llvm/bin/lld-link",
+            "llvm-addr2line": "sdk/default/openharmony/native/llvm/bin/llvm-addr2line",
+            "llvm-ar": "sdk/default/openharmony/native/llvm/bin/llvm-ar",
+            "llvm-as": "sdk/default/openharmony/native/llvm/bin/llvm-as",
+            "llvm-cfi-verify": "sdk/default/openharmony/native/llvm/bin/llvm-cfi-verify",
+            "llvm-config": "sdk/default/openharmony/native/llvm/bin/llvm-config",
+            "llvm-cov": "sdk/default/openharmony/native/llvm/bin/llvm-cov",
+            "llvm-cxxfilt": "sdk/default/openharmony/native/llvm/bin/llvm-cxxfilt",
+            "llvm-dis": "sdk/default/openharmony/native/llvm/bin/llvm-dis",
+            "llvm-dwarfdump": "sdk/default/openharmony/native/llvm/bin/llvm-dwarfdump",
+            "llvm-dwp": "sdk/default/openharmony/native/llvm/bin/llvm-dwp",
+            "llvm-lib": "sdk/default/openharmony/native/llvm/bin/llvm-lib",
+            "llvm-link": "sdk/default/openharmony/native/llvm/bin/llvm-link",
+            "llvm-modextract": "sdk/default/openharmony/native/llvm/bin/llvm-modextract",
+            "llvm-nm": "sdk/default/openharmony/native/llvm/bin/llvm-nm",
+            "llvm-objcopy": "sdk/default/openharmony/native/llvm/bin/llvm-objcopy",
+            "llvm-objdump": "sdk/default/openharmony/native/llvm/bin/llvm-objdump",
+            "llvm-profdata": "sdk/default/openharmony/native/llvm/bin/llvm-profdata",
+            "llvm-ranlib": "sdk/default/openharmony/native/llvm/bin/llvm-ranlib",
+            "llvm-rc": "sdk/default/openharmony/native/llvm/bin/llvm-rc",
+            "llvm-readelf": "sdk/default/openharmony/native/llvm/bin/llvm-readelf",
+            "llvm-readobj": "sdk/default/openharmony/native/llvm/bin/llvm-readobj",
+            "llvm-size": "sdk/default/openharmony/native/llvm/bin/llvm-size",
+            "llvm-strings": "sdk/default/openharmony/native/llvm/bin/llvm-strings",
+            "llvm-strip": "sdk/default/openharmony/native/llvm/bin/llvm-strip",
+            "llvm-symbolizer": "sdk/default/openharmony/native/llvm/bin/llvm-symbolizer",
+            "loongarch64-unknown-linux-ohos-clang": "sdk/default/openharmony/native/llvm/bin/clang",
+            "loongarch64-unknown-linux-ohos-clang++": "sdk/default/openharmony/native/llvm/bin/clang++",
+            "ninja": "sdk/default/openharmony/native/build-tools/cmake/bin/ninja",
+            "ohos_packing_tool": "sdk/default/openharmony/toolchains/lib/ohos_packing_tool",
+            "ohpm": "ohpm/bin/ohpm",
+            "opt": "sdk/default/openharmony/native/llvm/bin/opt",
+            "rawheap_translator": "sdk/default/openharmony/toolchains/rawheap_translator",
+            "restool": "sdk/default/openharmony/toolchains/restool",
+            "sancov": "sdk/default/openharmony/native/llvm/bin/sancov",
+            "sanstats": "sdk/default/openharmony/native/llvm/bin/sanstats",
+            "syscap_tool": "sdk/default/openharmony/toolchains/syscap_tool",
+            "x86_64-unknown-linux-ohos-clang": "sdk/default/openharmony/native/llvm/bin/clang",
+            "x86_64-unknown-linux-ohos-clang++": "sdk/default/openharmony/native/llvm/bin/clang++",
+            "yaml2obj": "sdk/default/openharmony/native/llvm/bin/yaml2obj"
+          },
+          "launchers": [
+            "FileCheck",
+            "aarch64-unknown-linux-ohos-clang",
+            "aarch64-unknown-linux-ohos-clang++",
+            "ark_disasm",
+            "armv7-unknown-linux-ohos-clang",
+            "armv7-unknown-linux-ohos-clang++",
+            "binary-sign-tool",
+            "clang",
+            "clang++",
+            "clang-15",
+            "clang-check",
+            "clang-cl",
+            "clang-cpp",
+            "clang-format",
+            "clang-tidy",
+            "clangd",
+            "cmake",
+            "cpack",
+            "ctest",
+            "dsymutil",
+            "hap-sign-tool",
+            "hdc",
+            "hvigor",
+            "hvigorw",
+            "ld.lld",
+            "ld64.lld",
+            "llc",
+            "lld",
+            "lld-link",
+            "llvm-addr2line",
+            "llvm-ar",
+            "llvm-as",
+            "llvm-cfi-verify",
+            "llvm-config",
+            "llvm-cov",
+            "llvm-cxxfilt",
+            "llvm-dis",
+            "llvm-dwarfdump",
+            "llvm-dwp",
+            "llvm-lib",
+            "llvm-link",
+            "llvm-modextract",
+            "llvm-nm",
+            "llvm-objcopy",
+            "llvm-objdump",
+            "llvm-profdata",
+            "llvm-ranlib",
+            "llvm-rc",
+            "llvm-readelf",
+            "llvm-readobj",
+            "llvm-size",
+            "llvm-strings",
+            "llvm-strip",
+            "llvm-symbolizer",
+            "loongarch64-unknown-linux-ohos-clang",
+            "loongarch64-unknown-linux-ohos-clang++",
+            "ninja",
+            "ohos_packing_tool",
+            "ohpm",
+            "opt",
+            "rawheap_translator",
+            "restool",
+            "sancov",
+            "sanstats",
+            "syscap_tool",
+            "x86_64-unknown-linux-ohos-clang",
+            "x86_64-unknown-linux-ohos-clang++",
+            "yaml2obj"
+          ],
+          "launcher_options": {
+            "aarch64-unknown-linux-ohos-clang": {
+              "arguments": [
+                "-target",
+                "aarch64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            },
+            "aarch64-unknown-linux-ohos-clang++": {
+              "arguments": [
+                "-target",
+                "aarch64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            },
+            "armv7-unknown-linux-ohos-clang": {
+              "arguments": [
+                "-target",
+                "arm-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__",
+                "-march=armv7-a",
+                "-mfloat-abi=softfp",
+                "-mtune=generic-armv7-a",
+                "-mthumb"
+              ]
+            },
+            "armv7-unknown-linux-ohos-clang++": {
+              "arguments": [
+                "-target",
+                "arm-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__",
+                "-march=armv7-a",
+                "-mfloat-abi=softfp",
+                "-mtune=generic-armv7-a",
+                "-mthumb"
+              ]
+            },
+            "hvigor": {
+              "environment": {
+                "NODE_HOME": "node/bin",
+                "DEVECO_SDK_HOME": "sdk"
+              },
+              "path": [
+                "node/bin"
+              ],
+              "interpreter": "sh"
+            },
+            "hvigorw": {
+              "environment": {
+                "NODE_HOME": "node/bin",
+                "DEVECO_SDK_HOME": "sdk"
+              },
+              "path": [
+                "node/bin"
+              ],
+              "interpreter": "sh"
+            },
+            "loongarch64-unknown-linux-ohos-clang": {
+              "arguments": [
+                "-target",
+                "loongarch64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            },
+            "loongarch64-unknown-linux-ohos-clang++": {
+              "arguments": [
+                "-target",
+                "loongarch64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            },
+            "ohpm": {
+              "environment": {
+                "NODE_HOME": "node/bin",
+                "DEVECO_SDK_HOME": "sdk"
+              },
+              "path": [
+                "node/bin"
+              ],
+              "interpreter": "sh"
+            },
+            "x86_64-unknown-linux-ohos-clang": {
+              "arguments": [
+                "-target",
+                "x86_64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            },
+            "x86_64-unknown-linux-ohos-clang++": {
+              "arguments": [
+                "-target",
+                "x86_64-linux-ohos",
+                "--sysroot=${PACKAGE_ROOT}/sdk/default/openharmony/native/sysroot",
+                "-D__MUSL__"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

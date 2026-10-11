@@ -295,10 +295,10 @@ async function refreshIndex() {
   loadingIndex = true;
   try {
     // Pages caches files for ten minutes; revalidate release metadata on each visit.
-    const response = await fetch('./index/v5/index.json', { cache: 'no-cache' });
+    const response = await fetch('./index/v6/index.json', { cache: 'no-cache' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const index = await response.json();
-    if (index.schema_version !== 5 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
+    if (index.schema_version !== 6 || !Array.isArray(index.packages)) throw new Error('不支持的索引格式');
     const updatedPackages = JSON.stringify(index.packages);
     if (updatedPackages !== loadedPackages) {
       packages = index.packages;
