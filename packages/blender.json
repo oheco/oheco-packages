@@ -24,20 +24,6 @@
           "strip_components": 1
         }
       }
-    },
-    {
-      "version": "5.2.2-ohos.host.15",
-      "upstream_version": "5.2.2",
-      "projects": {
-        "app": {
-          "description": "Blender 鸿蒙图形编辑器开发预览工程，包含宿主源码、运行库和资源，供用户自行签名安装。",
-          "url": "https://github.com/oheco/blender/releases/download/5.2.2-ohos.host.15/blender-app-5.2.2-ohos.host.15.zip",
-          "sha256": "d4b8653ddfb21f267931f168784ca63457ef98ff5cb39fd0169166008f51366e",
-          "size": 143827441,
-          "format": "zip",
-          "strip_components": 1
-        }
-      }
     }
   ]
 }
