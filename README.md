@@ -471,14 +471,17 @@ node-pty、Koffi、sharp 及 ripgrep 的适配包作为固定版本依赖自动�
 完整运行包保留已验证的 Host、Client、Web 和原生系统扩展构建，之后单独更新 CLI 与客户端资源；
 最终提交未全量重建。Rust 工具链和部分打包器使用官方鸿蒙预编译包；图片与 CSS 引擎等复用固定的上游 WASM。
 
-App 工程支持保存本地与远程连接，并原样接入 broker 0.4 SDK。导出后由用户自行构建和签名：
+`app` 工程指向独立更新的 App `0.2.0-rc.2-ohos.2`，支持保存本地与远程连接，并原样接入 broker 0.5 SDK，
+包含账号刷新持久化、最近页面保留与本地端口优先复用。CLI/Web 运行包版本仍为 `0.2.0-rc.2-ohos.1`。
+导出后由用户自行构建和签名：
 
 ```sh
-oo export deepseek-harness@0.2.0-rc.2-ohos.1 app --output ./DeepseekHarnessApp
+oo export deepseek-harness app --output ./DeepseekHarnessApp
 ```
 
-App versionCode `1000005` 已在两个设备完成安装，物理验收仅覆盖安装；未启动应用、执行 UI 操作或
-验证网络续传。个人签名 HAP 和设备签名资料不作为公开附件。
+App versionCode `1000006` 已在电脑和手机完成安装，物理验收仅覆盖安装；未启动应用、执行 UI 操作或
+验证网络续传。个人签名 HAP 和设备签名资料不作为公开附件，详情见
+[App 验证记录](https://github.com/oheco/deepseek-harness/releases/download/app-v0.2.0-rc.2-ohos.2/deepseek-harness-app-0.2.0-rc.2-ohos.2-validation.json)。
 
 鸿蒙默认使用 zsh、完整文件系统和进程权限，关闭审批；此平台未提供沙箱。
 持久终端需要带 `termios` 的 Python 3。发行版基于上游候选版本，不包含 Electron 和
