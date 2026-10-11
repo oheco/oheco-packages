@@ -4,35 +4,95 @@
   "description": "Godot 游戏引擎的 .NET 编辑器，提供无界面资源导入和 .NET 开发命令。可导出 DevEco 图形编辑器工程，在鸿蒙电脑上开发游戏项目。",
   "upstream": "https://github.com/godotengine/godot",
   "repository": "https://github.com/oheco/godot",
-  "maintainers": [{"github": "kdada", "name": "Guo Wei"}],
+  "maintainers": [
+    {
+      "github": "kdada",
+      "name": "Guo Wei"
+    }
+  ],
   "license": "MIT",
-  "notes": "godot 命令用于无界面导入和 .NET 任务；图形编辑器用 oo export godot-editor app 导出后自行构建签名，仅面向 2in1 设备。需精确版本 dotnet-sdk 10.0.401-ohos.2，CLI 的 DOTNET_ROOT、DOTNET_ROOT_ARM64 应指向该 SDK，并将其 bin 加入 PATH，App 不捆绑完整 SDK。签名和 profile ACL 按工程要求配置；设备内打包继续使用工程指定的旧 SDK/Hvigor 环境，保留其组件和已建 SDK 视图，不能直接用 command-line-tools 替代。外部终端和外部编辑器入口不可用。",
-  "latest": {"ohos-arm64": "4.7.2-ohos.4"},
-  "versions": [{
-    "version": "4.7.2-ohos.4",
-    "upstream_version": "4.7.2",
-    "dependencies": [{
-      "name": "dotnet-sdk",
-      "constraint": "=10.0.401-ohos.2",
-      "version_basis": "package",
-      "platforms": ["ohos-arm64"]
-    }],
-    "artifacts": {"ohos-arm64": {
-      "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-4.7.2-ohos.4-ohos-arm64.tar.gz",
-      "sha256": "1311a39ea8a8c6c5cdccad98cce4d2c022cfcb29db56996900408d131048b1c4",
-      "size": 344890723,
-      "format": "tar.gz",
-      "strip_components": 1,
-      "binaries": {"godot": "bin/godot"},
-      "launchers": ["godot"]
-    }},
-    "projects": {"app": {
-      "description": "Godot 图形编辑器工程，用于在鸿蒙电脑上创建和编辑游戏项目，包含场景编辑、脚本编辑和 .NET 开发支持。",
-      "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-app-4.7.2-ohos.4.zip",
-      "sha256": "c25d387f68e8a3efd97df7a940d0e0f1d590b00d30636f3482cf8ce84f83e031",
-      "size": 345743978,
-      "format": "zip",
-      "strip_components": 1
-    }}
-  }]
+  "notes": "godot 命令用于无界面导入和 .NET 任务；图形编辑器用 oo export godot-editor app 导出后自行构建签名，面向 API 26+ 的 2in1 设备。依赖精确版本 dotnet-sdk 10.0.401-ohos.2，CLI 的 DOTNET_ROOT、DOTNET_ROOT_ARM64 指向该 SDK，将其 bin 加入 PATH，App 不捆绑完整 SDK。当前版本使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK 26；离线使用前准备官方 wrapper 的 pnpm 缓存。签名和受限权限 profile ACL 按工程要求配置。外部终端和外部编辑器入口不可用。",
+  "latest": {
+    "ohos-arm64": "4.7.2-ohos.5"
+  },
+  "versions": [
+    {
+      "version": "4.7.2-ohos.4",
+      "upstream_version": "4.7.2",
+      "dependencies": [
+        {
+          "name": "dotnet-sdk",
+          "constraint": "=10.0.401-ohos.2",
+          "version_basis": "package",
+          "platforms": [
+            "ohos-arm64"
+          ]
+        }
+      ],
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-4.7.2-ohos.4-ohos-arm64.tar.gz",
+          "sha256": "1311a39ea8a8c6c5cdccad98cce4d2c022cfcb29db56996900408d131048b1c4",
+          "size": 344890723,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "godot": "bin/godot"
+          },
+          "launchers": [
+            "godot"
+          ]
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "Godot 图形编辑器工程，用于在鸿蒙电脑上创建和编辑游戏项目，包含场景编辑、脚本编辑和 .NET 开发支持。",
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-app-4.7.2-ohos.4.zip",
+          "sha256": "c25d387f68e8a3efd97df7a940d0e0f1d590b00d30636f3482cf8ce84f83e031",
+          "size": 345743978,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
+    {
+      "version": "4.7.2-ohos.5",
+      "upstream_version": "4.7.2",
+      "dependencies": [
+        {
+          "name": "dotnet-sdk",
+          "constraint": "=10.0.401-ohos.2",
+          "version_basis": "package",
+          "platforms": [
+            "ohos-arm64"
+          ]
+        }
+      ],
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.5/godot-editor-4.7.2-ohos.5-ohos-arm64.tar.gz",
+          "sha256": "847d8dc1007b705fbf4cff0957ced785a408002509074ca3a155ae7590400661",
+          "size": 334004600,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "godot": "bin/godot"
+          },
+          "launchers": [
+            "godot"
+          ]
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "Godot 图形编辑器工程，用于在鸿蒙电脑上创建和编辑游戏项目，包含场景编辑、脚本编辑和 .NET 开发支持。",
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.5/godot-editor-app-4.7.2-ohos.5.zip",
+          "sha256": "a9e6e16e0e3f620040a2f6f93dc922f1e47aa92267bb5582dc7b636381561ffa",
+          "size": 334940678,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    }
+  ]
 }
