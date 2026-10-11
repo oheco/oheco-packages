@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "rust",
-  "description": "Rust 1.98.1 官方 OHOS 工具链，可直接在鸿蒙上运行，包含 Cargo、rustfmt、Clippy 和 rust-analyzer",
+  "description": "Rust 开发工具链，包含 rustc、Cargo、rustfmt、Clippy 和 rust-analyzer，用于编译、测试、格式化、检查及编辑器代码分析。",
   "upstream": "https://github.com/rust-lang/rust",
   "repository": "https://github.com/oheco/rust",
   "maintainers": [

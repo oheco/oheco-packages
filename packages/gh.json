@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "gh",
-  "description": "GitHub 官方命令行工具，支持仓库、Issue、PR、Release 与 Actions 操作，含手册页和 shell 补全",
+  "description": "GitHub 命令行工具，可在终端管理仓库、Issue、PR、Release 和 Actions，附带手册页与 shell 补全。",
   "upstream": "https://github.com/cli/cli",
   "repository": "https://github.com/oheco/gh",
   "maintainers": [

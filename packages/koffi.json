@@ -3,7 +3,7 @@
   "name": "koffi",
   "package_manager": "npm",
   "package_name": "koffi",
-  "description": "Node.js C FFI 库，提供鸿蒙 ARM64 原生函数、结构体和回调调用",
+  "description": "Node.js 的 C 外部函数接口库，可调用动态库中的函数并处理结构体和回调，适合把现有 C 接口接入 JavaScript。",
   "upstream": "https://github.com/Koromix/rygel",
   "repository": "https://github.com/oheco/rygel",
   "maintainers": [
@@ -68,5 +68,5 @@
       }
     }
   ],
-  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；原生扩展已签名，无安装脚本。"
+  "notes": "需要鸿蒙 ARM64 Node.js 24；原生扩展已签名，无安装脚本。"
 }

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "dotnet-sdk",
-  "description": ".NET 10 LTS 鸿蒙 ARM64 原生 SDK，内含 ASP.NET Core，支持 C# 构建、JIT、ReadyToRun 和 NativeAOT",
+  "description": ".NET 10 开发工具，用于构建和发布 C# 应用，支持 JIT、ReadyToRun 与 NativeAOT。新版加入 ASP.NET Core，提供 Web 模板及 MVC/Razor、Blazor 服务端、SignalR 和托管 gRPC 开发能力。",
   "upstream": "https://github.com/dotnet/sdk",
   "repository": "https://github.com/oheco/dotnet-sdk",
   "maintainers": [

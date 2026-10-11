@@ -189,24 +189,45 @@ function versionPicker(pkg, versions, onChange) {
   onChange(versions[selected]);
   return picker;
 }
+function originLabel(pkg) {
+  // Huawei's official tools are developed for HarmonyOS and distributed as a bundle.
+  return pkg.name === 'command-line-tools' || projectURL(pkg.upstream) === projectURL(pkg.repository) ? '原生' : '移植';
+}
+function managerLabel(pkg) {
+  const manager = pkg.package_manager || 'oheco';
+  return manager === 'oheco' ? 'oo' : manager;
+}
+function architectures(pkg) {
+  return [...new Set(Object.keys(pkg.latest).map(platform => platform.slice(platform.lastIndexOf('-') + 1)))].sort();
+}
 function card(pkg) {
   const manager = pkg.package_manager || 'oheco';
   const article = el('article', undefined, 'package');
   const top = el('div', undefined, 'top');
-  top.append(el('h3', pkg.name), el('span', 'OHOS · ARM64', 'badge'));
+  const tags = el('div', undefined, 'package-tags');
+  const origin = el('span', originLabel(pkg), 'badge badge-origin');
+  origin.title = origin.textContent === '原生' ? '面向鸿蒙开发的软件' : '移植到鸿蒙的软件';
+  const owner = el('span', managerLabel(pkg), 'badge badge-manager');
+  owner.title = `包管理器：${owner.textContent}`;
+  tags.append(origin, owner, ...architectures(pkg).map(architecture => {
+    const badge = el('span', architecture, 'badge badge-architecture');
+    badge.title = `架构：${architecture}`;
+    return badge;
+  }));
+  top.append(el('h3', pkg.name), tags);
   article.append(top, el('p', pkg.description, 'description'));
   const meta = el('div', undefined, 'metadata');
   if (!pkg.upstream || projectURL(pkg.upstream) === projectURL(pkg.repository)) {
     meta.append(link('项目地址 ↗', pkg.repository));
   } else {
-    meta.append(link('上游项目 ↗', pkg.upstream), link('鸿蒙适配 ↗', pkg.repository));
+    meta.append(link('上游项目 ↗', pkg.upstream), link('项目仓库 ↗', pkg.repository));
   }
-  meta.append(el('span', pkg.license));
-  meta.append(el('span', manager === 'oheco' ? 'oheco · 原生' : `${manager} · ${pkg.package_name}`));
-  if (manager !== 'oheco') meta.append(el('span', `<由${manager}管理> · 非安装状态`));
+  const license = el('span', pkg.license.startsWith('Multiple') ? '多种许可证' : pkg.license);
+  license.title = pkg.license;
+  meta.append(license);
   article.append(meta);
   const people = el('div', undefined, 'metadata');
-  people.append(el('span', '移植维护：'));
+  people.append(el('span', '维护者：'));
   for (const person of pkg.maintainers) people.append(link(`@${person.github}`, `https://github.com/${encodeURIComponent(person.github)}`));
   article.append(people);
   const row = el('div', undefined, 'version-row');
@@ -226,22 +247,21 @@ function card(pkg) {
   const dependencies = el('section', undefined, 'dependencies');
   function updateVersion(version) {
     dependencies.replaceChildren();
-    if (manager === 'oheco') {
-      dependencies.append(el('strong', `原生软件依赖 · ${version.version}`));
-      if (!version.dependencies?.length) dependencies.append(el('p', '此版本未声明原生软件依赖。', 'notes'));
-      else {
-        const list = el('ul');
-        for (const dependency of version.dependencies) {
-          const item = el('li');
-          const basis = dependency.version_basis === 'upstream' ? '上游版本' : '包版本';
-          const platforms = dependency.platforms?.length ? dependency.platforms.join(', ') : '全部产物平台';
-          const applies = !dependency.platforms?.length || dependency.platforms.includes(target);
-          item.append(el('code', `${dependency.name} ${dependency.constraint}`), el('span', ` · ${basis} · ${platforms}${applies ? '' : '（不适用于当前平台）'}`));
-          list.append(item);
-        }
-        dependencies.append(list);
+    const required = manager === 'oheco' ? (version.dependencies || []).filter(dependency =>
+      !dependency.platforms?.length || dependency.platforms.includes(target)) : [];
+    dependencies.hidden = required.length === 0;
+    if (required.length) {
+      dependencies.append(el('strong', '依赖'));
+      const list = el('ul');
+      for (const dependency of required) {
+        const item = el('li');
+        const constraint = el('code', `${dependency.name} ${dependency.constraint}`);
+        constraint.title = dependency.version_basis === 'upstream' ? '按上游版本匹配' : '按包版本匹配';
+        item.append(constraint);
+        list.append(item);
       }
-    } else dependencies.append(el('p', `依赖由 ${manager} 在所选环境中即时解析；此页面不记录或判断安装状态。`, 'notes'));
+      dependencies.append(list);
+    }
     const artifacts = (manager === 'pip' ? version.pip_artifacts || [] : [manager === 'npm' ? version.npm_artifacts : version.artifacts?.[target]]).filter(Boolean);
     download.replaceChildren(...artifacts.map(artifact => link(
       manager === 'pip' ? `${artifact.filename} ↗` : '下载软件包 ↗', artifact.url, 'download')));
@@ -271,7 +291,11 @@ function card(pkg) {
     article.append(row, command, details, dependencies, projects);
   }
   else article.append(el('p', '此平台暂无可用版本', 'notes'));
-  if (pkg.notes) article.append(el('p', pkg.notes, 'notes'));
+  if (pkg.notes) {
+    const usage = el('details', undefined, 'usage-notes');
+    usage.append(el('summary', '使用说明'), el('p', pkg.notes, 'notes'));
+    article.append(usage);
+  }
   return article;
 }
 function render() {
@@ -281,9 +305,16 @@ function render() {
     const commands = pkg.versions.flatMap(version => Object.values(version.artifacts || {}).flatMap(artifact => Object.keys(artifact.binaries)));
     const projects = pkg.versions.flatMap(version => Object.entries(version.projects || {}).flatMap(([name, project]) => [name, project.description || '']));
     const dependencies = pkg.versions.flatMap(version => (version.dependencies || []).map(dependency => dependency.name));
-    return [pkg.name, pkg.package_manager || 'oheco', pkg.package_name || '', pkg.description, ...commands, ...projects, ...dependencies].join(' ').toLocaleLowerCase().includes(query);
+    return [pkg.name, originLabel(pkg), managerLabel(pkg), ...architectures(pkg), pkg.package_name || '', pkg.description, ...commands, ...projects, ...dependencies].join(' ').toLocaleLowerCase().includes(query);
   });
-  container.replaceChildren(...matches.map(card));
+  const cards = matches.map(card);
+  const middle = Math.ceil(cards.length / 2);
+  const columns = [cards.slice(0, middle), cards.slice(middle)].filter(column => column.length).map(cards => {
+    const column = el('div', undefined, 'package-column');
+    column.append(...cards);
+    return column;
+  });
+  container.replaceChildren(...columns);
   document.querySelector('#count').textContent = String(matches.length);
   status.textContent = matches.length ? '' : '没有找到匹配的工具。';
 }

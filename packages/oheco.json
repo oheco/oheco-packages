@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "oheco",
-  "description": "\u9e3f\u8499\u539f\u751f\u8f6f\u4ef6\u5305\u7ba1\u7406\u5668\uff0c\u4f7f\u7528 oo \u7edf\u4e00\u6279\u91cf\u5b89\u88c5/\u5378\u8f7d\u3001\u7ba1\u7406\u539f\u751f\u4f9d\u8d56\u3001\u5bfc\u51fa\u9879\u76ee\u548c\u5207\u6362\u5f00\u6e90\u5de5\u5177",
+  "description": "鸿蒙软件包管理器，通过 oo 批量安装和卸载软件、管理依赖、导出开发工程和切换版本。0.11.0 支持按命令配置运行环境，并可释放命令入口而保留已安装文件。",
   "upstream": "https://github.com/oheco/oheco",
   "repository": "https://github.com/oheco/oheco",
   "maintainers": [

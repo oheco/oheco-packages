@@ -3,7 +3,7 @@
   "name": "vscode-ripgrep",
   "package_manager": "npm",
   "package_name": "@vscode/ripgrep",
-  "description": "Node.js ripgrep 包装层，自动加载鸿蒙 ARM64 平台命令包",
+  "description": "在 Node.js 项目中调用 ripgrep 的包装库，自动加载配套平台命令包，适合为编辑器和开发工具提供文本搜索能力。",
   "upstream": "https://github.com/microsoft/vscode-ripgrep",
   "repository": "https://github.com/oheco/vscode-ripgrep",
   "maintainers": [
@@ -96,5 +96,5 @@
       }
     }
   ],
-  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
+  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
 }

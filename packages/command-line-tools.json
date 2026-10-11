@@ -1,7 +1,7 @@
 {
   "schema_version": 6,
   "name": "command-line-tools",
-  "description": "华为官方鸿蒙命令行工具，包含 SDK、LLVM/Clang、CMake、签名工具、Hvigor 和 OHPM",
+  "description": "华为官方鸿蒙开发工具集，用于应用构建、打包和签名，包含 SDK、LLVM/Clang、CMake、Hvigor 和 OHPM。当前版本提供 API 26 SDK、Hvigor 7.26.8 和 OHPM 6.0.1。",
   "upstream": "https://developer.huawei.com/consumer/cn/download/",
   "repository": "https://github.com/oheco/command-line-tools",
   "maintainers": [

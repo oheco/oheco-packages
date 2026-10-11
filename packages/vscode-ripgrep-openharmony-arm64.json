@@ -3,7 +3,7 @@
   "name": "vscode-ripgrep-openharmony-arm64",
   "package_manager": "npm",
   "package_name": "@vscode/ripgrep-openharmony-arm64",
-  "description": "供 @vscode/ripgrep 使用的已签名鸿蒙 ARM64 ripgrep 15.0.0 与 PCRE2 10.45",
+  "description": "为 @vscode/ripgrep 提供 ripgrep 15.0.0 搜索程序及 PCRE2 10.45 正则支持，供 Node.js 工具执行递归文本搜索。",
   "upstream": "https://github.com/microsoft/vscode-ripgrep",
   "repository": "https://github.com/oheco/vscode-ripgrep",
   "maintainers": [
@@ -70,5 +70,5 @@
       }
     }
   ],
-  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
+  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。原生命令已签名。"
 }

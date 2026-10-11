@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "python3",
-  "description": "Python 3.14 鸿蒙原生解释器，包含 pip、venv、开发头文件及扩展编译支持",
+  "description": "Python 解释器与开发环境，包含 pip、venv、开发头文件和扩展编译支持，适合脚本、自动化与 Python 应用开发。支持 SSL、SQLite、ctypes、压缩库和终端交互。",
   "upstream": "https://github.com/python/cpython",
   "repository": "https://github.com/oheco/cpython",
   "maintainers": [

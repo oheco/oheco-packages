@@ -3,7 +3,7 @@
   "name": "sharp",
   "package_manager": "npm",
   "package_name": "sharp",
-  "description": "Node.js 图像处理库，使用固定依赖的 WASM 引擎支持鸿蒙 PNG、JPEG、WebP 和缩放",
+  "description": "Node.js 图像处理库，支持 PNG、JPEG、WebP 和尺寸缩放，适合生成缩略图和批量处理图片。",
   "upstream": "https://github.com/lovell/sharp",
   "repository": "https://github.com/oheco/sharp",
   "maintainers": [
@@ -195,5 +195,5 @@
       }
     }
   ],
-  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24；无需安装脚本。使用官方 WASM 引擎，保留其内存和格式限制。"
+  "notes": "需要鸿蒙 ARM64 Node.js 24；无需安装脚本。使用官方 WASM 引擎，保留其内存和格式限制。"
 }

@@ -3,7 +3,7 @@
   "name": "node-pty",
   "package_manager": "npm",
   "package_name": "node-pty",
-  "description": "Node.js 伪终端库，提供鸿蒙原生 zsh 终端进程、输入输出和窗口调整",
+  "description": "Node.js 伪终端库，可启动交互式 zsh 终端进程并处理输入、输出和窗口尺寸调整，适合开发终端工具与集成终端。",
   "upstream": "https://github.com/microsoft/node-pty",
   "repository": "https://github.com/oheco/node-pty",
   "maintainers": [
@@ -62,5 +62,5 @@
       }
     }
   ],
-  "notes": "安装到当前 npm 项目，由 npm 管理。需要鸿蒙 ARM64 Node.js 24.21.0；已签名，无安装脚本。库安装不会自动替换其他项目内的依赖。"
+  "notes": "需要鸿蒙 ARM64 Node.js 24.21.0；已签名，无安装脚本。库安装不会自动替换其他项目内的依赖。"
 }

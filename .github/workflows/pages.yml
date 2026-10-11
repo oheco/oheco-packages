@@ -29,6 +29,8 @@ jobs:
         env:
           OHECO_SOURCE: ${{ github.workspace }}/.tools/oheco
         run: sh scripts/build.sh
+      - name: Check package cards and interactions
+        run: node scripts/test-site.cjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public

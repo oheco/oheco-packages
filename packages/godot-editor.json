@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
   "name": "godot-editor",
-  "description": "Godot 4.7.2 .NET 鸿蒙 PC ARM64 编辑器，提供开发 CLI 和可导出的 DevEco 图形工程",
+  "description": "Godot 游戏引擎的 .NET 编辑器，提供无界面资源导入和 .NET 开发命令。可导出 DevEco 图形编辑器工程，在鸿蒙电脑上开发游戏项目。",
   "upstream": "https://github.com/godotengine/godot",
   "repository": "https://github.com/oheco/godot",
   "maintainers": [{"github": "kdada", "name": "Guo Wei"}],
@@ -27,7 +27,7 @@
       "launchers": ["godot"]
     }},
     "projects": {"app": {
-      "description": "Godot Editor DevEco 工程；已签名 native 输入，个人应用签名及 profile ACL 由安装用户配置",
+      "description": "Godot 图形编辑器工程，用于在鸿蒙电脑上创建和编辑游戏项目，包含场景编辑、脚本编辑和 .NET 开发支持。",
       "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.4/godot-editor-app-4.7.2-ohos.4.zip",
       "sha256": "c25d387f68e8a3efd97df7a940d0e0f1d590b00d30636f3482cf8ce84f83e031",
       "size": 345743978,

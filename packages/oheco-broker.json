@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "oheco-broker",
-  "description": "支持账户 token 自动刷新、自动重连和有条件 TCP 续传的加密端口映射工具，提供独立服务端及完整 C/Go/.NET 源码 SDK",
+  "description": "加密端口映射工具，用于远程访问本地服务，支持自动重连和符合条件的 TCP 会话恢复，提供独立服务端及 C、Go、.NET 源码 SDK。0.5.0 新增账户令牌自动刷新，可保持现有连接和映射端口。",
   "upstream": "https://github.com/oheco/oheco-broker",
   "repository": "https://github.com/oheco/oheco-broker",
   "maintainers": [

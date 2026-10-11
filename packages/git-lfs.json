@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
   "name": "git-lfs",
-  "description": "Git LFS 鸿蒙原生大文件管理工具，支持 HTTPS 和本地大文件传输",
+  "description": "Git 大文件管理扩展，适合版本化图片、模型和其他大型资源，支持 HTTPS 与本地传输、克隆时还原文件及历史迁移。",
   "upstream": "https://github.com/git-lfs/git-lfs",
   "repository": "https://github.com/oheco/git-lfs",
   "maintainers": [

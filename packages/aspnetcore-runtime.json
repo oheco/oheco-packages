@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "aspnetcore-runtime",
-  "description": "ASP.NET Core 10 LTS 鸿蒙 ARM64 运行包，内含 .NET Runtime，支持 Kestrel、MVC/Razor、SignalR 和 gRPC",
+  "description": "ASP.NET Core 10 LTS Web 应用运行包，内含 .NET Runtime，支持 Kestrel、MVC/Razor、Razor Pages、SignalR 和 gRPC，适合部署 API 与网站。",
   "upstream": "https://github.com/dotnet/aspnetcore",
   "repository": "https://github.com/oheco/dotnet-aspnetcore",
   "maintainers": [

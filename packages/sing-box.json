@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "sing-box",
-  "description": "通用代理平台，支持 mixed/HTTP/SOCKS5 入站的代理转发、DNS、TLS 出站与 Clash API",
+  "description": "代理与 DNS 工具，支持 mixed、HTTP 和 SOCKS5 入站、TLS 出站及 Clash API，适合配置应用代理和流量转发。",
   "upstream": "https://github.com/SagerNet/sing-box",
   "repository": "https://github.com/oheco/sing-box",
   "maintainers": [

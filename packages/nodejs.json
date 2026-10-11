@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "nodejs",
-  "description": "Node.js 24 LTS 鸿蒙原生运行时，包含 npm、npx、Corepack 和开发头文件",
+  "description": "Node.js 24 LTS 运行时，用于运行 JavaScript 工具和服务，包含 npm、npx、Corepack 与开发头文件。支持 JIT、WebAssembly、Inspector 和 SQLite。",
   "upstream": "https://github.com/nodejs/node",
   "repository": "https://github.com/oheco/node",
   "maintainers": [

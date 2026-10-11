@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "go",
-  "description": "Go 编程语言和鸿蒙原生工具链，支持构建、运行、测试 Go 程序及 cgo",
+  "description": "Go 语言工具链，用于编译、运行和测试 Go 程序，包含 gofmt，并支持通过 cgo 调用 C 代码。",
   "upstream": "https://github.com/golang/go",
   "repository": "https://github.com/oheco/go",
   "maintainers": [

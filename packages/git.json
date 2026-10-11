@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "git",
-  "description": "Git 鸿蒙原生命令行工具，支持本地、SSH 和 HTTP/HTTPS 远端操作",
+  "description": "分布式版本管理工具，用于代码提交、分支协作、合并与变基。新版新增 HTTP/HTTPS 远端传输，可通过本地、SSH 或 HTTP/HTTPS 克隆和同步仓库。",
   "upstream": "https://github.com/git/git",
   "repository": "https://github.com/oheco/git",
   "maintainers": [

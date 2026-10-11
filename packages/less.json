@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "less",
-  "description": "less 鸿蒙原生终端分页器，支持搜索、中文、彩色输出和 Git 日志浏览",
+  "description": "终端文本分页器，用于浏览长文件、命令输出和 Git 日志，支持搜索、中文和彩色输出。",
   "upstream": "https://github.com/gwsw/less",
   "repository": "https://github.com/oheco/less",
   "maintainers": [

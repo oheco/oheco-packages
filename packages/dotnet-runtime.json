@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "dotnet-runtime",
-  "description": ".NET 10 LTS 鸿蒙 ARM64 运行时，支持 CoreCLR JIT 和 ReadyToRun",
+  "description": ".NET 10 LTS 应用运行时，支持 CoreCLR JIT 与 ReadyToRun，适合部署无需开发 SDK 的命令行程序和后台应用。",
   "upstream": "https://github.com/dotnet/runtime",
   "repository": "https://github.com/oheco/dotnet-runtime",
   "maintainers": [

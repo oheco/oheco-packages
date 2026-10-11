@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "ripgrep",
-  "description": "快速递归文本搜索命令，支持 Unicode、忽略规则和 PCRE2",
+  "description": "快速递归文本搜索工具，用于查找代码和文件内容，支持 Unicode、忽略规则和 PCRE2 正则表达式。",
   "upstream": "https://github.com/BurntSushi/ripgrep",
   "repository": "https://github.com/oheco/ripgrep",
   "maintainers": [
