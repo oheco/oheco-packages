@@ -9,8 +9,22 @@
   ],
   "license": "GPL-2.0-or-later",
   "notes": "使用 oo export blender app 导出后，在支持 API26 的 DevEco 中配置自己的签名并构建安装；oo 不直接安装鸿蒙应用，也不提供 Blender CLI。工程使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK26，包含预编译运行库及资源；离线构建需提前准备 wrapper 包缓存。最低 API22，当前仅验证 MOR-M2/Maleoon935 的 API26 环境；完整编辑、渲染和其他设备支持仍在完善，libmv 运动跟踪未启用。升级既有应用需沿用原签名身份，以保留项目和设置；Release 中的预签名 HAP 仅限其已授权开发设备。",
-  "latest": {"ohos-arm64": "5.2.2-ohos.host.15"},
+  "latest": {"ohos-arm64": "5.2.2-ohos.15"},
   "versions": [
+    {
+      "version": "5.2.2-ohos.15",
+      "upstream_version": "5.2.2",
+      "projects": {
+        "app": {
+          "description": "Blender 鸿蒙图形编辑器开发预览工程，包含宿主源码、运行库和资源，供用户自行签名安装。",
+          "url": "https://github.com/oheco/blender/releases/download/5.2.2-ohos.15/blender-app-5.2.2-ohos.15.zip",
+          "sha256": "10fd703c38d6bf57272dadd53929d8f35073aed83c12f90b1d7bd90974ec4fff",
+          "size": 143771688,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
     {
       "version": "5.2.2-ohos.host.15",
       "upstream_version": "5.2.2",
