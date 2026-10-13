@@ -363,7 +363,7 @@ function searchFor(query) {
     }
   }
   searchFor('原生');
-  assert.deepEqual(cardNames(), ['command-line-tools', 'oheco', 'oheco-broker'], 'filtered native packages retain alphabetical DOM order');
+  assert.deepEqual(cardNames(), ['command-line-tools', 'dsh-godot-control', 'oheco', 'oheco-broker'], 'filtered native packages retain alphabetical DOM order');
   searchFor('deepseek-harness');
   assert.equal(packageCards().length, 1);
   const dsh = packageCards()[0];
