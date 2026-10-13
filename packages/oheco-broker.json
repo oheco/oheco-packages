@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "name": "oheco-broker",
-  "description": "加密端口映射工具，用于远程访问本地服务，支持自动重连和符合条件的 TCP 会话恢复，提供独立服务端及 C、Go、.NET 源码 SDK。0.5.0 新增账户令牌自动刷新，可保持现有连接和映射端口。",
+  "description": "加密端口映射工具，用于远程访问本地服务，支持账户令牌自动刷新和符合条件的 TCP 会话恢复，提供独立服务端及 C、Go、.NET 源码 SDK。0.5.1 让长期运行的 tenant serve 在控制连接重试耗尽后每 30 秒继续尝试恢复。",
   "upstream": "https://github.com/oheco/oheco-broker",
   "repository": "https://github.com/oheco/oheco-broker",
   "maintainers": [
@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "设置 OHECO_BROKER_API 指向可信 HTTPS 服务，再用 tenant register/login、tenant serve 和 tenant connect 管理账号与映射；peer 密码与账号密码分开，目标 allowlist 默认拒绝，账号审批和 relay 授权需分别开通。旧配置执行一次 tenant login 后启用自动刷新；刷新凭据失效或授权撤销后仍需重新登录。TCP 会话恢复要求双方支持映射 v2，且原授权、会话上下文和目标 socket 在宽限内仍有效；无 TUN，TURN 仅支持 UDP/IPv4，不保证所有 NAT 都能连通。凭据和数据库应放应用私有目录，升级前正规备份 SQLite，回退需恢复旧数据库；安装不会自动启动服务，无鉴权的 shell serve 仅用于可信本机开发。随包 SDK 是源码，C/Go 接入需对应编译环境，.NET 10 SDK 仅封装本机命令服务。",
+  "notes": "设置 OHECO_BROKER_API 指向可信 HTTPS 服务，再用 tenant register/login、tenant serve 和 tenant connect 管理账号与映射；peer 密码与账号密码分开，目标 allowlist 默认拒绝，账号审批和 relay 授权需分别开通。旧配置执行一次 tenant login 后启用自动刷新；刷新凭据失效或授权撤销后仍需重新登录。升级后重启现有 tenant serve 一次加载新程序，后续控制连接暂停自动恢复；tenant connect 和 SDK 的暂停恢复仍由调用方请求。TCP 会话恢复要求双方支持映射 v2，且原授权、会话上下文和目标 socket 在宽限内仍有效；无 TUN，TURN 仅支持 UDP/IPv4，不保证所有 NAT 都能连通。凭据和数据库应放应用私有目录，升级前正规备份 SQLite，回退需恢复旧数据库；安装不会自动启动服务，无鉴权的 shell serve 仅用于可信本机开发。随包 SDK 是源码，C/Go 接入需对应编译环境，.NET 10 SDK 仅封装本机命令服务。",
   "latest": {
-    "ohos-arm64": "0.5.0"
+    "ohos-arm64": "0.5.1"
   },
   "versions": [
     {
@@ -85,6 +85,22 @@
           "url": "https://github.com/oheco/oheco-broker/releases/download/v0.5.0/oheco-broker-0.5.0-ohos-arm64.tar.gz",
           "sha256": "190c89f60dacbe0855b42f567abda873cecca37bac8d6f2d2fceb2f338b589d0",
           "size": 110700967,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "oheco-broker": "bin/oheco-broker",
+            "oheco-broker-server": "bin/oheco-broker-server"
+          }
+        }
+      }
+    },
+    {
+      "version": "0.5.1",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco-broker/releases/download/v0.5.1/oheco-broker-0.5.1-ohos-arm64.tar.gz",
+          "sha256": "93b09d7aad742edcdb1cfdc4a7f54e59f5252a12ea467c0d76b5e5d79df5ebb8",
+          "size": 110852761,
           "format": "tar.gz",
           "strip_components": 1,
           "binaries": {
