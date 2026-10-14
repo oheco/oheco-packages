@@ -1,16 +1,30 @@
 {
   "schema_version": 4,
   "name": "blender",
-  "description": "Blender 三维建模编辑器的鸿蒙开发预览，提供可自行构建签名的 DevEco 图形应用工程。当前预览改善了窗口缩放、键盘快捷键和输入法交互。",
+  "description": "Blender 三维建模编辑器的鸿蒙开发预览，提供可自行构建签名的 DevEco 图形应用工程。支持桌面、文档、下载目录访问、联网和系统浏览器链接，并改善了窗口缩放、键盘快捷键与输入法交互。",
   "upstream": "https://github.com/blender/blender",
   "repository": "https://github.com/oheco/blender",
   "maintainers": [
     {"github": "kdada", "name": "Guo Wei"}
   ],
   "license": "GPL-2.0-or-later",
-  "notes": "使用 oo export blender app 导出后，在支持 API26 的 DevEco 中配置自己的签名并构建安装；oo 不直接安装鸿蒙应用，也不提供 Blender CLI。工程使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK26，包含预编译运行库及资源；离线构建需提前准备 wrapper 包缓存。最低 API22，当前仅验证 MOR-M2/Maleoon935 的 API26 环境；完整编辑、渲染和其他设备支持仍在完善，libmv 运动跟踪未启用。升级既有应用需沿用原签名身份，以保留项目和设置；Release 中的预签名 HAP 仅限其已授权开发设备。",
-  "latest": {"ohos-arm64": "5.2.2-ohos.15"},
+  "notes": "使用 oo export blender app 导出后，在支持 API26 的 DevEco 中配置自己的签名和 Profile 并构建安装；Profile 需批准桌面目录 ACL 和适用的文档、下载目录授权，首次启动需授予三项目录访问。oo 不直接安装鸿蒙应用，也不提供 Blender CLI。工程使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK26，包含预编译运行库及资源；离线构建需提前准备 wrapper 包缓存。最低 API22，当前预览面向 MOR-M2/Maleoon935 的 API26 环境；完整编辑、渲染和其他设备支持仍在完善，libmv 运动跟踪未启用。升级时保留既有签名配置并使用覆盖安装，以保留项目和设置；Release 中的预签名 HAP 仅限其已授权开发设备。",
+  "latest": {"ohos-arm64": "5.2.2-ohos.17"},
   "versions": [
+    {
+      "version": "5.2.2-ohos.17",
+      "upstream_version": "5.2.2",
+      "projects": {
+        "app": {
+          "description": "Blender 鸿蒙图形编辑器开发预览工程，包含宿主源码、运行库和资源，供用户自行签名安装。",
+          "url": "https://github.com/oheco/blender/releases/download/5.2.2-ohos.17/blender-app-5.2.2-ohos.17.zip",
+          "sha256": "536c42361fbffae4dcacc3ce0fccf1de0536c216d49f0151196612541d7edb05",
+          "size": 143782689,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
     {
       "version": "5.2.2-ohos.15",
       "upstream_version": "5.2.2",
