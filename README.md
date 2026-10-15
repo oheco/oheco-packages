@@ -4,6 +4,8 @@ oheco 的软件目录、索引规范和 GitHub Pages 下载站。目录收录 oh
 官方 `command-line-tools`，目标平台为 `ohos-arm64`。可用版本见
 [软件下载站](https://oheco.org/)。开源适配包发布到对应仓库的 GitHub Releases；官方工具大于 GitHub 单资产限制，使用固定 R2 公共地址。
 
+DSH 插件不属于本软件目录的收录范围。此类插件只维护各自的代码仓库，通过 DSH 插件管理页从仓库目录安装，不在这里创建软件包或 `oo` 安装入口。
+
 移植维护者为 [Guo Wei (@kdada)](https://github.com/kdada)。
 
 > 完整索引使用 schema v6，Pages 生成器随本次 `oheco v0.11.0` 发布升级。
