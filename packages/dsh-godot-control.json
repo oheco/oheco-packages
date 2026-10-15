@@ -6,9 +6,23 @@
   "repository": "https://github.com/oheco/dsh-godot-control",
   "maintainers": [{"github": "kdada", "name": "Guo Wei"}],
   "license": "MIT",
-  "notes": "这是无命令的数据插件包。安装后在 DSH 插件管理页从本地目录安装包根并启用 @oheco/dsh-godot-control，将 godot/addons/dsh_godot 复制到 Godot 项目的 addons 目录，再在两侧配对面板保存端口和令牌。需要已有 DSH（Node.js 24）与 Godot 4.7+ 的 4.x 编辑器；oo 不自动注册 DSH bundle 或修改 Godot 项目。保留 DSH 引用的安装目录，移除数据包前先卸载 bundle。已在鸿蒙真实 headless Godot 与实际 DSH 模型工具调用中验收核心工作流，161 个命令未逐项测试，图形 HAP 截图与音频行为未全面验收。",
-  "latest": {"ohos-arm64": "0.1.0"},
+  "notes": "这是无命令的数据插件包。安装后在 DSH 插件管理页从本地目录安装包根并启用 @oheco/dsh-godot-control；在包根运行 node scripts/install-addon.mjs --project <Godot工程根目录> --pair 同步完整 addon 并写入当前 DSH 配对，使用 --check 核对插件代码一致性。Godot 端配置位于各项目的 .godot/dsh-godot-control/connection.cfg，外部修改后自动重连，删除 .godot 后需重新配对。插件修复应先在源码仓库完成，再统一同步工程。需要已有 DSH（Node.js 24）与 Godot 4.7+ 的 4.x 编辑器；oo 不自动注册 DSH bundle 或修改 Godot 项目。保留 DSH 引用的安装目录，移除数据包前先卸载 bundle。161 个命令未逐项测试，图形 HAP 截图与音频行为未全面验收。",
+  "latest": {"ohos-arm64": "0.1.1"},
   "versions": [
+    {
+      "version": "0.1.1",
+      "upstream_version": "4.3.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/dsh-godot-control/releases/download/dsh-v0.1.1/dsh-godot-control-0.1.1-ohos-arm64.zip",
+          "sha256": "40c1df733264bd95c3d8db2e72773aea1315b436b7cc26269e76a97354e9fd5c",
+          "size": 20720187,
+          "format": "zip",
+          "strip_components": 1,
+          "binaries": {}
+        }
+      }
+    },
     {
       "version": "0.1.0",
       "upstream_version": "4.3.0",
