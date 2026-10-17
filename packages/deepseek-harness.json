@@ -3,7 +3,7 @@
   "name": "deepseek-harness",
   "package_manager": "npm",
   "package_name": "@deepseek-ai/dsh",
-  "description": "AI 编程助手，提供命令行与浏览器 Web，可结合终端、文件操作和搜索处理开发任务。配套 App 工程支持本地与远程连接，新版工程改进了账号刷新、页面保留和端口复用。",
+  "description": "AI 编程助手，提供命令行与浏览器 Web，可结合终端、文件操作和搜索处理开发任务。配套鸿蒙 App 工程支持保存和打开本地连接，以及通过原生 broker 建立远程连接。",
   "upstream": "https://github.com/deepseek-ai/deepseek-harness",
   "repository": "https://github.com/oheco/deepseek-harness",
   "maintainers": [
@@ -14,9 +14,58 @@
   ],
   "license": "MIT",
   "latest": {
-    "ohos-arm64": "0.2.0-rc.2-ohos.1"
+    "ohos-arm64": "0.2.1-rc.2-ohos.1"
   },
   "versions": [
+    {
+      "version": "0.2.1-rc.2-ohos.1",
+      "upstream_version": "0.2.1-rc.2",
+      "npm_artifacts": {
+        "url": "https://github.com/oheco/deepseek-harness/releases/download/v0.2.1-rc.2-ohos.1/deepseek-harness-0.2.1-rc.2-ohos.1.tgz",
+        "sha256": "1d22fcf952fba672a0594212b8e284a5aeeda693c29c5f4c2f9d2a4d4053bf3c",
+        "size": 49861725,
+        "filename": "deepseek-harness-0.2.1-rc.2-ohos.1.tgz",
+        "package_json": {
+          "name": "@deepseek-ai/dsh",
+          "version": "0.2.1-rc.2-ohos.1",
+          "description": "DeepSeek Harness CLI and Web profiles for HarmonyOS PC ARM64",
+          "type": "module",
+          "bin": {
+            "dsh": "bin/dsh"
+          },
+          "license": "MIT",
+          "repository": {
+            "type": "git",
+            "url": "https://github.com/oheco/deepseek-harness"
+          },
+          "os": [
+            "openharmony"
+          ],
+          "cpu": [
+            "arm64"
+          ],
+          "engines": {
+            "node": ">=24"
+          },
+          "dependencies": {
+            "node-pty": "1.2.0-beta.15-ohos.1",
+            "koffi": "3.1.1-ohos.1",
+            "sharp": "0.35.5-ohos.2",
+            "@vscode/ripgrep": "1.18.0-ohos.2"
+          }
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "DSH 鸿蒙 App 连接管理工程（本地连接与 broker 远程连接）",
+          "url": "https://github.com/oheco/deepseek-harness/releases/download/app-v0.2.1-rc.2-ohos.1/deepseek-harness-app-0.2.1-rc.2-ohos.1.zip",
+          "sha256": "cd37af82efe5ec66958e4fe2810a2b2bbc739959f5f70536a2225409f6b48475",
+          "size": 91562958,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
     {
       "version": "0.2.0-rc.2-ohos.1",
       "upstream_version": "0.2.0-rc.2",
