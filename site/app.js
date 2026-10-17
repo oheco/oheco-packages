@@ -315,7 +315,7 @@ function card(pkg) {
       section.append(meta);
       if (project.description) section.append(el('p', project.description, 'notes'));
       const command = el('div', undefined, 'command');
-      const code = el('code', `oo export ${pkg.name}@${version.version} ${name} --output ./${pkg.name}-${name}`);
+      const code = el('code', `oo export ${pkg.name}@${version.version} ${name} --output ./${pkg.name}-${name} --install`);
       const button = el('button', '复制'); button.type = 'button';
       button.addEventListener('click', () => copy(code.textContent, button));
       command.append(code, button);
