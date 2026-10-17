@@ -3,7 +3,7 @@
   "name": "deepseek-harness",
   "package_manager": "npm",
   "package_name": "@deepseek-ai/dsh",
-  "description": "AI 编程助手，提供命令行与浏览器 Web，可结合终端、文件操作和搜索处理开发任务。配套鸿蒙 App 工程支持保存和打开本地连接，以及通过原生 broker 建立远程连接。",
+  "description": "AI 编程助手，提供命令行与浏览器 Web，可结合终端、文件操作和搜索处理开发任务。配套 App 工程可保存和打开本地连接，也支持通过 broker 连接远程服务。",
   "upstream": "https://github.com/deepseek-ai/deepseek-harness",
   "repository": "https://github.com/oheco/deepseek-harness",
   "maintainers": [

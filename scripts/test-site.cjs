@@ -367,12 +367,13 @@ function searchFor(query) {
   searchFor('deepseek-harness');
   assert.equal(packageCards().length, 1);
   const dsh = packageCards()[0];
+  const dshVersion = catalog.find(pkg => pkg.name === 'deepseek-harness').latest['ohos-arm64'];
   const projects = all(dsh).filter(node => hasClass(node, 'project-delivery'));
   assert.equal(projects.length, 1);
-  assert.match(projects[0].textContent, /oo export deepseek-harness@0\.2\.0-rc\.2-ohos\.1 app --output/);
-  assert.doesNotMatch(projects[0].textContent, /app-0\.2\.0-rc\.2-ohos\.2/);
+  assert.ok(projects[0].textContent.includes(`oo export deepseek-harness@${dshVersion} app --output`));
+  assert.doesNotMatch(projects[0].textContent, /deepseek-harness-app-.*\.zip/);
   await findClass(projects[0], 'command').children[1].listeners.click();
-  assert.equal(clipboardWrites.at(-1), 'oo export deepseek-harness@0.2.0-rc.2-ohos.1 app --output ./deepseek-harness-app --install');
+  assert.equal(clipboardWrites.at(-1), `oo export deepseek-harness@${dshVersion} app --output ./deepseek-harness-app --install`);
 
   const compare = vm.runInContext('compareVersionNames', context);
   for (const [a, b, want] of [
