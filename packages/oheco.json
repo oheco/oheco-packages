@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "name": "oheco",
-  "description": "鸿蒙软件包管理器，支持批量安装卸载、依赖解析、工程导出和版本切换。0.12.0 新增 oo daemon 用户服务管理，支持独立后台运行、服务启停、自动重启和异步 zsh autoload。",
+  "description": "鸿蒙软件包管理器，支持批量安装卸载、依赖解析、工程导出、版本切换和用户服务。0.13.0 新增 oo export --install，自动准备工具、生成开发签名、构建 APP 并通过 HDC 覆盖安装。",
   "upstream": "https://github.com/oheco/oheco",
   "repository": "https://github.com/oheco/oheco",
   "maintainers": [
@@ -11,9 +11,9 @@
     }
   ],
   "license": "MIT",
-  "notes": "oo update 只刷新索引，安装用 oo install 包名或包名@版本，切换已装版本用 oo switch 包名 版本，卸载用 oo remove 包名@版本。npm 默认全局安装；项目依赖请在项目目录执行 oo install 包名 --，卸载也使用同一作用域，npm/pip 包不由 oo list 或 oo switch 管理。只释放命令入口并保留文件可用 oo unlink；工程用 oo export 包名 项目名 --output 新目录 导出后自行构建签名。工具集和 unlink 需要 oo >=0.11.0；升级客户端可依次执行 oo update、oo install oheco、oo update，升级后不要混用旧客户端管理同一安装根。自定义 OHECO_ROOT 后需持续使用同一设置，并将其 bin 加入 PATH。oo >=0.12.0 可在 ~/.oheco/services/ 定义 JSON 用户服务：oo daemon 后台运行管理器，enable/disable 设置随管理器启动，start/stop/restart 控制当前服务；日志追加到 services/logs/。oo daemon autoload 显式配置 zsh 异步启动；服务保持前台运行，TMPDIR 使用支持私有权限的应用目录。",
+  "notes": "oo update 只刷新索引，安装用 oo install 包名或包名@版本，切换已装版本用 oo switch 包名 版本，卸载用 oo remove 包名@版本。npm 默认全局安装；项目依赖请在项目目录执行 oo install 包名 --，卸载也使用同一作用域，npm/pip 包不由 oo list 或 oo switch 管理。只释放命令入口并保留文件可用 oo unlink；工程用 oo export 包名 项目名 --output 新目录 导出；oo >=0.13.0 可追加 --install 自动准备官方工具、登录开发者账号、构建签名并通过 HDC 覆盖安装，支持 --device、--team、--product 和同命令恢复，不自动卸载既有应用。工具集和 unlink 需要 oo >=0.11.0；升级客户端可依次执行 oo update、oo install oheco、oo update，升级后不要混用旧客户端管理同一安装根。自定义 OHECO_ROOT 后需持续使用同一设置，并将其 bin 加入 PATH。oo >=0.12.0 可在 ~/.oheco/services/ 定义 JSON 用户服务：oo daemon 后台运行管理器，enable/disable 设置随管理器启动，start/stop/restart 控制当前服务；日志追加到 services/logs/。oo daemon autoload 显式配置 zsh 异步启动；服务保持前台运行，TMPDIR 使用支持私有权限的应用目录。",
   "latest": {
-    "ohos-arm64": "0.12.0"
+    "ohos-arm64": "0.13.0"
   },
   "versions": [
     {
@@ -246,6 +246,19 @@
           "url": "https://github.com/oheco/oheco/releases/download/v0.12.0/oheco-0.12.0-ohos-arm64.tar.gz",
           "sha256": "cfa050f9be9a2e5a8f5e3a508fa8d37e1845ec855427a3048624f4d905fd1e24",
           "size": 3322569,
+          "format": "tar.gz",
+          "strip_components": 0,
+          "binaries": {"oo": "bin/oo"}
+        }
+      }
+    },
+    {
+      "version": "0.13.0",
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/oheco/releases/download/v0.13.0/oheco-0.13.0-ohos-arm64.tar.gz",
+          "sha256": "6ae4aa5b0baad2bbe84bfab9a5fa121baa6ac6acd32e5dc9ed68940572edc220",
+          "size": 3485372,
           "format": "tar.gz",
           "strip_components": 0,
           "binaries": {"oo": "bin/oo"}

@@ -8,7 +8,7 @@
     {"github": "kdada", "name": "Guo Wei"}
   ],
   "license": "GPL-2.0-or-later",
-  "notes": "使用 oo export blender app 导出后，在支持 API26 的 DevEco 中配置自己的签名和 Profile 并构建安装；Profile 需批准桌面目录 ACL 和适用的文档、下载目录授权，首次启动需授予三项目录访问。oo 不直接安装鸿蒙应用，也不提供 Blender CLI。工程使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK26，包含预编译运行库及资源；离线构建需提前准备 wrapper 包缓存。最低 API22，当前预览面向 MOR-M2/Maleoon935 的 API26 环境；完整编辑、渲染和其他设备支持仍在完善，libmv 运动跟踪未启用。升级时保留既有签名配置并使用覆盖安装，以保留项目和设置；Release 中的预签名 HAP 仅限其已授权开发设备。",
+  "notes": "oo >=0.13.0 可用 oo export blender app -o ./BlenderApp --install 自动准备官方工具、生成开发签名并覆盖安装；也可普通导出后在支持 API26 的 DevEco 中配置自己的签名和 Profile。Profile 需批准桌面目录 ACL 和适用的文档、下载目录授权，首次启动需授予三项目录访问。目录不提供 Blender CLI。工程使用官方 command-line-tools 26.0.0.201、Hvigor/plugin 7.26.8 和 SDK26，包含预编译运行库及资源；离线构建需提前准备 wrapper 包缓存。最低 API22，当前预览面向 MOR-M2/Maleoon935 的 API26 环境；完整编辑、渲染和其他设备支持仍在完善，libmv 运动跟踪未启用。升级时保留既有签名配置并使用覆盖安装，以保留项目和设置；Release 中的预签名 HAP 仅限其已授权开发设备。",
   "latest": {"ohos-arm64": "5.2.2-ohos.17"},
   "versions": [
     {
