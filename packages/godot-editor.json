@@ -1,7 +1,7 @@
 {
   "schema_version": 5,
   "name": "godot-editor",
-  "description": "Godot .NET 游戏开发套件，包含 headless 编辑器、GodotSharp 和 OpenHarmony 游戏导出模板，另提供精简的 DevEco 图形编辑器工程。 子游戏崩溃后保留编辑器，并在 Output 中显示诊断。",
+  "description": "Godot .NET 游戏开发套件，包含 headless 编辑器、GodotSharp、OpenHarmony 游戏导出模板和精简的 DevEco 图形编辑器工程，支持手机与平板沉浸式全屏游戏；子游戏崩溃诊断可在编辑器 Output 查看。",
   "upstream": "https://github.com/godotengine/godot",
   "repository": "https://github.com/oheco/godot",
   "maintainers": [
@@ -13,7 +13,7 @@
   "license": "MIT",
   "notes": "子游戏崩溃摘要及末尾日志可在编辑器 Output 查看。oo install godot-editor 安装 headless、GodotSharp、四个 Godot 自有 NuGet 包及 debug/release 模板，并自动安装精确依赖 dotnet-sdk 10.0.401-ohos.2。图形编辑器用 oo export godot-editor app 导出后按工程说明构建签名，面向 API 26+ 的 2in1 设备；APP 仅含原生编辑器和启动资源，自动发现兼容开发套件后启用 C#，未安装套件时保留原生/GDScript 编辑。普通第三方依赖通过 NuGet.org 正常恢复；单独运行 dotnet build 需设置 GODOT_NUGET_SOURCE 为套件 share/godot/GodotSharp/Tools/nupkgs，或配置等价本地源。模板默认自动定位，导出预设中的自定义模板优先。官方构建工具为 command-line-tools 26.0.0.201 和 Hvigor/plugin 7.26.8，构建离线使用前需准备 wrapper 依赖缓存。本机 oo 0.12.0 解包大归档会间歇报 file exists；安装和工程导出可仅对该命令设置 GODEBUG=asyncpreemptoff=1，已在独立根通过正式索引复核。鼠标滚轮保留系统滚动偏好，触控板支持连续双指滚动和捏合，抬指惯性尚未接入。外部终端和外部编辑器入口不可用。",
   "latest": {
-    "ohos-arm64": "4.7.2-ohos.8"
+    "ohos-arm64": "4.7.2-ohos.9"
   },
   "versions": [
     {
@@ -206,6 +206,45 @@
           "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.8/godot-editor-app-4.7.2-ohos.8.zip",
           "sha256": "c54cee896855b9e19885e8a43e4f4a19f92e7fbb1eb53507d2f0668f0a7f2ab1",
           "size": 76866207,
+          "format": "zip",
+          "strip_components": 1
+        }
+      }
+    },
+    {
+      "version": "4.7.2-ohos.9",
+      "upstream_version": "4.7.2",
+      "dependencies": [
+        {
+          "name": "dotnet-sdk",
+          "constraint": "=10.0.401-ohos.2",
+          "version_basis": "package",
+          "platforms": [
+            "ohos-arm64"
+          ]
+        }
+      ],
+      "artifacts": {
+        "ohos-arm64": {
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.9/godot-editor-4.7.2-ohos.9-ohos-arm64.tar.gz",
+          "sha256": "dedd5e1e93f0fd23f2fec00fc8528770c7987ccce8166a664d5e13d4383929f4",
+          "size": 161665142,
+          "format": "tar.gz",
+          "strip_components": 1,
+          "binaries": {
+            "godot": "bin/godot"
+          },
+          "launchers": [
+            "godot"
+          ]
+        }
+      },
+      "projects": {
+        "app": {
+          "description": "精简 Godot 图形编辑器工程，包含宿主和启动资源；C# 开发及游戏模板从兼容的 godot-editor 开发套件加载。",
+          "url": "https://github.com/oheco/godot/releases/download/4.7.2-ohos.9/godot-editor-app-4.7.2-ohos.9.zip",
+          "sha256": "404267aed3632808b0b44a46b60dc543909b525bec5bdd6d14f42d9d90e6563d",
+          "size": 76866257,
           "format": "zip",
           "strip_components": 1
         }
